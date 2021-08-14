@@ -1,0 +1,62 @@
+﻿@model StudentsIndexViewModel
+@{
+    ViewData["GroupId"] = ViewBag.Group.Id;
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">"@ViewBag.Group.Name" group students</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Students" asp-action="Create" asp-route-groupId="@ViewBag.Group.Id" class="btn btn-primary">
+                Add New Student
+            </a>
+        </div>
+    </div>
+
+    <br />
+
+    @if (Model.Students.Any())
+    {
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date Of Birth</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model.Students)
+                {
+                <tr>
+                    <td wigth="25%">@student.FirstName</td>
+                    <td width="25%">@student.LastName</td>
+                    <td width="20%">@student.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                    <td width="20%">@((StudentStatus) student.Status)</td>
+                    <td class="text-center">
+                        <div class="w-75 btn-group">
+                            <a asp-controller="Students" asp-action="Edit" asp-route-Id="@student.Id" class="btn btn-primary">
+                                Edit
+                            </a>
+                            <a asp-controller="Students" asp-action="Delete" asp-route-Id="@student.Id" class="btn btn-danger">
+                                Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No students exists.</p>
+    }
+    <partial name="_Pager" model="@Model.PagingInfo" view-data="ViewData"/>
+    <br />
+</div>
+

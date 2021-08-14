@@ -1,0 +1,54 @@
+﻿@model CoursesIndexViewModel
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary ps-3">Courses List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Courses" asp-action="Create" class="btn btn-primary">
+                Create New Course
+            </a>
+        </div>
+    </div>
+
+   @if (Model.Courses.Any())
+    {
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+                <tr>
+                    <th class="ps-3">Course Name</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Model.Courses)
+                {
+                    <tr>
+                        <td wigth="25%" class="align-middle ps-3">
+                            <a class="h5" asp-controller="Groups" asp-action="Index" asp-route-courseId="@course.Id">@course.Name</a>
+                        </td>
+                        <td width="65%">@course.Description</td>
+                        <td class="text-center align-middle">
+                            <div class="w-75 btn-group">
+                                <a asp-controller="Courses" asp-action="Edit" asp-route-Id="@course.Id" class="btn btn-primary">
+                                    Edit
+                                </a>
+                                <a asp-controller="Courses" asp-action="Delete" asp-route-Id="@course.Id" class="btn btn-danger">
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No courses exists.</p>
+    }
+   <partial name="_Pager" model="@Model.PagingInfo"/>
+   <br/>
+</div>
