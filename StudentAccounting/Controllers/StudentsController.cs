@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using SmartBreadcrumbs.Nodes;
 using StudentAccounting.Data;
 using StudentAccounting.Models;
 using StudentAccounting.Models.ViewModels;
@@ -18,7 +19,12 @@ namespace StudentAccounting.Controllers
 
         public IActionResult Index(int groupId, int page = 1)
         {
-            ViewBag.Group = _unitOfWork.Groups.Get(groupId);
+            var currentGroup = _unitOfWork.Groups.Get(groupId);
+            ViewBag.Group = currentGroup;
+            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{currentGroup.Course.Name}") {RouteValues = new {courseId = currentGroup.CourseId}};
+            var childNode = new MvcBreadcrumbNode("Index", "Students", $"{currentGroup.Name} group") {Parent = parentNode};
+            ViewData["BreadcrumbNode"] = childNode;
+
             return View(new StudentsIndexViewModel
             {
                 Students = _unitOfWork.Students.GetAll()
@@ -38,6 +44,12 @@ namespace StudentAccounting.Controllers
 
         public IActionResult Create(int groupId)
         {
+            var currentGroup = _unitOfWork.Groups.Get(groupId);
+            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{currentGroup.Course.Name}") {RouteValues = new {courseId = currentGroup.CourseId}};
+            var childNode1 = new MvcBreadcrumbNode("Index", "Students", $"{currentGroup.Name} group") { RouteValues = new {groupId = currentGroup.Id }, Parent = parentNode};
+            var childNode2 = new MvcBreadcrumbNode("Create", "Students", "New student") {Parent = childNode1};
+            ViewData["BreadcrumbNode"] = childNode2;
+
             var student = new Student {GroupId = groupId};
             return View(student);
         }
@@ -62,6 +74,11 @@ namespace StudentAccounting.Controllers
 
             var student = _unitOfWork.Students.Get((int) id);
             if (student == null) return NotFound();
+
+            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{student.Group.Course.Name}") {RouteValues = new {courseId = student.Group.CourseId}};
+            var childNode1 = new MvcBreadcrumbNode("Index", "Students", $"{student.Group.Name} group") {RouteValues = new {groupId = student.Group.Id}, Parent = parentNode};
+            var childNode2 = new MvcBreadcrumbNode("Create", "Students", "Edit student") {Parent = childNode1};
+            ViewData["BreadcrumbNode"] = childNode2;
 
             ViewBag.Groups = _unitOfWork.Groups.Find(g => g.CourseId == student.Group.CourseId);
             return View(student);
@@ -92,6 +109,11 @@ namespace StudentAccounting.Controllers
 
             var student = _unitOfWork.Students.Get((int) id);
             if (student == null) return NotFound();
+
+            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{student.Group.Course.Name}") { RouteValues = new { courseId = student.Group.CourseId } };
+            var childNode1 = new MvcBreadcrumbNode("Index", "Students", $"{student.Group.Name} group") { RouteValues = new { groupId = student.Group.Id }, Parent = parentNode };
+            var childNode2 = new MvcBreadcrumbNode("Create", "Students", "Delete student") { Parent = childNode1 };
+            ViewData["BreadcrumbNode"] = childNode2;
 
             return View(student);
         }

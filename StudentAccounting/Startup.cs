@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using StudentAccounting.Data;
+using SmartBreadcrumbs.Extensions;
 
 namespace StudentAccounting
 {
@@ -26,6 +27,7 @@ namespace StudentAccounting
 
             services.AddControllersWithViews();
             services.AddMvc();
+            services.AddBreadcrumbs(GetType().Assembly);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

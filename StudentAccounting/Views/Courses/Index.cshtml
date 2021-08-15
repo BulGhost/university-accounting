@@ -1,4 +1,5 @@
 ﻿@model CoursesIndexViewModel
+@{ ViewBag.Title = "Courses";}
 
 <div class="container p-3">
     <div class="row pt-4">
@@ -12,7 +13,7 @@
         </div>
     </div>
 
-   @if (Model.Courses.Any())
+    @if (Model.Courses.Any())
     {
         <table class="table table-striped" style="width: 100%">
             <thead>
@@ -49,6 +50,6 @@
     {
         <p>No courses exists.</p>
     }
-   <partial name="_Pager" model="@Model.PagingInfo"/>
-   <br/>
+    <partial name="_Pager" model="@Model.PagingInfo" />
+    <br />
 </div>

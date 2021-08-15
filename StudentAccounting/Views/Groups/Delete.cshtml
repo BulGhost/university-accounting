@@ -1,4 +1,5 @@
 ﻿@model Group
+@{ ViewBag.Title = "Delete group";}
 
 <form method="post" asp-action="DeletePost">
     <input asp-for="Id" hidden />
@@ -21,7 +22,7 @@
                         <label asp-for="FormationDate"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="FormationDate" disabled class="form-control" type="date"/>
+                        <input asp-for="FormationDate" disabled class="form-control" type="date" />
                     </div>
                 </div>
                 <div class="row m-3">

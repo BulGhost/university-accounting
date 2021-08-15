@@ -1,7 +1,9 @@
 ﻿@model GroupsIndexViewModel
 @{
-    ViewData["CourseId"] = ViewBag.Course.Id;
+    ViewBag.Title = $"\"{ViewBag.Course.Name}\" course groups";
+    ViewData["CourseId"] = ViewBag.Course.Id; //TODO: Попробовать перенести в контроллер
 }
+
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">

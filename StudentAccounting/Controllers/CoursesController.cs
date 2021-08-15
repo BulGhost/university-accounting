@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using SmartBreadcrumbs.Attributes;
 using StudentAccounting.Data;
 using StudentAccounting.Models;
 using StudentAccounting.Models.ViewModels;
@@ -16,6 +17,7 @@ namespace StudentAccounting.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [DefaultBreadcrumb("Courses")]
         public IActionResult Index(int page = 1)
         {
             if (page < 1) page = 1;
@@ -34,6 +36,7 @@ namespace StudentAccounting.Controllers
             });
         }
 
+        [Breadcrumb("Create new")]
         public IActionResult Create()
         {
             return View();
@@ -53,6 +56,7 @@ namespace StudentAccounting.Controllers
             return View(course);
         }
 
+        [Breadcrumb("Edit course")]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -85,6 +89,7 @@ namespace StudentAccounting.Controllers
             return View(course);
         }
 
+        [Breadcrumb("Delete course")]
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0) return NotFound();

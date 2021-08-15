@@ -1,8 +1,9 @@
 ﻿@model Group
+@{ ViewBag.Title = "Create group";}
 
 <form method="post" asp-action="Create">
-    <input asp-for="CourseId" hidden/>
-    <input asp-for="FormationDate" hidden/>
+    <input asp-for="CourseId" hidden />
+    <input asp-for="FormationDate" hidden />
     <div class="border p-3">
         <div class="row">
             <h2 class="text-info ps-3">Add group</h2>

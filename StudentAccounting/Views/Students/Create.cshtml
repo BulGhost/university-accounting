@@ -1,7 +1,8 @@
 ﻿@model Student
+@{ ViewBag.Title = "Add student";}
 
 <form method="post" asp-action="Create">
-    <input asp-for="GroupId" hidden/>
+    <input asp-for="GroupId" hidden />
     <div class="border p-3">
         <div class="row">
             <h2 class="text-info ps-3">Add student</h2>
@@ -31,7 +32,7 @@
                         <label asp-for="DateOfBirth"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="DateOfBirth" class="form-control" type="date"/>
+                        <input asp-for="DateOfBirth" class="form-control" type="date" />
                         <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                     </div>
                 </div>

@@ -4,7 +4,8 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <title>Student Accounting</title>
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon"/>
+    <title>Student Accounting - @ViewBag.Title</title>
 </head>
 <body class="p-3">
     <header>
@@ -30,6 +31,7 @@
     </header>
 
     <div class="container">
+        <breadcrumb class="ps-3"></breadcrumb>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
