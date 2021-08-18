@@ -38,7 +38,7 @@
                     <td wigth="25%">@student.FirstName</td>
                     <td width="20%">@student.LastName</td>
                     <td width="20%">@student.DateOfBirth.ToString("dd/MM/yyyy")</td>
-                    <td width="15%">@($"{student.FinalExamGpa:F2}")</td>
+                    <td width="15%">@Html.DisplayFor(modelItem => student.FinalExamGpa)</td>
                     <td width="15%">@((StudentStatus) student.Status)</td>
                     <td class="text-center">
                         <div class="w-75 btn-group">

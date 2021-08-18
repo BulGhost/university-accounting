@@ -7,6 +7,7 @@
         <div class="row">
             <h2 class="text-info ps-3">Edit student</h2>
         </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row m-3">
             <div class="col-8">
                 <div class="row m-3">
@@ -37,18 +38,18 @@
                     </div>
                 </div>
                 <div class="row m-3">
-                        <div class="col-4">
-                            <label asp-for="GroupId" class="required"></label>
-                        </div>
-                        <div class="col-8">
-                            <select asp-for="GroupId" class="form-select">
-                                @foreach (var group in ViewBag.Groups)
-                                {
-                                    <option value="@group.Id">@group.Name</option>
-                                }
-                            </select>
-                        </div>
+                    <div class="col-4">
+                        <label asp-for="Group" class="required"></label>
                     </div>
+                    <div class="col-8">
+                        <select asp-for="Group.Name" class="form-select">
+                            @foreach (var group in ViewBag.Groups)
+                            {
+                                <option value="@group.Id">@group.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
                 <div class="row m-3">
                     <div class="col-4">
                         <label asp-for="FinalExamGpa"></label>

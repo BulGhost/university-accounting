@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using StudentAccounting.Models;
 
 namespace StudentAccounting.Data
@@ -26,6 +27,10 @@ namespace StudentAccounting.Data
             modelBuilder.Entity<Student>(entity =>
                 entity.HasIndex(e => new {e.LastName, e.FirstName, e.DateOfBirth})
                     .IsUnique());
+
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
+                .SelectMany(e => e.GetForeignKeys()))
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
         }
     }
 }
