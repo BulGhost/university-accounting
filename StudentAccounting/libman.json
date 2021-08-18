@@ -17,6 +17,10 @@
     {
       "library": "jquery-validate@1.19.3",
       "destination": "wwwroot/lib/jquery-validate/"
+    },
+    {
+      "library": "globalize@1.7.0",
+      "destination": "wwwroot/lib/globalize/"
     }
   ]
 }

@@ -81,6 +81,9 @@ namespace StudentAccounting.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("date");
 
+                    b.Property<double>("FinalExamGpa")
+                        .HasColumnType("float");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(30)

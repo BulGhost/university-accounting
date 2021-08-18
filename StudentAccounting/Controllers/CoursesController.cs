@@ -64,7 +64,7 @@ namespace StudentAccounting.Controllers
                 return NotFound();
             }
 
-            var course = _unitOfWork.Courses.Get((int)id);
+            var course = _unitOfWork.Courses.Get((int) id);
             if (course == null)
             {
                 return NotFound();
@@ -112,6 +112,20 @@ namespace StudentAccounting.Controllers
             _unitOfWork.Courses.Remove(course);
             _unitOfWork.Complete();
             return RedirectToAction("Index");
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult VerifyCourseName(int id, string name)
+        {
+            if (id == 0)
+                return _unitOfWork.Courses.Find(c => c.Name == name).Any()
+                    ? Json($"The course name {name} is already exists.")
+                    : Json(true);
+
+            var coursesWithSameName = _unitOfWork.Courses.Find(c => c.Name == name);
+            return coursesWithSameName.Any(course => course.Id != id)
+                ? Json($"The course name {name} is already exists.")
+                : Json(true);
         }
     }
 }

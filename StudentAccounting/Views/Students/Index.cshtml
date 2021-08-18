@@ -26,6 +26,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Date Of Birth</th>
+                    <th>GPA</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
@@ -35,9 +36,10 @@
                 {
                 <tr>
                     <td wigth="25%">@student.FirstName</td>
-                    <td width="25%">@student.LastName</td>
+                    <td width="20%">@student.LastName</td>
                     <td width="20%">@student.DateOfBirth.ToString("dd/MM/yyyy")</td>
-                    <td width="20%">@((StudentStatus) student.Status)</td>
+                    <td width="15%">@($"{student.FinalExamGpa:F2}")</td>
+                    <td width="15%">@((StudentStatus) student.Status)</td>
                     <td class="text-center">
                         <div class="w-75 btn-group">
                             <a asp-controller="Students" asp-action="Edit" asp-route-Id="@student.Id" class="btn btn-primary">

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using SmartBreadcrumbs.Nodes;
 using StudentAccounting.Data;
@@ -21,8 +22,8 @@ namespace StudentAccounting.Controllers
         {
             var currentGroup = _unitOfWork.Groups.Get(groupId);
             ViewBag.Group = currentGroup;
-            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{currentGroup.Course.Name}") {RouteValues = new {courseId = currentGroup.CourseId}};
-            var childNode = new MvcBreadcrumbNode("Index", "Students", $"{currentGroup.Name} group") {Parent = parentNode};
+            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{currentGroup.Course.Name}") { RouteValues = new { courseId = currentGroup.CourseId } };
+            var childNode = new MvcBreadcrumbNode("Index", "Students", $"{currentGroup.Name} group") { Parent = parentNode };
             ViewData["BreadcrumbNode"] = childNode;
 
             return View(new StudentsIndexViewModel
@@ -45,12 +46,12 @@ namespace StudentAccounting.Controllers
         public IActionResult Create(int groupId)
         {
             var currentGroup = _unitOfWork.Groups.Get(groupId);
-            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{currentGroup.Course.Name}") {RouteValues = new {courseId = currentGroup.CourseId}};
-            var childNode1 = new MvcBreadcrumbNode("Index", "Students", $"{currentGroup.Name} group") { RouteValues = new {groupId = currentGroup.Id }, Parent = parentNode};
-            var childNode2 = new MvcBreadcrumbNode("Create", "Students", "New student") {Parent = childNode1};
+            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{currentGroup.Course.Name}") { RouteValues = new { courseId = currentGroup.CourseId } };
+            var childNode1 = new MvcBreadcrumbNode("Index", "Students", $"{currentGroup.Name} group") { RouteValues = new { groupId = currentGroup.Id }, Parent = parentNode };
+            var childNode2 = new MvcBreadcrumbNode("Create", "Students", "New student") { Parent = childNode1 };
             ViewData["BreadcrumbNode"] = childNode2;
 
-            var student = new Student {GroupId = groupId};
+            var student = new Student { GroupId = groupId };
             return View(student);
         }
 
@@ -62,7 +63,7 @@ namespace StudentAccounting.Controllers
             {
                 _unitOfWork.Students.Add(student);
                 _unitOfWork.Complete();
-                return RedirectToAction("Index", new {groupId = student.GroupId});
+                return RedirectToAction("Index", new { groupId = student.GroupId });
             }
 
             return View(student);
@@ -72,12 +73,12 @@ namespace StudentAccounting.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var student = _unitOfWork.Students.Get((int) id);
+            var student = _unitOfWork.Students.Get((int)id);
             if (student == null) return NotFound();
 
-            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{student.Group.Course.Name}") {RouteValues = new {courseId = student.Group.CourseId}};
-            var childNode1 = new MvcBreadcrumbNode("Index", "Students", $"{student.Group.Name} group") {RouteValues = new {groupId = student.Group.Id}, Parent = parentNode};
-            var childNode2 = new MvcBreadcrumbNode("Create", "Students", "Edit student") {Parent = childNode1};
+            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{student.Group.Course.Name}") { RouteValues = new { courseId = student.Group.CourseId } };
+            var childNode1 = new MvcBreadcrumbNode("Index", "Students", $"{student.Group.Name} group") { RouteValues = new { groupId = student.Group.Id }, Parent = parentNode };
+            var childNode2 = new MvcBreadcrumbNode("Create", "Students", "Edit student") { Parent = childNode1 };
             ViewData["BreadcrumbNode"] = childNode2;
 
             ViewBag.Groups = _unitOfWork.Groups.Find(g => g.CourseId == student.Group.CourseId);
@@ -95,11 +96,14 @@ namespace StudentAccounting.Controllers
                 updStudent.LastName = student.LastName;
                 updStudent.DateOfBirth = student.DateOfBirth;
                 updStudent.GroupId = student.GroupId;
+                updStudent.FinalExamGpa = student.FinalExamGpa;
                 updStudent.Status = student.Status;
                 _unitOfWork.Complete();
-                return RedirectToAction("Index", new {groupId = student.GroupId});
+                return RedirectToAction("Index", new { groupId = student.GroupId });
             }
 
+            var group = _unitOfWork.Groups.Get(student.GroupId);
+            ViewBag.Groups = _unitOfWork.Groups.Find(g => g.CourseId == group.CourseId);
             return View(student);
         }
 
@@ -107,7 +111,7 @@ namespace StudentAccounting.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var student = _unitOfWork.Students.Get((int) id);
+            var student = _unitOfWork.Students.Get((int)id);
             if (student == null) return NotFound();
 
             var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{student.Group.Course.Name}") { RouteValues = new { courseId = student.Group.CourseId } };
@@ -129,7 +133,23 @@ namespace StudentAccounting.Controllers
 
             _unitOfWork.Students.Remove(student);
             _unitOfWork.Complete();
-            return RedirectToAction("Index", new {groupId = student.GroupId});
+            return RedirectToAction("Index", new { groupId = student.GroupId });
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult VerifyStudent(int id, string firstName, string lastName, DateTime dateOfBirth)
+        {
+            if (id == 0)
+                return _unitOfWork.Students.Find(s =>
+                    s.FirstName == firstName && s.LastName == lastName && s.DateOfBirth == dateOfBirth).Any()
+                    ? Json("Such a student already exists.")
+                    : Json(true);
+
+            var studentsWithSameAttributes = _unitOfWork.Students.Find(s =>
+                s.FirstName == firstName && s.LastName == lastName && s.DateOfBirth == dateOfBirth);
+            return studentsWithSameAttributes.Any(student => student.Id != id)
+                ? Json("Such a student already exists.")
+                : Json(true);
         }
     }
 }

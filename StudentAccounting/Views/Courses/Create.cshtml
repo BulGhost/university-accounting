@@ -10,7 +10,7 @@
             <div class="col-8">
                 <div class="row m-3">
                     <div class="col-4">
-                        <label asp-for="Name"></label>
+                        <label asp-for="Name" class="required"></label>
                     </div>
                     <div class="col-8">
                         <input asp-for="Name" class="form-control" />
@@ -23,7 +23,7 @@
                         <label asp-for="Description"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="Description" class="form-control" />
+                        <textarea asp-for="Description" class="form-control" rows="6"></textarea>
                     </div>
                 </div>
                 <div class="row m-3">

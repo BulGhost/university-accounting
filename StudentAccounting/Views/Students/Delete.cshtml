@@ -35,10 +35,26 @@
                 </div>
                 <div class="row m-3">
                     <div class="col-4">
+                        <label asp-for="Group"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Group.Name" disabled class="form-control">
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="FinalExamGpa"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="FinalExamGpa" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
                         <label asp-for="Status"></label>
                     </div>
                     <div class="col-8">
-                        <select asp-for="Status" disabled="" class="form-select">
+                        <select asp-for="Status" disabled class="form-select">
                             <option value="1">Applicant</option>
                             <option value="2">Undergraduate</option>
                             <option value="3">Graduate</option>

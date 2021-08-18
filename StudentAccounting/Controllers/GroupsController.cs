@@ -127,5 +127,19 @@ namespace StudentAccounting.Controllers
             _unitOfWork.Complete();
             return RedirectToAction("Index", new { courseId = group.CourseId });
         }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult VerifyGroupName(int id, string name)
+        {
+            if (id == 0)
+                return _unitOfWork.Groups.Find(g => g.Name == name).Any()
+                    ? Json($"The group name {name} is already exists.")
+                    : Json(true);
+
+            var groupsWithSameName = _unitOfWork.Groups.Find(g => g.Name == name);
+            return groupsWithSameName.Any(group => group.Id != id)
+                ? Json($"The group name {name} is already exists.")
+                : Json(true);
+        }
     }
 }

@@ -11,7 +11,7 @@
             <div class="col-8">
                 <div class="row m-3">
                     <div class="col-4">
-                        <label asp-for="FirstName"></label>
+                        <label asp-for="FirstName" class="required"></label>
                     </div>
                     <div class="col-8">
                         <input asp-for="FirstName" class="form-control" />
@@ -20,7 +20,7 @@
                 </div>
                 <div class="row m-3">
                     <div class="col-4">
-                        <label asp-for="LastName"></label>
+                        <label asp-for="LastName" class="required"></label>
                     </div>
                     <div class="col-8">
                         <input asp-for="LastName" class="form-control" />
@@ -29,7 +29,7 @@
                 </div>
                 <div class="row m-3">
                     <div class="col-4">
-                        <label asp-for="DateOfBirth"></label>
+                        <label asp-for="DateOfBirth" class="required"></label>
                     </div>
                     <div class="col-8">
                         <input asp-for="DateOfBirth" class="form-control" type="date" />
@@ -37,21 +37,30 @@
                     </div>
                 </div>
                 <div class="row m-3">
+                        <div class="col-4">
+                            <label asp-for="GroupId" class="required"></label>
+                        </div>
+                        <div class="col-8">
+                            <select asp-for="GroupId" class="form-select">
+                                @foreach (var group in ViewBag.Groups)
+                                {
+                                    <option value="@group.Id">@group.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                <div class="row m-3">
                     <div class="col-4">
-                        <label asp-for="Group"></label>
+                        <label asp-for="FinalExamGpa"></label>
                     </div>
                     <div class="col-8">
-                        <select asp-for="GroupId" class="form-select">
-                            @foreach (var group in ViewBag.Groups)
-                            {
-                                <option value="@group.Id">@group.Name</option>
-                            }
-                        </select>
+                        <input asp-for="FinalExamGpa" class="form-control" />
+                        <span asp-validation-for="FinalExamGpa" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row m-3">
                     <div class="col-4">
-                        <label asp-for="Status"></label>
+                        <label asp-for="Status" class="required"></label>
                     </div>
                     <div class="col-8">
                         <select asp-for="Status" class="form-select">
@@ -82,5 +91,7 @@
 @section Scripts {
     @{
         <partial name="_ValidationScriptsPartial" />
+        <script type="text/javascript" src="~/lib/globalize/globalize.min.js"></script>
+        <script type="text/javascript" src="~/lib/globalize/culture.min.js"></script>
     }
 }

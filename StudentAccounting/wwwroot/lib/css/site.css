@@ -1,0 +1,13 @@
+﻿.required:after {
+    content: " *";
+    color: red;
+}
+
+.input-validation-error {
+    border-color: red;
+}
+
+.input-validation-error:focus {
+    border-color: red;
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
