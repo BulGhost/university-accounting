@@ -1,0 +1,84 @@
+﻿@model StudentViewModel
+@{ ViewBag.Title = "Add student";}
+
+<form method="post" asp-action="Create">
+    <input asp-for="GroupId" hidden />
+    <div class="border p-3">
+        <div class="row">
+            <h2 class="text-info ps-3">Add student</h2>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row m-3">
+            <div class="col-8">
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="FirstName" class="required"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="LastName" class="required"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="DateOfBirth" class="required"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="DateOfBirth" class="form-control" type="date" value="2003-01-01" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="FinalExamGpa"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="FinalExamGpa" class="form-control" />
+                        <span asp-validation-for="FinalExamGpa" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="Status" class="required"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="Status" class="form-select">
+                            <option value="1">Applicant</option>
+                            <option value="2">Undergraduate</option>
+                            <option value="3">Graduate</option>
+                            <option value="4">Expelled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row m-3">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Create" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" asp-route-groupId="@Model.GroupId" class="btn btn-success w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+        <script type="text/javascript" src="~/lib/globalize/globalize.min.js"></script>
+        <script type="text/javascript" src="~/lib/globalize/culture.min.js"></script>
+    }
+}
