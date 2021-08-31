@@ -10,11 +10,15 @@ namespace UniversityAccounting.WEB.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(30, ErrorMessage = "Course name length can't be more than 30 characters.")]
+        [StringLength(30, ErrorMessageResourceName = "CourseNameErrorMessage",
+            ErrorMessageResourceType = typeof(Resources.Models.CourseViewModel))]
         [Remote(action: "VerifyCourseName", controller: "Courses", AdditionalFields = nameof(Id))]
+        [Display(Name = "Name", ResourceType = typeof(Resources.Models.CourseViewModel))]
         public string Name { get; set; }
 
-        [StringLength(300, ErrorMessage = "Course description length can't be more than 300 characters.")]
+        [StringLength(300, ErrorMessageResourceName = "DescriptionErrorMessage",
+            ErrorMessageResourceType = typeof(Resources.Models.CourseViewModel))]
+        [Display(Name = "Description", ResourceType = typeof(Resources.Models.CourseViewModel))]
         public string Description { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using UniversityAccounting.DAL.Entities;
 using UniversityAccounting.DAL.Interfaces;
 using UniversityAccounting.WEB.Models;
 using AutoMapper;
+using UniversityAccounting.DAL.BusinessLogic;
 
 namespace UniversityAccounting.WEB.Controllers
 {
@@ -39,22 +40,17 @@ namespace UniversityAccounting.WEB.Controllers
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Group, GroupViewModel>()
                 .ForMember(x => x.StudentsQuantity, opt => opt.MapFrom(g => g.Students.Count)));
             var mapper = new Mapper(config);
-            var allGroups = mapper.Map<IEnumerable<GroupViewModel>>(_unitOfWork.Groups.GetAll());
+            var groupsOnPage = mapper.Map<IEnumerable<GroupViewModel>>(_unitOfWork.Groups
+                .GetPart(g => g.CourseId == courseId, g => g.Name, page, GroupsPerPage));
 
             return View(new GroupsIndexViewModel
             {
-                Groups = allGroups
-                    .Where(g => g.CourseId == courseId)
-                    .OrderBy(g => g.Id)
-                    .Skip((page - 1) * GroupsPerPage)
-                    .Take(GroupsPerPage),
+                Groups = groupsOnPage,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = GroupsPerPage,
-                    TotalItems = _unitOfWork.Groups
-                        .GetAll()
-                        .Count(g => g.CourseId == courseId)
+                    TotalItems = _unitOfWork.Groups.Find(g => g.CourseId == courseId).Count()
                 }
             });
         }
@@ -190,13 +186,7 @@ namespace UniversityAccounting.WEB.Controllers
         [AcceptVerbs("GET", "POST")]
         public IActionResult VerifyGroupName(int id, string name)
         {
-            if (id == 0)
-                return _unitOfWork.Groups.Find(g => g.Name == name).Any()
-                    ? Json($"The group name {name} is already exists.")
-                    : Json(true);
-
-            var groupsWithSameName = _unitOfWork.Groups.Find(g => g.Name == name);
-            return groupsWithSameName.Any(group => group.Id != id)
+            return !new DuplicateVerifier().VerifyGroupName(id, name)
                 ? Json($"The group name {name} is already exists.")
                 : Json(true);
         }

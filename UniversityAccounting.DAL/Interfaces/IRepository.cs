@@ -6,8 +6,13 @@ namespace UniversityAccounting.DAL.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
+        int TotalCount();
+
         TEntity Get(int id);
         IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> GetPart(int pageIndex, int pageSize);
+        IEnumerable<TEntity> GetPart(Expression<Func<TEntity, IComparable>> sortingProperty, int pageIndex, int pageSize);
+        IEnumerable<TEntity> GetPart(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, IComparable>> sortingProperty, int pageIndex, int pageSize);
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);

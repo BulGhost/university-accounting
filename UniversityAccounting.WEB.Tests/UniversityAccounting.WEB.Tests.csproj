@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudentAccounting\UniversityAccounting.WEB.csproj" />
+    <ProjectReference Include="..\UniversityAccounting.WEB\UniversityAccounting.WEB.csproj" />
   </ItemGroup>
 
 </Project>

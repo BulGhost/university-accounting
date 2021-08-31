@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartBreadcrumbs.Attributes;
 using UniversityAccounting.DAL.Interfaces;
 using AutoMapper;
+using Microsoft.Extensions.Localization;
+using UniversityAccounting.DAL.BusinessLogic;
 using UniversityAccounting.DAL.Entities;
 using UniversityAccounting.WEB.Models;
 
@@ -17,17 +18,20 @@ namespace UniversityAccounting.WEB.Controllers
         private const int CoursesPerPage = 5;
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotyfService _notyf;
+        private readonly IStringLocalizer<CoursesController> _localizer;
 
-        public CoursesController(IUnitOfWork unitOfWork, INotyfService notyf)
+        public CoursesController(IUnitOfWork unitOfWork, INotyfService notyf,
+            IStringLocalizer<CoursesController> localizer)
         {
             _unitOfWork = unitOfWork;
             _notyf = notyf;
+            _localizer = localizer;
         }
 
-        [DefaultBreadcrumb("Courses")]
+        [DefaultBreadcrumb(nameof(Resources.Controllers.CoursesController.Courses))]
         public IActionResult Index(int page = 1)
         {
-            int totalCourses = _unitOfWork.Courses.GetAll().Count();
+            int totalCourses = _unitOfWork.Courses.TotalCount();
             if (page < 1 || page > Math.Ceiling((double) totalCourses / CoursesPerPage))
                 return RedirectToAction("Index", new {page = 1});
 
@@ -36,14 +40,12 @@ namespace UniversityAccounting.WEB.Controllers
             var config = new MapperConfiguration(cfg =>
                 cfg.CreateMap<Course, CourseViewModel>());
             var mapper = new Mapper(config);
-            var allCourses = mapper.Map<IEnumerable<CourseViewModel>>(_unitOfWork.Courses.GetAll());
+            var coursesOnPage = mapper.Map<IEnumerable<CourseViewModel>>(
+                _unitOfWork.Courses.GetPart(c => c.Name, page, CoursesPerPage));
 
             return View(new CoursesIndexViewModel
             {
-                Courses = allCourses
-                    .OrderBy(c => c.Id)
-                    .Skip((page - 1) * CoursesPerPage)
-                    .Take(CoursesPerPage),
+                Courses = coursesOnPage,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
@@ -53,7 +55,7 @@ namespace UniversityAccounting.WEB.Controllers
             });
         }
 
-        [Breadcrumb("Create new")]
+        [Breadcrumb(nameof(Resources.Controllers.CoursesController.CreateNew))]
         public IActionResult Create()
         {
             return View();
@@ -78,11 +80,11 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = $"\"{courseModel.Name}\" course added";
+            TempData["message"] = _localizer["CourseAdded", courseModel.Name].Value;
             return RedirectToAction("Index");
         }
 
-        [Breadcrumb("Edit course")]
+        [Breadcrumb(nameof(Resources.Controllers.CoursesController.EditCourse))]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0) return NotFound();
@@ -119,7 +121,7 @@ namespace UniversityAccounting.WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        [Breadcrumb("Delete course")]
+        [Breadcrumb(nameof(Resources.Controllers.CoursesController.DeleteCourse))]
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0) return NotFound();
@@ -150,7 +152,7 @@ namespace UniversityAccounting.WEB.Controllers
             }
             catch (DbUpdateException)
             {
-                ModelState.AddModelError(string.Empty, @"Unable to delete course that contains groups");
+                ModelState.AddModelError(string.Empty, _localizer["DeleteErrorMessage"]);
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<Course, CourseViewModel>());
                 var mapper = new Mapper(config);
                 var courseModel = mapper.Map<Course, CourseViewModel>(course);
@@ -168,13 +170,7 @@ namespace UniversityAccounting.WEB.Controllers
         [AcceptVerbs("GET", "POST")]
         public IActionResult VerifyCourseName(int id, string name)
         {
-            if (id == 0)
-                return _unitOfWork.Courses.Find(c => c.Name == name).Any()
-                    ? Json($"The course name {name} is already exists.")
-                    : Json(true);
-
-            var coursesWithSameName = _unitOfWork.Courses.Find(c => c.Name == name);
-            return coursesWithSameName.Any(course => course.Id != id)
+            return !new DuplicateVerifier().VerifyCourseName(id, name)
                 ? Json($"The course name {name} is already exists.")
                 : Json(true);
         }

@@ -14,6 +14,14 @@ namespace UniversityAccounting.DAL.EF
         public DbSet<Group> Groups { get; set; }
         public DbSet<Course> Courses { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (optionsBuilder.IsConfigured) return;
+
+            const string connectionString = @"Server=.;Database=University;Trusted_Connection=True;MultipleActiveResultSets=True";
+            optionsBuilder.UseSqlServer(connectionString, options => options.EnableRetryOnFailure());
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Course>(entity =>

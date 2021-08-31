@@ -7,6 +7,7 @@ using SmartBreadcrumbs.Nodes;
 using UniversityAccounting.DAL.Interfaces;
 using UniversityAccounting.WEB.Models;
 using AutoMapper;
+using UniversityAccounting.DAL.BusinessLogic;
 using UniversityAccounting.DAL.Entities;
 
 namespace UniversityAccounting.WEB.Controllers
@@ -37,21 +38,17 @@ namespace UniversityAccounting.WEB.Controllers
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Student, StudentViewModel>()
                 .ForMember(x => x.GroupName, opt => opt.MapFrom(s => s.Group.Name)));
             var mapper = new Mapper(config);
-            var allStudents = mapper.Map<List<StudentViewModel>>(_unitOfWork.Students.GetAll());
+            var studentsOnPage = mapper.Map<List<StudentViewModel>>(_unitOfWork.Students
+                .GetPart(s => s.GroupId == groupId, s => s.LastName, page, StudentsPerPage));
 
             return View(new StudentsIndexViewModel
             {
-                Students = allStudents
-                    .Where(s => s.GroupId == groupId)
-                    .OrderBy(s => s.Id)
-                    .Skip((page - 1) * StudentsPerPage)
-                    .Take(StudentsPerPage),
+                Students = studentsOnPage,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = StudentsPerPage,
-                    TotalItems = _unitOfWork.Students.GetAll()
-                        .Count(s => s.GroupId == groupId)
+                    TotalItems = _unitOfWork.Students.Find(s => s.GroupId == groupId).Count()
                 }
             });
         }
@@ -193,15 +190,7 @@ namespace UniversityAccounting.WEB.Controllers
         [AcceptVerbs("GET", "POST")]
         public IActionResult VerifyStudent(int id, string firstName, string lastName, DateTime dateOfBirth)
         {
-            if (id == 0)
-                return _unitOfWork.Students.Find(s =>
-                    s.FirstName == firstName && s.LastName == lastName && s.DateOfBirth == dateOfBirth).Any()
-                    ? Json("Such a student already exists.")
-                    : Json(true);
-
-            var studentsWithSameAttributes = _unitOfWork.Students.Find(s =>
-                s.FirstName == firstName && s.LastName == lastName && s.DateOfBirth == dateOfBirth);
-            return studentsWithSameAttributes.Any(student => student.Id != id)
+            return !new DuplicateVerifier().VerifyStudent(id, firstName, lastName, dateOfBirth)
                 ? Json("Such a student already exists.")
                 : Json(true);
         }

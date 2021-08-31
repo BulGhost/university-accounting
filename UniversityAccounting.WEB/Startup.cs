@@ -27,10 +27,16 @@ namespace UniversityAccounting.WEB
                     .UseSqlServer(connection,
                         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
 
+            services.AddMvc().AddViewLocalization();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddControllersWithViews();
-            services.AddMvc();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.SetDefaultCulture("en-Us");
+                options.AddSupportedCultures("en-US", "ru-RU", "ar-SA");
+                options.AddSupportedUICultures("en-US", "ru-RU", "ar-SA");
+            });
             services.AddBreadcrumbs(GetType().Assembly);
             services.AddNotyf(config =>
             {
@@ -57,6 +63,7 @@ namespace UniversityAccounting.WEB
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseRequestLocalization();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -64,15 +71,15 @@ namespace UniversityAccounting.WEB
                 endpoints.MapControllerRoute(
                     name: "studentPaging",
                     pattern: "Students/groupId-{groupId}/Page{page}",
-                    defaults: new { Controller = "Students", action = "Index" });
+                    defaults: new {Controller = "Students", action = "Index"});
                 endpoints.MapControllerRoute(
                     name: "groupPaging",
                     pattern: "Groups/courseId-{courseId}/Page{page}",
-                    defaults: new { Controller = "Groups", action = "Index" });
+                    defaults: new {Controller = "Groups", action = "Index"});
                 endpoints.MapControllerRoute(
                     name: "coursePaging",
                     pattern: "Courses/Page{page}",
-                    defaults: new { Controller = "Courses", action = "Index" });
+                    defaults: new {Controller = "Courses", action = "Index"});
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Courses}/{action=Index}/{id?}");
