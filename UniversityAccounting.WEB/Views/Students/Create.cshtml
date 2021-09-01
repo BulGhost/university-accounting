@@ -1,6 +1,8 @@
 ﻿@model StudentViewModel
 @inject IViewLocalizer _localizer
-@{ ViewBag.Title = _localizer["AddStudent"];}
+@{
+    ViewBag.Title = _localizer["AddStudent"];
+}
 
 <form method="post" asp-action="Create">
     <input asp-for="GroupId" hidden />
@@ -34,7 +36,7 @@
                         <label asp-for="DateOfBirth" class="required"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="DateOfBirth" class="form-control" type="date" value="2003-01-01" />
+                        <input asp-for="DateOfBirth" class="form-control" type="date" value="2003-01-01"/>
                         <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                     </div>
                 </div>

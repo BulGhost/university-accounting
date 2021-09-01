@@ -2,7 +2,7 @@
 @inject IViewLocalizer _localizer
 @{
     ViewBag.Title = _localizer["CourseGroups", ViewBag.Course.Name];
-    ViewData["CourseId"] = ViewBag.Course.Id; //TODO: Попробовать перенести в контроллер
+    ViewData["CourseId"] = ViewBag.Course.Id;
 }
 
 <div class="container p-3">
@@ -37,7 +37,7 @@
                         <td wigth="30%" class="ps-3">
                             <a class="h5" asp-controller="Students" asp-action="Index" asp-route-groupId="@group.Id">@group.Name</a>
                         </td>
-                        <td width="30%">@group.FormationDate.ToString("dd/MM/yyyy")</td>
+                        <td width="30%">@group.FormationDate.ToShortDateString()</td>
                         <td width="30%">@group.StudentsQuantity</td>
                         <td class="text-center">
                             <div class="w-75 btn-group">

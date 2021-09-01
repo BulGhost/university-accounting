@@ -19,13 +19,15 @@ namespace UniversityAccounting.WEB.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotyfService _notyf;
         private readonly IStringLocalizer<CoursesController> _localizer;
+        private readonly IMapper _mapper;
 
         public CoursesController(IUnitOfWork unitOfWork, INotyfService notyf,
-            IStringLocalizer<CoursesController> localizer)
+            IStringLocalizer<CoursesController> localizer, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _notyf = notyf;
             _localizer = localizer;
+            _mapper = mapper;
         }
 
         public IActionResult Index(int page = 1)
@@ -36,10 +38,7 @@ namespace UniversityAccounting.WEB.Controllers
 
             if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
 
-            var config = new MapperConfiguration(cfg =>
-                cfg.CreateMap<Course, CourseViewModel>());
-            var mapper = new Mapper(config);
-            var coursesOnPage = mapper.Map<IEnumerable<CourseViewModel>>(
+            var coursesOnPage = _mapper.Map<IEnumerable<CourseViewModel>>(
                 _unitOfWork.Courses.GetPart(nameof(Course.Id), page, CoursesPerPage));
 
             return View(new CoursesIndexViewModel
@@ -71,9 +70,7 @@ namespace UniversityAccounting.WEB.Controllers
 
             try
             {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<CourseViewModel, Course>());
-                var mapper = new Mapper(config);
-                var course = mapper.Map<CourseViewModel, Course>(courseModel);
+                var course = _mapper.Map<CourseViewModel, Course>(courseModel);
                 _unitOfWork.Courses.Add(course);
                 _unitOfWork.Complete();
             }
@@ -97,9 +94,7 @@ namespace UniversityAccounting.WEB.Controllers
             var node2 = new MvcBreadcrumbNode("Edit", "Courses", _localizer["EditCourse"]) { Parent = node1 };
             ViewData["BreadcrumbNode"] = node2;
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Course, CourseViewModel>());
-            var mapper = new Mapper(config);
-            var courseModel = mapper.Map<Course, CourseViewModel>(course);
+            var courseModel = _mapper.Map<Course, CourseViewModel>(course);
 
             return View(courseModel);
         }
@@ -137,9 +132,7 @@ namespace UniversityAccounting.WEB.Controllers
             var node2 = new MvcBreadcrumbNode("Delete", "Courses", _localizer["DeleteCourse"]) { Parent = node1 };
             ViewData["BreadcrumbNode"] = node2;
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Course, CourseViewModel>());
-            var mapper = new Mapper(config);
-            var courseModel = mapper.Map<Course, CourseViewModel>(course);
+            var courseModel = _mapper.Map<Course, CourseViewModel>(course);
 
             return View(courseModel);
         }
@@ -161,9 +154,7 @@ namespace UniversityAccounting.WEB.Controllers
             catch (DbUpdateException)
             {
                 ModelState.AddModelError(string.Empty, _localizer["DeleteErrorMessage"]);
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<Course, CourseViewModel>());
-                var mapper = new Mapper(config);
-                var courseModel = mapper.Map<Course, CourseViewModel>(course);
+                var courseModel = _mapper.Map<Course, CourseViewModel>(course);
                 return View("Delete", courseModel);
             }
             catch (Exception)

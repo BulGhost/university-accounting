@@ -19,12 +19,14 @@ namespace UniversityAccounting.WEB.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotyfService _notyf;
         private readonly IStringLocalizer<StudentsController> _localizer;
+        private readonly IMapper _mapper;
 
-        public StudentsController(IUnitOfWork unitOfWork, INotyfService notyf, IStringLocalizer<StudentsController> localizer)
+        public StudentsController(IUnitOfWork unitOfWork, INotyfService notyf, IStringLocalizer<StudentsController> localizer, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _notyf = notyf;
             _localizer = localizer;
+            _mapper = mapper;
         }
 
         public IActionResult Index(int groupId, int page = 1)
@@ -41,10 +43,7 @@ namespace UniversityAccounting.WEB.Controllers
             ViewData["BreadcrumbNode"] = node3;
             if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Student, StudentViewModel>()
-                .ForMember(x => x.GroupName, opt => opt.MapFrom(s => s.Group.Name)));
-            var mapper = new Mapper(config);
-            var studentsOnPage = mapper.Map<List<StudentViewModel>>(_unitOfWork.Students
+            var studentsOnPage = _mapper.Map<List<StudentViewModel>>(_unitOfWork.Students
                 .GetPart(s => s.GroupId == groupId, nameof(Student.Id), page, StudentsPerPage));
 
             return View(new StudentsIndexViewModel
@@ -86,9 +85,7 @@ namespace UniversityAccounting.WEB.Controllers
 
             try
             {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<StudentViewModel, Student>());
-                var mapper = new Mapper(config);
-                var student = mapper.Map<StudentViewModel, Student>(studentModel);
+                var student = _mapper.Map<StudentViewModel, Student>(studentModel);
                 _unitOfWork.Students.Add(student);
                 _unitOfWork.Complete();
             }
@@ -116,9 +113,7 @@ namespace UniversityAccounting.WEB.Controllers
             var node4 = new MvcBreadcrumbNode("Create", "Students", _localizer["EditStudent"]) {Parent = node3};
             ViewData["BreadcrumbNode"] = node4;
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Student, StudentViewModel>());
-            var mapper = new Mapper(config);
-            var studentModel = mapper.Map<Student, StudentViewModel>(student);
+            var studentModel = _mapper.Map<Student, StudentViewModel>(student);
 
             ViewBag.Groups = _unitOfWork.Groups.Find(g => g.CourseId == student.Group.CourseId);
             return View(studentModel);
@@ -172,9 +167,7 @@ namespace UniversityAccounting.WEB.Controllers
             var node4 = new MvcBreadcrumbNode("Create", "Students", _localizer["DeleteStudent"]) { Parent = node3 };
             ViewData["BreadcrumbNode"] = node4;
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Student, StudentViewModel>());
-            var mapper = new Mapper(config);
-            var studentModel = mapper.Map<Student, StudentViewModel>(student);
+            var studentModel = _mapper.Map<Student, StudentViewModel>(student);
 
             return View(studentModel);
         }

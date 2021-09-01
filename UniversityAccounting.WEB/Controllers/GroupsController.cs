@@ -20,12 +20,14 @@ namespace UniversityAccounting.WEB.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotyfService _notyf;
         private readonly IStringLocalizer<GroupsController> _localizer;
+        private readonly IMapper _mapper;
 
-        public GroupsController(IUnitOfWork unitOfWork, INotyfService notyf, IStringLocalizer<GroupsController> localizer)
+        public GroupsController(IUnitOfWork unitOfWork, INotyfService notyf, IStringLocalizer<GroupsController> localizer, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _notyf = notyf;
             _localizer = localizer;
+            _mapper = mapper;
         }
 
         public IActionResult Index(int courseId, int page = 1)
@@ -41,10 +43,7 @@ namespace UniversityAccounting.WEB.Controllers
             ViewBag.Course = currentCourse;
             if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Group, GroupViewModel>()
-                .ForMember(x => x.StudentsQuantity, opt => opt.MapFrom(g => g.Students.Count)));
-            var mapper = new Mapper(config);
-            var groupsOnPage = mapper.Map<IEnumerable<GroupViewModel>>(_unitOfWork.Groups
+            var groupsOnPage = _mapper.Map<IEnumerable<GroupViewModel>>(_unitOfWork.Groups
                 .GetPart(g => g.CourseId == courseId, nameof(Group.Id), page, GroupsPerPage));
 
             return View(new GroupsIndexViewModel
@@ -84,9 +83,7 @@ namespace UniversityAccounting.WEB.Controllers
 
             try
             {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<GroupViewModel, Group>());
-                var mapper = new Mapper(config);
-                var group = mapper.Map<GroupViewModel, Group>(groupModel);
+                var group = _mapper.Map<GroupViewModel, Group>(groupModel);
                 _unitOfWork.Groups.Add(group);
                 _unitOfWork.Complete();
             }
@@ -112,9 +109,7 @@ namespace UniversityAccounting.WEB.Controllers
             var node3 = new MvcBreadcrumbNode("Edit", "Groups", _localizer["EditGroup"]) {Parent = node2};
             ViewData["BreadcrumbNode"] = node3;
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Group, GroupViewModel>());
-            var mapper = new Mapper(config);
-            var groupModel = mapper.Map<Group, GroupViewModel>(group);
+            var groupModel = _mapper.Map<Group, GroupViewModel>(group);
 
             return View(groupModel);
         }
@@ -155,9 +150,7 @@ namespace UniversityAccounting.WEB.Controllers
             var node3 = new MvcBreadcrumbNode("Edit", "Groups", _localizer["DeleteGroup"]) {Parent = node2};
             ViewData["BreadcrumbNode"] = node3;
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Group, GroupViewModel>());
-            var mapper = new Mapper(config);
-            var groupModel = mapper.Map<Group, GroupViewModel>(group);
+            var groupModel = _mapper.Map<Group, GroupViewModel>(group);
 
             return View(groupModel);
         }
@@ -179,9 +172,7 @@ namespace UniversityAccounting.WEB.Controllers
             catch (DbUpdateException)
             {
                 ModelState.AddModelError(string.Empty, _localizer["DeleteErrorMessage"]);
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<Group, GroupViewModel>());
-                var mapper = new Mapper(config);
-                var groupModel = mapper.Map<Group, GroupViewModel>(group);
+                var groupModel = _mapper.Map<Group, GroupViewModel>(group);
                 return View("Delete", groupModel);
             }
             catch (Exception)

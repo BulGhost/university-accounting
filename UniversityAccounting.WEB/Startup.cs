@@ -10,6 +10,8 @@ using SmartBreadcrumbs.Extensions;
 using UniversityAccounting.DAL.EF;
 using UniversityAccounting.DAL.Interfaces;
 using UniversityAccounting.DAL.Repositories;
+using AutoMapper;
+using UniversityAccounting.WEB.Models;
 
 namespace UniversityAccounting.WEB
 {
@@ -27,6 +29,7 @@ namespace UniversityAccounting.WEB
                     .UseSqlServer(connection,
                         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
 
+            services.AddAutoMapper(typeof(MappingProfile));
             services.AddMvc().AddViewLocalization();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

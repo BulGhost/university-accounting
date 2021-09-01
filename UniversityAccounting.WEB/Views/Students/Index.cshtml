@@ -38,7 +38,7 @@
                     <tr>
                         <td wigth="25%">@student.FirstName</td>
                         <td width="20%">@student.LastName</td>
-                        <td width="20%">@student.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                        <td width="20%">@student.DateOfBirth.ToShortDateString()</td>
                         <td width="15%">@Html.DisplayFor(modelItem => student.FinalExamGpa)</td>
                         @{
                             switch (student.Status)
@@ -76,7 +76,7 @@
     {
         <p>@_localizer["NoStudentsExists"]</p>
     }
-    <partial name="_Pager" model="@Model.PagingInfo" view-data="ViewData" />
+    <partial name="_Pager" model="@Model.PagingInfo" view-data="ViewData"  />
     <br />
 </div>
 
