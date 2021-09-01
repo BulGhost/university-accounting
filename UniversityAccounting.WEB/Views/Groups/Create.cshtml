@@ -1,12 +1,13 @@
 ﻿@model GroupViewModel
-@{ ViewBag.Title = "Create group";}
+@inject IViewLocalizer _localizer
+@{ ViewBag.Title = _localizer["CreateGroup"];}
 
 <form method="post" asp-action="Create">
     <input asp-for="CourseId" hidden />
     <input asp-for="FormationDate" hidden />
     <div class="border p-3">
         <div class="row">
-            <h2 class="text-info ps-3">Add group</h2>
+            <h2 class="text-info ps-3">@_localizer["AddGroup"]</h2>
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row m-3">
@@ -24,10 +25,10 @@
                 <div class="row m-3">
                     <div class="col-8 offset-4 row">
                         <div class="col">
-                            <input type="submit" class="btn btn-info w-100" value="Create" />
+                            <input type="submit" class="btn btn-info w-100" value=@_localizer["CreateBtn"] />
                         </div>
                         <div class="col">
-                            <a asp-action="Index" asp-route-courseId="@Model.CourseId" class="btn btn-success w-100">Back</a>
+                            <a asp-action="Index" asp-route-courseId="@Model.CourseId" class="btn btn-success w-100">@_localizer["Back"]</a>
                         </div>
                     </div>
                 </div>

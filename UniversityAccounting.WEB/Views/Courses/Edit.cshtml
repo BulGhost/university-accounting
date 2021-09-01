@@ -1,11 +1,12 @@
 ﻿@model CourseViewModel
-@{ ViewBag.Title = "Edit course";}
+@inject IViewLocalizer _localizer
+@{ ViewBag.Title = _localizer["EditСourse"];}
 
 <form method="post">
     <input asp-for="Id" hidden />
     <div class="border p-3">
         <div class="row">
-            <h2 class="text-info ps-3">Edit course</h2>
+            <h2 class="text-info ps-3">@_localizer["EditСourse"]</h2>
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row m-3">
@@ -31,10 +32,10 @@
                 <div class="row m-3">
                     <div class="col-8 offset-4 row">
                         <div class="col">
-                            <input type="submit" class="btn btn-info w-100" value="Update" />
+                            <input type="submit" class="btn btn-info w-100" value=@_localizer["Update"] />
                         </div>
                         <div class="col">
-                            <a asp-action="Index" class="btn btn-success w-100">Back</a>
+                            <a asp-action="Index" class="btn btn-success w-100">@_localizer["Back"]</a>
                         </div>
                     </div>
                 </div>

@@ -121,4 +121,7 @@
   <data name="GroupExistsErrorMessage" xml:space="preserve">
     <value>The group name {0} is already exists.</value>
   </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Courses</value>
+  </data>
 </root>

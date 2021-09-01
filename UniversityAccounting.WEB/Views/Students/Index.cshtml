@@ -1,17 +1,18 @@
 ﻿@model StudentsIndexViewModel
+@inject IViewLocalizer _localizer
 @{
-    ViewBag.Title = $"\"{ViewBag.Group.Name}\" group students";
+    ViewBag.Title = _localizer["GroupStudents", ViewBag.Group.Name];
     ViewData["GroupId"] = ViewBag.Group.Id;
 }
 
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">"@ViewBag.Group.Name" group students</h2>
+            <h2 class="text-primary">@_localizer["GroupStudents", ViewBag.Group.Name]</h2>
         </div>
         <div class="col-6 text-end">
             <a asp-controller="Students" asp-action="Create" asp-route-groupId="@ViewBag.Group.Id" class="btn btn-primary">
-                Add New Student
+                @_localizer["AddNewStudent"]
             </a>
         </div>
     </div>
@@ -23,43 +24,59 @@
         <table class="table table-striped" style="width: 100%">
             <thead>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Date Of Birth</th>
-                    <th>GPA</th>
-                    <th>Status</th>
+                    <th>@_localizer["FirstName"]</th>
+                    <th>@_localizer["LastName"]</th>
+                    <th>@_localizer["DateOfBirth"]</th>
+                    <th>@_localizer["Gpa"]</th>
+                    <th>@_localizer["Status"]</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var student in Model.Students)
                 {
-                <tr>
-                    <td wigth="25%">@student.FirstName</td>
-                    <td width="20%">@student.LastName</td>
-                    <td width="20%">@student.DateOfBirth.ToString("dd/MM/yyyy")</td>
-                    <td width="15%">@Html.DisplayFor(modelItem => student.FinalExamGpa)</td>
-                    <td width="15%">@((StudentStatus) student.Status)</td>
-                    <td class="text-center">
-                        <div class="w-75 btn-group">
-                            <a asp-controller="Students" asp-action="Edit" asp-route-Id="@student.Id" class="btn btn-primary">
-                                Edit
-                            </a>
-                            <a asp-controller="Students" asp-action="Delete" asp-route-Id="@student.Id" class="btn btn-danger">
-                                Delete
-                            </a>
-                        </div>
-                    </td>
-                </tr>
+                    <tr>
+                        <td wigth="25%">@student.FirstName</td>
+                        <td width="20%">@student.LastName</td>
+                        <td width="20%">@student.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                        <td width="15%">@Html.DisplayFor(modelItem => student.FinalExamGpa)</td>
+                        @{
+                            switch (student.Status)
+                            {
+                                case 1:
+                                    <td width="15%">@_localizer["Applicant"]</td>
+                                    break;
+                                case 2:
+                                    <td width="15%">@_localizer["Undergraduate"]</td>
+                                    break;
+                                case 3:
+                                    <td width="15%">@_localizer["Graduate"]</td>
+                                    break;
+                                case 4:
+                                    <td width="15%">@_localizer["Expelled"]</td>
+                                    break;
+                            }
+                        }
+                        <td class="text-center">
+                            <div class="w-75 btn-group">
+                                <a asp-controller="Students" asp-action="Edit" asp-route-Id="@student.Id" class="btn btn-primary">
+                                    @_localizer["Edit"]
+                                </a>
+                                <a asp-controller="Students" asp-action="Delete" asp-route-Id="@student.Id" class="btn btn-danger">
+                                    @_localizer["Delete"]
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
     }
     else
     {
-        <p>No students exists.</p>
+        <p>@_localizer["NoStudentsExists"]</p>
     }
-    <partial name="_Pager" model="@Model.PagingInfo" view-data="ViewData"/>
+    <partial name="_Pager" model="@Model.PagingInfo" view-data="ViewData" />
     <br />
 </div>
 

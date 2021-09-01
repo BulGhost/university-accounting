@@ -138,7 +138,7 @@
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>
-  <data name="NoStudentsExists." xml:space="preserve">
+  <data name="NoStudentsExists" xml:space="preserve">
     <value>В группе нет студентов.</value>
   </data>
   <data name="GroupStudents" xml:space="preserve">
@@ -146,5 +146,17 @@
   </data>
   <data name="AddNewStudent" xml:space="preserve">
     <value>Добавить нового студента</value>
+  </data>
+  <data name="Applicant" xml:space="preserve">
+    <value>Абитуриент</value>
+  </data>
+  <data name="Undergraduate" xml:space="preserve">
+    <value>Студент</value>
+  </data>
+  <data name="Graduate" xml:space="preserve">
+    <value>Выпускник</value>
+  </data>
+  <data name="Expelled" xml:space="preserve">
+    <value>Отчислен</value>
   </data>
 </root>

@@ -129,4 +129,7 @@
   <data name="Name" xml:space="preserve">
     <value>Название</value>
   </data>
+  <data name="CourseNameRequired" xml:space="preserve">
+    <value>Поле "Имя" обязательно для заполнения</value>
+  </data>
 </root>

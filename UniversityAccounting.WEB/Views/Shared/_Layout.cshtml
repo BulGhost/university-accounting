@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject IViewLocalizer _localizer
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -8,20 +10,20 @@
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <link href="~/lib/css/site.css" rel="stylesheet" />
     <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
-    <title>Student Accounting - @ViewBag.Title</title>
+    <title>@_localizer["UniversityAccounting"] - @ViewBag.Title</title>
 </head>
 <body class="p-3">
     <header>
         <nav class="navbar py-3 navbar-expand-lg navbar-dark  bg-primary border-bottom mb-3">
             <div class="container">
-                <a class="navbar-brand" font-size="larger" asp-area="" asp-controller="Courses" asp-action="Index">University Accounting</a>
+                <a class="navbar-brand" font-size="larger" asp-area="" asp-controller="Courses" asp-action="Index">@_localizer["UniversityAccounting"]</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" style="font-size: larger" aria-current="page" href="#">About</a>
+                            <a class="nav-link active" style="font-size: larger" aria-current="page" href="#">@_localizer["About"]</a>
                         </li>
                     </ul>
                 </div>

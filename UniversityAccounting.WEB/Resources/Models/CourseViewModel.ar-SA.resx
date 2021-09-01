@@ -129,4 +129,7 @@
   <data name="Name" xml:space="preserve">
     <value>اسم</value>
   </data>
+  <data name="CourseNameRequired" xml:space="preserve">
+    <value>حقل "الاسم" مطلوب</value>
+  </data>
 </root>

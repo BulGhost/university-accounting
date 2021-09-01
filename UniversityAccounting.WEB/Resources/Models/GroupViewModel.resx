@@ -109,4 +109,10 @@
   <data name="StudentsQuantity" xml:space="preserve">
     <value>Students Quantity</value>
   </data>
+  <data name="GroupNameRequired" xml:space="preserve">
+    <value>"Name" field is required</value>
+  </data>
+  <data name="GroupFormationDateRequired" xml:space="preserve">
+    <value>"Formation date" field is required</value>
+  </data>
 </root>

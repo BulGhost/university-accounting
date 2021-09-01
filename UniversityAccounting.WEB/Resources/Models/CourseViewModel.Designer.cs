@@ -70,6 +70,15 @@ namespace UniversityAccounting.WEB.Resources.Models {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;Name&quot; field is required.
+        /// </summary>
+        public static string CourseNameRequired {
+            get {
+                return ResourceManager.GetString("CourseNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {

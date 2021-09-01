@@ -129,4 +129,10 @@
   <data name="StudentsQuantity" xml:space="preserve">
     <value>عدد الطلاب</value>
   </data>
+  <data name="GroupNameRequired" xml:space="preserve">
+    <value>حقل "الاسم" مطلوب</value>
+  </data>
+  <data name="GroupFormationDateRequired" xml:space="preserve">
+    <value>حقل "تاريخ التكوين" مطلوب</value>
+  </data>
 </root>

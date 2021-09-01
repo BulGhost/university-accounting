@@ -141,4 +141,7 @@
   <data name="StudentExists" xml:space="preserve">
     <value>مثل هذا الطالب موجود بالفعل.</value>
   </data>
+  <data name="Courses" xml:space="preserve">
+    <value>الدورات التدريبية</value>
+  </data>
 </root>

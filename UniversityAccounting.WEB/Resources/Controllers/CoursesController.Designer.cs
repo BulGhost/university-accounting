@@ -61,7 +61,7 @@ namespace UniversityAccounting.WEB.Resources.Controllers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} course added.
+        ///   Looks up a localized string similar to &quot;{0}&quot; course added.
         /// </summary>
         public static string CourseAdded {
             get {
@@ -124,7 +124,7 @@ namespace UniversityAccounting.WEB.Resources.Controllers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DeleteErrorMessage.
+        ///   Looks up a localized string similar to Unable to delete course that contains groups.
         /// </summary>
         public static string DeleteErrorMessage {
             get {

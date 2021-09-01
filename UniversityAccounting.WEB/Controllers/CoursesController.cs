@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SmartBreadcrumbs.Attributes;
 using UniversityAccounting.DAL.Interfaces;
 using AutoMapper;
 using Microsoft.Extensions.Localization;
+using SmartBreadcrumbs.Nodes;
 using UniversityAccounting.DAL.BusinessLogic;
 using UniversityAccounting.DAL.Entities;
 using UniversityAccounting.WEB.Models;
@@ -28,7 +28,6 @@ namespace UniversityAccounting.WEB.Controllers
             _localizer = localizer;
         }
 
-        [DefaultBreadcrumb(nameof(Resources.Controllers.CoursesController.Courses))]
         public IActionResult Index(int page = 1)
         {
             int totalCourses = _unitOfWork.Courses.TotalCount();
@@ -41,7 +40,7 @@ namespace UniversityAccounting.WEB.Controllers
                 cfg.CreateMap<Course, CourseViewModel>());
             var mapper = new Mapper(config);
             var coursesOnPage = mapper.Map<IEnumerable<CourseViewModel>>(
-                _unitOfWork.Courses.GetPart(c => c.Name, page, CoursesPerPage));
+                _unitOfWork.Courses.GetPart(nameof(Course.Id), page, CoursesPerPage));
 
             return View(new CoursesIndexViewModel
             {
@@ -55,9 +54,12 @@ namespace UniversityAccounting.WEB.Controllers
             });
         }
 
-        [Breadcrumb(nameof(Resources.Controllers.CoursesController.CreateNew))]
         public IActionResult Create()
         {
+            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
+            var node2 = new MvcBreadcrumbNode("Create", "Courses", _localizer["CreateNew"]) { Parent = node1 };
+            ViewData["BreadcrumbNode"] = node2;
+
             return View();
         }
 
@@ -84,13 +86,16 @@ namespace UniversityAccounting.WEB.Controllers
             return RedirectToAction("Index");
         }
 
-        [Breadcrumb(nameof(Resources.Controllers.CoursesController.EditCourse))]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0) return NotFound();
 
-            var course = _unitOfWork.Courses.Get((int) id);
+            var course = _unitOfWork.Courses.Get((int)id);
             if (course == null) return NotFound();
+
+            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
+            var node2 = new MvcBreadcrumbNode("Edit", "Courses", _localizer["EditCourse"]) { Parent = node1 };
+            ViewData["BreadcrumbNode"] = node2;
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Course, CourseViewModel>());
             var mapper = new Mapper(config);
@@ -117,17 +122,20 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = $"\"{courseModel.Name}\" course updated";
+            TempData["message"] = _localizer["CourseUpdated", courseModel.Name].Value;
             return RedirectToAction("Index");
         }
 
-        [Breadcrumb(nameof(Resources.Controllers.CoursesController.DeleteCourse))]
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0) return NotFound();
 
-            var course = _unitOfWork.Courses.Get((int) id);
+            var course = _unitOfWork.Courses.Get((int)id);
             if (course == null) return NotFound();
+
+            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
+            var node2 = new MvcBreadcrumbNode("Delete", "Courses", _localizer["DeleteCourse"]) { Parent = node1 };
+            ViewData["BreadcrumbNode"] = node2;
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Course, CourseViewModel>());
             var mapper = new Mapper(config);
@@ -142,7 +150,7 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var course = _unitOfWork.Courses.Get((int) id);
+            var course = _unitOfWork.Courses.Get((int)id);
             if (course == null) return NotFound();
 
             try
@@ -163,7 +171,7 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = $"\"{course.Name}\" course deleted";
+            TempData["message"] = _localizer["CourseDeleted", course.Name].Value;
             return RedirectToAction("Index");
         }
 
@@ -171,7 +179,7 @@ namespace UniversityAccounting.WEB.Controllers
         public IActionResult VerifyCourseName(int id, string name)
         {
             return !new DuplicateVerifier().VerifyCourseName(id, name)
-                ? Json($"The course name {name} is already exists.")
+                ? Json(_localizer["CourseExistsErrorMessage", name].Value)
                 : Json(true);
         }
     }

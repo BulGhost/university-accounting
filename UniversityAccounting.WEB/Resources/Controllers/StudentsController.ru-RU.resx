@@ -141,4 +141,7 @@
   <data name="StudentExists" xml:space="preserve">
     <value>Такой студент уже существует.</value>
   </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Курсы</value>
+  </data>
 </root>

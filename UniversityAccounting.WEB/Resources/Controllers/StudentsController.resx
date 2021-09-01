@@ -121,4 +121,7 @@
   <data name="StudentExists" xml:space="preserve">
     <value>Such a student already exists.</value>
   </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Courses</value>
+  </data>
 </root>

@@ -132,13 +132,13 @@
   <data name="GroupName" xml:space="preserve">
     <value>Название группы</value>
   </data>
-  <data name="Formation Date" xml:space="preserve">
+  <data name="FormationDate" xml:space="preserve">
     <value>Дата создания</value>
   </data>
-  <data name="Students Quantity" xml:space="preserve">
+  <data name="StudentsQuantity" xml:space="preserve">
     <value>Количество студентов</value>
   </data>
-  <data name="NoGroupsExists." xml:space="preserve">
+  <data name="NoGroupsExists" xml:space="preserve">
     <value>В курсе нет групп.</value>
   </data>
 </root>

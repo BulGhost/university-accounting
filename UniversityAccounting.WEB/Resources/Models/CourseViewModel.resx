@@ -109,4 +109,7 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="CourseNameRequired" xml:space="preserve">
+    <value>"Name" field is required</value>
+  </data>
 </root>

@@ -70,11 +70,29 @@ namespace UniversityAccounting.WEB.Resources.Models {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;Formation date&quot; field is required.
+        /// </summary>
+        public static string GroupFormationDateRequired {
+            get {
+                return ResourceManager.GetString("GroupFormationDateRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group name length can&apos;t be more than 30 characters..
         /// </summary>
         public static string GroupNameErrorMessage {
             get {
                 return ResourceManager.GetString("GroupNameErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Name&quot; field is required.
+        /// </summary>
+        public static string GroupNameRequired {
+            get {
+                return ResourceManager.GetString("GroupNameRequired", resourceCulture);
             }
         }
         

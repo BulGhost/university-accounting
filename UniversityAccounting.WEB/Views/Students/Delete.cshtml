@@ -1,11 +1,12 @@
 ﻿@model StudentViewModel
-@{ ViewBag.Title = "Delete student";}
+@inject IViewLocalizer _localizer
+@{ ViewBag.Title = _localizer["DeleteStudent"];}
 
 <form method="post" asp-action="DeletePost">
     <input asp-for="Id" hidden />
     <div class="border p-3">
         <div class="row">
-            <h2 class="text-info ps-3">Delete student</h2>
+            <h2 class="text-info ps-3">@_localizer["DeleteStudent"]</h2>
         </div>
         <div class="row m-3">
             <div class="col-8">
@@ -55,10 +56,10 @@
                     </div>
                     <div class="col-8">
                         <select asp-for="Status" disabled class="form-select">
-                            <option value="1">Applicant</option>
-                            <option value="2">Undergraduate</option>
-                            <option value="3">Graduate</option>
-                            <option value="4">Expelled</option>
+                            <option value="1">@_localizer["Applicant"]</option>
+                            <option value="2">@_localizer["Undergraduate"]</option>
+                            <option value="3">@_localizer["Graduate"]</option>
+                            <option value="4">@_localizer["Expelled"]</option>
                         </select>
                     </div>
                 </div>
@@ -66,10 +67,10 @@
                 <div class="row m-3">
                     <div class="col-8 offset-4 row">
                         <div class="col">
-                            <input type="submit" class="btn btn-danger w-100" value="Delete" />
+                            <input type="submit" class="btn btn-danger w-100" value=@_localizer["DeleteBtn"] />
                         </div>
                         <div class="col">
-                            <a asp-action="Index" asp-route-groupId="@Model.GroupId" class="btn btn-success w-100">Back</a>
+                            <a asp-action="Index" asp-route-groupId="@Model.GroupId" class="btn btn-success w-100">@_localizer["Back"]</a>
                         </div>
                     </div>
                 </div>

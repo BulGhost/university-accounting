@@ -135,4 +135,25 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="FirstNameRequired" xml:space="preserve">
+    <value>"First Name" field is required</value>
+  </data>
+  <data name="LastNameRequired" xml:space="preserve">
+    <value>"Last Name" field is required</value>
+  </data>
+  <data name="FirstNameErrorMessage" xml:space="preserve">
+    <value>First Name length can't be more than 30 characters.</value>
+  </data>
+  <data name="LastNameErrorMessage" xml:space="preserve">
+    <value>Last Name length can't be more than 30 characters.</value>
+  </data>
+  <data name="DateOfBirthRequired" xml:space="preserve">
+    <value>"Date Of Birth" field is required</value>
+  </data>
+  <data name="StatusRequired" xml:space="preserve">
+    <value>"Status" field is required</value>
+  </data>
+  <data name="GpaRangeError" xml:space="preserve">
+    <value>GPA must be between 2.0 and 5.0</value>
+  </data>
 </root>

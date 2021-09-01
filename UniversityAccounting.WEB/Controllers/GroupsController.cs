@@ -9,6 +9,7 @@ using UniversityAccounting.DAL.Entities;
 using UniversityAccounting.DAL.Interfaces;
 using UniversityAccounting.WEB.Models;
 using AutoMapper;
+using Microsoft.Extensions.Localization;
 using UniversityAccounting.DAL.BusinessLogic;
 
 namespace UniversityAccounting.WEB.Controllers
@@ -18,11 +19,13 @@ namespace UniversityAccounting.WEB.Controllers
         private const int GroupsPerPage = 10;
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotyfService _notyf;
+        private readonly IStringLocalizer<GroupsController> _localizer;
 
-        public GroupsController(IUnitOfWork unitOfWork, INotyfService notyf)
+        public GroupsController(IUnitOfWork unitOfWork, INotyfService notyf, IStringLocalizer<GroupsController> localizer)
         {
             _unitOfWork = unitOfWork;
             _notyf = notyf;
+            _localizer = localizer;
         }
 
         public IActionResult Index(int courseId, int page = 1)
@@ -30,8 +33,9 @@ namespace UniversityAccounting.WEB.Controllers
             var currentCourse = _unitOfWork.Courses.Get(courseId);
             if (currentCourse == null) return NotFound();
 
-            var node = new MvcBreadcrumbNode("Index", "Groups", $"{currentCourse.Name}");
-            ViewData["BreadcrumbNode"] = node;
+            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
+            var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{currentCourse.Name}") {Parent = node1};
+            ViewData["BreadcrumbNode"] = node2;
 
             if (page < 1) page = 1;
             ViewBag.Course = currentCourse;
@@ -41,7 +45,7 @@ namespace UniversityAccounting.WEB.Controllers
                 .ForMember(x => x.StudentsQuantity, opt => opt.MapFrom(g => g.Students.Count)));
             var mapper = new Mapper(config);
             var groupsOnPage = mapper.Map<IEnumerable<GroupViewModel>>(_unitOfWork.Groups
-                .GetPart(g => g.CourseId == courseId, g => g.Name, page, GroupsPerPage));
+                .GetPart(g => g.CourseId == courseId, nameof(Group.Id), page, GroupsPerPage));
 
             return View(new GroupsIndexViewModel
             {
@@ -62,9 +66,11 @@ namespace UniversityAccounting.WEB.Controllers
             var currentCourse = _unitOfWork.Courses.Get((int) courseId);
             if (currentCourse == null) return NotFound();
 
-            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{currentCourse.Name}") {RouteValues = new {courseId = currentCourse.Id}};
-            var childNode = new MvcBreadcrumbNode("Create", "Groups", "New group") {Parent = parentNode};
-            ViewData["BreadcrumbNode"] = childNode;
+            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
+            var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{currentCourse.Name}")
+                {RouteValues = new {courseId = currentCourse.Id}, Parent = node1};
+            var node3 = new MvcBreadcrumbNode("Create", "Groups", _localizer["NewGroup"]) {Parent = node2};
+            ViewData["BreadcrumbNode"] = node3;
 
             var group = new GroupViewModel {CourseId = (int) courseId, FormationDate = DateTime.Now};
             return View(group);
@@ -89,7 +95,7 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = $"\"{groupModel.Name}\" group added";
+            TempData["message"] = _localizer["GroupAdded", groupModel.Name].Value;
             return RedirectToAction("Index", new {courseId = groupModel.CourseId});
         }
 
@@ -100,9 +106,11 @@ namespace UniversityAccounting.WEB.Controllers
             var group = _unitOfWork.Groups.Get((int) id);
             if (group == null) return NotFound();
 
-            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{group.Course.Name}") {RouteValues = new {courseId = group.Course.Id}};
-            var childNode = new MvcBreadcrumbNode("Edit", "Groups", "Edit group") {Parent = parentNode};
-            ViewData["BreadcrumbNode"] = childNode;
+            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
+            var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{group.Course.Name}")
+                {RouteValues = new {courseId = group.Course.Id}, Parent = node1};
+            var node3 = new MvcBreadcrumbNode("Edit", "Groups", _localizer["EditGroup"]) {Parent = node2};
+            ViewData["BreadcrumbNode"] = node3;
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Group, GroupViewModel>());
             var mapper = new Mapper(config);
@@ -130,7 +138,7 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = $"\"{group.Name}\" group updated";
+            TempData["message"] = _localizer["GroupUpdated", group.Name].Value;
             return RedirectToAction("Index", new {courseId = group.CourseId});
         }
 
@@ -141,9 +149,11 @@ namespace UniversityAccounting.WEB.Controllers
             var group = _unitOfWork.Groups.Get((int) id);
             if (group == null) return NotFound();
 
-            var parentNode = new MvcBreadcrumbNode("Index", "Groups", $"{group.Course.Name}") {RouteValues = new {courseId = group.Course.Id}};
-            var childNode = new MvcBreadcrumbNode("Edit", "Groups", "Delete group") {Parent = parentNode};
-            ViewData["BreadcrumbNode"] = childNode;
+            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
+            var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{group.Course.Name}")
+                {RouteValues = new {courseId = group.Course.Id}, Parent = node1};
+            var node3 = new MvcBreadcrumbNode("Edit", "Groups", _localizer["DeleteGroup"]) {Parent = node2};
+            ViewData["BreadcrumbNode"] = node3;
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Group, GroupViewModel>());
             var mapper = new Mapper(config);
@@ -168,7 +178,7 @@ namespace UniversityAccounting.WEB.Controllers
             }
             catch (DbUpdateException)
             {
-                ModelState.AddModelError(string.Empty, @"Unable to delete group that contains students");
+                ModelState.AddModelError(string.Empty, _localizer["DeleteErrorMessage"]);
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<Group, GroupViewModel>());
                 var mapper = new Mapper(config);
                 var groupModel = mapper.Map<Group, GroupViewModel>(group);
@@ -179,15 +189,15 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = $"\"{group.Name}\" group deleted";
-            return RedirectToAction("Index", new { courseId = group.CourseId });
+            TempData["message"] = _localizer["GroupDeleted", group.Name].Value;
+            return RedirectToAction("Index", new {courseId = group.CourseId});
         }
 
         [AcceptVerbs("GET", "POST")]
         public IActionResult VerifyGroupName(int id, string name)
         {
             return !new DuplicateVerifier().VerifyGroupName(id, name)
-                ? Json($"The group name {name} is already exists.")
+                ? Json(_localizer["GroupExistsErrorMessage", name].Value)
                 : Json(true);
         }
     }

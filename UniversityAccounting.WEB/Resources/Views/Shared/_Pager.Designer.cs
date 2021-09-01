@@ -22,14 +22,14 @@ namespace UniversityAccounting.WEB.Resources.Views.Shared {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Layout {
+    public class _Pager {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Layout() {
+        internal _Pager() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace UniversityAccounting.WEB.Resources.Views.Shared {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UniversityAccounting.WEB.Resources.Views.Shared.Layout", typeof(Layout).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UniversityAccounting.WEB.Resources.Views.Shared._Pager", typeof(_Pager).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,20 @@ namespace UniversityAccounting.WEB.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About.
+        ///   Looks up a localized string similar to Next.
         /// </summary>
-        public static string About {
+        public static string Next {
             get {
-                return ResourceManager.GetString("About", resourceCulture);
+                return ResourceManager.GetString("Next", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to University Accounting.
+        ///   Looks up a localized string similar to Previous.
         /// </summary>
-        public static string UniversityAccounting {
+        public static string Previous {
             get {
-                return ResourceManager.GetString("UniversityAccounting", resourceCulture);
+                return ResourceManager.GetString("Previous", resourceCulture);
             }
         }
     }

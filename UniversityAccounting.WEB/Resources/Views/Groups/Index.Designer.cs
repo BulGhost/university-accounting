@@ -99,9 +99,9 @@ namespace UniversityAccounting.WEB.Resources.Views.Groups {
         /// <summary>
         ///   Looks up a localized string similar to Formation Date.
         /// </summary>
-        public static string Formation_Date {
+        public static string FormationDate {
             get {
-                return ResourceManager.GetString("Formation Date", resourceCulture);
+                return ResourceManager.GetString("FormationDate", resourceCulture);
             }
         }
         
@@ -126,9 +126,9 @@ namespace UniversityAccounting.WEB.Resources.Views.Groups {
         /// <summary>
         ///   Looks up a localized string similar to Students Quantity.
         /// </summary>
-        public static string Students_Quantity {
+        public static string StudentsQuantity {
             get {
-                return ResourceManager.GetString("Students Quantity", resourceCulture);
+                return ResourceManager.GetString("StudentsQuantity", resourceCulture);
             }
         }
     }

@@ -1,14 +1,15 @@
 ﻿@model UniversityAccounting.WEB.Models.PagingInfo
+@inject IViewLocalizer _localizer
 
 <div class="container">
     @if (Model.TotalPages > 1)
     {
         <ul class="pagination justify-content-start">
-            
+
             @if (Model.CurrentPage > 1)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage - 1)" asp-route-courseId="@ViewData["CourseId"]" asp-route-groupId="@ViewData["GroupId"]">Previous</a>
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage - 1)" asp-route-courseId="@ViewData["CourseId"]" asp-route-groupId="@ViewData["GroupId"]">@_localizer["Previous"]</a>
                 </li>
             }
 
@@ -22,7 +23,7 @@
             @if (Model.CurrentPage < Model.TotalPages)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage + 1)" asp-route-courseId="@ViewData["CourseId"]" asp-route-groupId="@ViewData["GroupId"]">Next</a>
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage + 1)" asp-route-courseId="@ViewData["CourseId"]" asp-route-groupId="@ViewData["GroupId"]">@_localizer["Next"]</a>
                 </li>
             }
 

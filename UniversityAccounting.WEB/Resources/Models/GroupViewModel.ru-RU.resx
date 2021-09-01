@@ -126,7 +126,13 @@
   <data name="StudentsQuantity" xml:space="preserve">
     <value>Количество студентов</value>
   </data>
+  <data name="GroupNameRequired" xml:space="preserve">
+    <value>Поле "Название" обязательно для заполнения</value>
+  </data>
   <data name="FormationDate" xml:space="preserve">
     <value>Дата создания</value>
+  </data>
+  <data name="GroupFormationDateRequired" xml:space="preserve">
+    <value>Поле "Дата создания" обязательно для заполнения</value>
   </data>
 </root>

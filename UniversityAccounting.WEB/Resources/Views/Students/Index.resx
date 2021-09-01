@@ -124,7 +124,19 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="NoStudentsExists." xml:space="preserve">
+  <data name="NoStudentsExists" xml:space="preserve">
     <value>No students exists.</value>
+  </data>
+  <data name="Applicant" xml:space="preserve">
+    <value>Applicant</value>
+  </data>
+  <data name="Undergraduate" xml:space="preserve">
+    <value>Undergraduate</value>
+  </data>
+  <data name="Graduate" xml:space="preserve">
+    <value>Graduate</value>
+  </data>
+  <data name="Expelled" xml:space="preserve">
+    <value>Expelled</value>
   </data>
 </root>

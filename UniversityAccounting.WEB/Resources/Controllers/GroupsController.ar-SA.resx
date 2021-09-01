@@ -141,4 +141,7 @@
   <data name="GroupExistsErrorMessage" xml:space="preserve">
     <value>اسم المجموعة {0} موجود بالفعل.</value>
   </data>
+  <data name="Courses" xml:space="preserve">
+    <value>الدورات التدريبية</value>
+  </data>
 </root>

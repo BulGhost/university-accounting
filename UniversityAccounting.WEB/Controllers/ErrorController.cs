@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
 namespace UniversityAccounting.WEB.Controllers
@@ -7,10 +8,12 @@ namespace UniversityAccounting.WEB.Controllers
     public class ErrorController : Controller
     {
         private readonly ILogger<ErrorController> _logger;
+        private readonly IStringLocalizer<ErrorController> _localizer;
 
-        public ErrorController(ILogger<ErrorController> logger)
+        public ErrorController(ILogger<ErrorController> logger, IStringLocalizer<ErrorController> localizer)
         {
             _logger = logger;
+            _localizer = localizer;
         }
 
         [Route("Error/{statusCode:int}")]
@@ -21,7 +24,7 @@ namespace UniversityAccounting.WEB.Controllers
             switch (statusCode)
             {
                 case 404:
-                    ViewBag.ErrorMessage = "Sorry, the resource you requested could not be found";
+                    ViewBag.ErrorMessage = _localizer["404ErrorMessage"];
                     _logger.LogWarning($"404 Error Occured. Path = {statusCodeResult.OriginalPath}" +
                                        $"and QueryString = {statusCodeResult.OriginalQueryString}");
                     break;

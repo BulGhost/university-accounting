@@ -106,10 +106,10 @@
   <data name="GroupName" xml:space="preserve">
     <value>Group Name</value>
   </data>
-  <data name="Formation Date" xml:space="preserve">
+  <data name="FormationDate" xml:space="preserve">
     <value>Formation Date</value>
   </data>
-  <data name="Students Quantity" xml:space="preserve">
+  <data name="StudentsQuantity" xml:space="preserve">
     <value>Students Quantity</value>
   </data>
   <data name="Edit" xml:space="preserve">
@@ -118,7 +118,7 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="NoGroupsExists." xml:space="preserve">
+  <data name="NoGroupsExists" xml:space="preserve">
     <value>No groups exists.</value>
   </data>
 </root>

@@ -141,4 +141,7 @@
   <data name="GroupExistsErrorMessage" xml:space="preserve">
     <value>Группа с именем {0} уже существует.</value>
   </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Курсы</value>
+  </data>
 </root>

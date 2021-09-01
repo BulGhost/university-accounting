@@ -37,7 +37,7 @@ namespace UniversityAccounting.WEB
                 options.AddSupportedCultures("en-US", "ru-RU", "ar-SA");
                 options.AddSupportedUICultures("en-US", "ru-RU", "ar-SA");
             });
-            services.AddBreadcrumbs(GetType().Assembly);
+            services.AddBreadcrumbs(GetType().Assembly, options => options.DontLookForDefaultNode = true);
             services.AddNotyf(config =>
             {
                 config.DurationInSeconds = 5;

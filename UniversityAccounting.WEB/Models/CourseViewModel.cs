@@ -9,7 +9,8 @@ namespace UniversityAccounting.WEB.Models
         [Remote(action: "VerifyCourseName", controller: "Courses", AdditionalFields = nameof(Name))]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "CourseNameRequired",
+            ErrorMessageResourceType = typeof(Resources.Models.CourseViewModel))]
         [StringLength(30, ErrorMessageResourceName = "CourseNameErrorMessage",
             ErrorMessageResourceType = typeof(Resources.Models.CourseViewModel))]
         [Remote(action: "VerifyCourseName", controller: "Courses", AdditionalFields = nameof(Id))]

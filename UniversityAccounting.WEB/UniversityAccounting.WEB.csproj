@@ -111,20 +111,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Error.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\Views\Shared\Layout.Designer.cs">
+    <Compile Update="Resources\Views\Shared\_Layout.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Layout.resx</DependentUpon>
+      <DependentUpon>_Layout.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\Views\Shared\NotFound.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>NotFound.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\Views\Shared\Pager.Designer.cs">
+    <Compile Update="Resources\Views\Shared\_Pager.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Pager.resx</DependentUpon>
+      <DependentUpon>_Pager.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\Views\Students\Create.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -319,14 +319,14 @@
     <EmbeddedResource Update="Resources\Views\Shared\Error.ru-RU.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\Layout.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\_Layout.ar-SA.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\Layout.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\_Layout.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Layout.Designer.cs</LastGenOutput>
+      <LastGenOutput>_Layout.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\Layout.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\_Layout.ru-RU.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Shared\NotFound.ar-SA.resx">
@@ -339,14 +339,14 @@
     <EmbeddedResource Update="Resources\Views\Shared\NotFound.ru-RU.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\Pager.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\_Pager.ar-SA.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\Pager.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\_Pager.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Pager.Designer.cs</LastGenOutput>
+      <LastGenOutput>_Pager.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\Pager.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\_Pager.ru-RU.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Students\Create.ar-SA.resx">

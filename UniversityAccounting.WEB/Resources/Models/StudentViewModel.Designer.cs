@@ -70,6 +70,15 @@ namespace UniversityAccounting.WEB.Resources.Models {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;Date Of Birth&quot; field is required.
+        /// </summary>
+        public static string DateOfBirthRequired {
+            get {
+                return ResourceManager.GetString("DateOfBirthRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First Name.
         /// </summary>
         public static string FirstName {
@@ -79,11 +88,38 @@ namespace UniversityAccounting.WEB.Resources.Models {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to First Name length can&apos;t be more than 30 characters..
+        /// </summary>
+        public static string FirstNameErrorMessage {
+            get {
+                return ResourceManager.GetString("FirstNameErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;First Name&quot; field is required.
+        /// </summary>
+        public static string FirstNameRequired {
+            get {
+                return ResourceManager.GetString("FirstNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GPA.
         /// </summary>
         public static string Gpa {
             get {
                 return ResourceManager.GetString("Gpa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GPA must be between 2.0 and 5.0.
+        /// </summary>
+        public static string GpaRangeError {
+            get {
+                return ResourceManager.GetString("GpaRangeError", resourceCulture);
             }
         }
         
@@ -106,11 +142,38 @@ namespace UniversityAccounting.WEB.Resources.Models {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Name length can&apos;t be more than 30 characters..
+        /// </summary>
+        public static string LastNameErrorMessage {
+            get {
+                return ResourceManager.GetString("LastNameErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Last Name&quot; field is required.
+        /// </summary>
+        public static string LastNameRequired {
+            get {
+                return ResourceManager.GetString("LastNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Status&quot; field is required.
+        /// </summary>
+        public static string StatusRequired {
+            get {
+                return ResourceManager.GetString("StatusRequired", resourceCulture);
             }
         }
     }

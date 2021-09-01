@@ -123,7 +123,7 @@
   <data name="Delete" xml:space="preserve">
     <value>حذف</value>
   </data>
-  <data name="NoGroupsExists." xml:space="preserve">
+  <data name="NoGroupsExists" xml:space="preserve">
     <value>لا توجد مجموعات.</value>
   </data>
   <data name="CourseGroups" xml:space="preserve">
@@ -135,10 +135,10 @@
   <data name="GroupName" xml:space="preserve">
     <value>أسم المجموعة</value>
   </data>
-  <data name="Formation Date" xml:space="preserve">
+  <data name="FormationDate" xml:space="preserve">
     <value>تاريخ التكوين</value>
   </data>
-  <data name="Students Quantity" xml:space="preserve">
+  <data name="StudentsQuantity" xml:space="preserve">
     <value>عدد الطلاب</value>
   </data>
 </root>

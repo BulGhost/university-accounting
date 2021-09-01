@@ -11,8 +11,11 @@ namespace UniversityAccounting.DAL.Interfaces
         TEntity Get(int id);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> GetPart(int pageIndex, int pageSize);
-        IEnumerable<TEntity> GetPart(Expression<Func<TEntity, IComparable>> sortingProperty, int pageIndex, int pageSize);
-        IEnumerable<TEntity> GetPart(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, IComparable>> sortingProperty, int pageIndex, int pageSize);
+        IEnumerable<TEntity> GetPart(string ordering, int pageIndex, int pageSize);
+
+        IEnumerable<TEntity> GetPart(Expression<Func<TEntity, bool>> predicate, string ordering, int pageIndex,
+            int pageSize);
+
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);

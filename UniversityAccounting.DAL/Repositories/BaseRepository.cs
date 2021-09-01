@@ -39,20 +39,36 @@ namespace UniversityAccounting.DAL.Repositories
                 .AsEnumerable();
         }
 
-        public IEnumerable<TEntity> GetPart(Expression<Func<TEntity, IComparable>> sortingProperty, int pageIndex, int pageSize)
+        public IEnumerable<TEntity> GetPart(string ordering, int pageIndex, int pageSize)
         {
+            var type = typeof(TEntity);
+            var prop = type.GetProperty(ordering);
+            if (prop == null) throw new ArgumentException("Invalid property for ordering", ordering);
+
+            var param = Expression.Parameter(type);
+            var expr = Expression.Lambda<Func<TEntity, object>>(
+                Expression.Convert(Expression.Property(param, prop), typeof(object)), param);
+
             return Context.Set<TEntity>()
-                .OrderBy(sortingProperty)
+                .OrderBy(expr)
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
                 .AsEnumerable();
         }
 
-        public IEnumerable<TEntity> GetPart(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, IComparable>> sortingProperty, int pageIndex, int pageSize)
+        public IEnumerable<TEntity> GetPart(Expression<Func<TEntity, bool>> predicate, string ordering, int pageIndex, int pageSize)
         {
+            var type = typeof(TEntity);
+            var prop = type.GetProperty(ordering);
+            if (prop == null) throw new ArgumentException("Invalid property for ordering", ordering);
+
+            var param = Expression.Parameter(type);
+            var expr = Expression.Lambda<Func<TEntity, object>>(
+                Expression.Convert(Expression.Property(param, prop), typeof(object)), param);
+
             return Context.Set<TEntity>()
                 .Where(predicate)
-                .OrderBy(sortingProperty)
+                .OrderBy(expr)
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
                 .AsEnumerable();
