@@ -86,5 +86,14 @@ namespace UniversityAccounting.WEB.Resources.Views.Courses {
                 return ResourceManager.GetString("DeleteСourse", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} course.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
     }
 }

@@ -106,4 +106,7 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>{0} group</value>
+  </data>
 </root>

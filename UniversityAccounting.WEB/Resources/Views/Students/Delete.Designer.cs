@@ -97,6 +97,15 @@ namespace UniversityAccounting.WEB.Resources.Views.Students {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} {1} student.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expelled.
         /// </summary>
         public static string Expelled {

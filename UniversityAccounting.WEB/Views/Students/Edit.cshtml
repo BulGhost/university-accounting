@@ -80,18 +80,20 @@
                             <input type="submit" class="btn btn-info w-100" value=@_localizer["Update"] />
                         </div>
                         <div class="col">
-                            <a asp-action="Index" asp-route-groupId="@Model.GroupId" class="btn btn-success w-100">@_localizer["Back"]</a>
+                            <a id="backButton" class="btn btn-success w-100">@_localizer["Back"]</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </form>
+
+<partial name="_BackConfirm" />
 
 @section Scripts {
     @{
         <partial name="_ValidationScriptsPartial" />
+        <script src="~/lib/js/ConfirmBack.js"></script>
     }
 }

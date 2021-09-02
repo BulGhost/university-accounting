@@ -170,9 +170,9 @@ namespace UniversityAccounting.WEB.Controllers
         [AcceptVerbs("GET", "POST")]
         public IActionResult VerifyCourseName(int id, string name)
         {
-            return !new DuplicateVerifier().VerifyCourseName(id, name)
-                ? Json(_localizer["CourseExistsErrorMessage", name].Value)
-                : Json(true);
+            return new DuplicateVerifier().VerifyCourseName(id, name)
+                ? Json(true)
+                : Json(_localizer["CourseExistsErrorMessage", name].Value);
         }
     }
 }

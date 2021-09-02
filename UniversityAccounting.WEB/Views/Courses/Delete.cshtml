@@ -1,6 +1,9 @@
 ﻿@model CourseViewModel
 @inject IViewLocalizer _localizer
-@{ ViewBag.Title = _localizer["DeleteСourse"];}
+@{
+    ViewBag.Title = _localizer["DeleteСourse"];
+    ViewData["Details"] = _localizer["Details", Model.Name];
+}
 
 <form method="post" asp-action="DeletePost">
     <input asp-for="Id" hidden />
@@ -30,20 +33,22 @@
                 <div class="row m-3">
                     <div class="col-8 offset-4 row">
                         <div class="col">
-                            <input type="submit" class="btn btn-danger w-100" value=@_localizer["DeleteBtn"] />
+                            <a id="deleteButton" class="btn btn-danger w-100">@_localizer["DeleteBtn"]</a>
                         </div>
                         <div class="col">
-                            <a asp-action="Index" class="btn btn-success w-100">@_localizer["Back"]</a>
+                            <a onclick="window.history.back();" class="btn btn-success w-100">@_localizer["Back"]</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <partial name="_DeleteConfirm" view-data="ViewData" />
 </form>
 
 @section Scripts {
     @{
         <partial name="_ValidationScriptsPartial" />
+        <script src="~/lib/js/ConfirmDelete.js"></script>
     }
 }

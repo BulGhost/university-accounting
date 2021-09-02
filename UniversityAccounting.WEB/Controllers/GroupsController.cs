@@ -188,9 +188,9 @@ namespace UniversityAccounting.WEB.Controllers
         [AcceptVerbs("GET", "POST")]
         public IActionResult VerifyGroupName(int id, string name)
         {
-            return !new DuplicateVerifier().VerifyGroupName(id, name)
-                ? Json(_localizer["GroupExistsErrorMessage", name].Value)
-                : Json(true);
+            return new DuplicateVerifier().VerifyGroupName(id, name)
+                ? Json(true)
+                : Json(_localizer["GroupExistsErrorMessage", name].Value);
         }
     }
 }

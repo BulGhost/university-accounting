@@ -126,4 +126,7 @@
   <data name="Back" xml:space="preserve">
     <value>خلف</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>{0} مجموعة</value>
+  </data>
 </root>

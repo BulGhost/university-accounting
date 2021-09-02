@@ -97,28 +97,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DeleteStudent" xml:space="preserve">
-    <value>Delete student</value>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Are you sure?</value>
   </data>
-  <data name="Applicant" xml:space="preserve">
-    <value>Applicant</value>
+  <data name="Message" xml:space="preserve">
+    <value>Are you sure you want to go back? The entered data will be lost.</value>
   </data>
-  <data name="Undergraduate" xml:space="preserve">
-    <value>Undergraduate</value>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
-  <data name="Graduate" xml:space="preserve">
-    <value>Graduate</value>
-  </data>
-  <data name="Expelled" xml:space="preserve">
-    <value>Expelled</value>
-  </data>
-  <data name="DeleteBtn" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="Details" xml:space="preserve">
-    <value>{0} {1} student</value>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
   </data>
 </root>

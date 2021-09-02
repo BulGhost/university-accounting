@@ -86,5 +86,14 @@ namespace UniversityAccounting.WEB.Resources.Views.Groups {
                 return ResourceManager.GetString("DeleteGroup", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} group.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
     }
 }

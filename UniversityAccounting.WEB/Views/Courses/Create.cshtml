@@ -2,7 +2,7 @@
 @inject IViewLocalizer _localizer
 @{ ViewBag.Title = _localizer["CreateCourse"];}
 
-<form method="post" asp-action="Create">
+<form method="post" asp-action="Create" id="myform">
     <div class="border p-3">
         <div class="row">
             <h2 class="text-info ps-3">@_localizer["AddCourse"].Value</h2>
@@ -34,7 +34,7 @@
                             <input type="submit" class="btn btn-info w-100" value=@_localizer["CreateBtn"] />
                         </div>
                         <div class="col">
-                            <a asp-action="Index" class="btn btn-success w-100">@_localizer["Back"]</a>
+                            <a id="backButton" class="btn btn-success w-100">@_localizer["Back"]</a>
                         </div>
                     </div>
                 </div>
@@ -43,8 +43,11 @@
     </div>
 </form>
 
+<partial name="_BackConfirm"/>
+
 @section Scripts {
     @{
         <partial name="_ValidationScriptsPartial" />
+        <script src="~/lib/js/ConfirmBack.js"></script>
     }
 }

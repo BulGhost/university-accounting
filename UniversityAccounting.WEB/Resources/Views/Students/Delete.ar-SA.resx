@@ -138,4 +138,7 @@
   <data name="DeleteStudent" xml:space="preserve">
     <value>حذف الطالب</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>{0} {1} طالب</value>
+  </data>
 </root>

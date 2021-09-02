@@ -126,4 +126,7 @@
   <data name="Back" xml:space="preserve">
     <value>Назад</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>курс {0}</value>
+  </data>
 </root>
