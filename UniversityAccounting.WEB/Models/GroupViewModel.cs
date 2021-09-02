@@ -1,8 +1,8 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc;
+using UniversityAccounting.WEB.Models.HelperClasses;
 
 namespace UniversityAccounting.WEB.Models
 {
@@ -26,6 +26,7 @@ namespace UniversityAccounting.WEB.Models
         [Required(ErrorMessageResourceName = "GroupFormationDateRequired",
             ErrorMessageResourceType = typeof(Resources.Models.GroupViewModel))]
         [Column(TypeName = "date")]
+        [WithinSixYears]
         [Display(Name = "FormationDate", ResourceType = typeof(Resources.Models.GroupViewModel))]
         public DateTime FormationDate { get; set; }
 

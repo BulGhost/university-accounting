@@ -135,4 +135,7 @@
   <data name="GroupFormationDateRequired" xml:space="preserve">
     <value>حقل "تاريخ التكوين" مطلوب</value>
   </data>
+  <data name="FormationDateError" xml:space="preserve">
+    <value>يجب أن يكون التاريخ خلال السنوات الست الماضية</value>
+  </data>
 </root>

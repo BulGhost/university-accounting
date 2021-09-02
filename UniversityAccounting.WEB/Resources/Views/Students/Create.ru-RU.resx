@@ -138,4 +138,7 @@
   <data name="Expelled" xml:space="preserve">
     <value>Отчислен</value>
   </data>
+  <data name="Choose" xml:space="preserve">
+    <value>Выбирите...</value>
+  </data>
 </root>

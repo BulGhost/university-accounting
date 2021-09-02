@@ -6,14 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace UniversityAccounting.WEB.Models
 {
-    public enum StudentStatus
-    {
-        Applicant = 1,
-        Undergraduate,
-        Graduate,
-        Expelled
-    }
-
     public class StudentViewModel
     {
         [Key]
@@ -56,9 +48,10 @@ namespace UniversityAccounting.WEB.Models
 
         [Required(ErrorMessageResourceName = "StatusRequired",
             ErrorMessageResourceType = typeof(Resources.Models.StudentViewModel))]
-        [Range(1, 4)]
+        [Range(1, 4, ErrorMessageResourceName = "ChooseStatus",
+            ErrorMessageResourceType = typeof(Resources.Models.StudentViewModel))]
         [Display(Name = "Status", ResourceType = typeof(Resources.Models.StudentViewModel))]
-        public int Status { get; set; } = 1;
+        public int Status { get; set; }
 
         [DisplayName("GPA")]
         [Range(2.0, 5.0, ErrorMessageResourceName = "GpaRangeError",

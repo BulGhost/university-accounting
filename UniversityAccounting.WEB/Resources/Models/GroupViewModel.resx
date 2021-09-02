@@ -115,4 +115,7 @@
   <data name="GroupFormationDateRequired" xml:space="preserve">
     <value>"Formation date" field is required</value>
   </data>
+  <data name="FormationDateError" xml:space="preserve">
+    <value>Date must be within the last six years</value>
+  </data>
 </root>

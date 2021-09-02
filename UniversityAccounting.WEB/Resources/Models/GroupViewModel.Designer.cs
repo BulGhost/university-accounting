@@ -70,6 +70,15 @@ namespace UniversityAccounting.WEB.Resources.Models {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date must be within the last six years.
+        /// </summary>
+        public static string FormationDateError {
+            get {
+                return ResourceManager.GetString("FormationDateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Formation date&quot; field is required.
         /// </summary>
         public static string GroupFormationDateRequired {

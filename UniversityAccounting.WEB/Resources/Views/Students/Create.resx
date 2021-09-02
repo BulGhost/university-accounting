@@ -118,4 +118,7 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="Choose" xml:space="preserve">
+    <value>Choose...</value>
+  </data>
 </root>

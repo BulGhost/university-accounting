@@ -5,7 +5,7 @@
     ViewData["GroupId"] = ViewBag.Group.Id;
 }
 
-<div class="container p-3">
+<div class="container p-2">
     <div class="row pt-4">
         <div class="col-6">
             <h2 class="text-primary">@_localizer["GroupStudents", ViewBag.Group.Name]</h2>
@@ -35,10 +35,10 @@
             <tbody>
                 @foreach (var student in Model.Students)
                 {
-                    <tr>
-                        <td wigth="25%">@student.FirstName</td>
+                    <tr class="align-middle">
+                        <td wigth="20%" class="ps-3">@student.FirstName</td>
                         <td width="20%">@student.LastName</td>
-                        <td width="20%">@student.DateOfBirth.ToShortDateString()</td>
+                        <td width="15%">@student.DateOfBirth.ToShortDateString()</td>
                         <td width="15%">@Html.DisplayFor(modelItem => student.FinalExamGpa)</td>
                         @{
                             switch (student.Status)
@@ -58,11 +58,11 @@
                             }
                         }
                         <td class="text-center">
-                            <div class="w-75 btn-group">
-                                <a asp-controller="Students" asp-action="Edit" asp-route-Id="@student.Id" class="btn btn-primary">
+                            <div>
+                                <a asp-controller="Students" asp-action="Edit" asp-route-Id="@student.Id" class="btn btn-primary ms-4 my-1">
                                     @_localizer["Edit"]
                                 </a>
-                                <a asp-controller="Students" asp-action="Delete" asp-route-Id="@student.Id" class="btn btn-danger">
+                                <a asp-controller="Students" asp-action="Delete" asp-route-Id="@student.Id" class="btn btn-danger ms-4 my-1">
                                     @_localizer["Delete"]
                                 </a>
                             </div>

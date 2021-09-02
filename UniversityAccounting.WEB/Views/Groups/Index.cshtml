@@ -5,7 +5,7 @@
     ViewData["CourseId"] = ViewBag.Course.Id;
 }
 
-<div class="container p-3">
+<div class="container p-2">
     <div class="row pt-4">
         <div class="col-6">
             <h2 class="text-primary">@_localizer["CourseGroups", ViewBag.Course.Name]</h2>
@@ -33,18 +33,18 @@
             <tbody>
                 @foreach (var group in Model.Groups)
                 {
-                    <tr>
+                    <tr class="align-middle">
                         <td wigth="30%" class="ps-3">
                             <a class="h5" asp-controller="Students" asp-action="Index" asp-route-groupId="@group.Id">@group.Name</a>
                         </td>
                         <td width="30%">@group.FormationDate.ToShortDateString()</td>
-                        <td width="30%">@group.StudentsQuantity</td>
+                        <td width="20%">@group.StudentsQuantity</td>
                         <td class="text-center">
-                            <div class="w-75 btn-group">
-                                <a asp-controller="Groups" asp-action="Edit" asp-route-Id="@group.Id" class="btn btn-primary">
+                            <div>
+                                <a asp-controller="Groups" asp-action="Edit" asp-route-Id="@group.Id" class="btn btn-primary ms-4 my-2">
                                     @_localizer["Edit"]
                                 </a>
-                                <a asp-controller="Groups" asp-action="Delete" asp-route-Id="@group.Id" class="btn btn-danger">
+                                <a asp-controller="Groups" asp-action="Delete" asp-route-Id="@group.Id" class="btn btn-danger ms-4 my-2">
                                     @_localizer["Delete"]
                                 </a>
                             </div>

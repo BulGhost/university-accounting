@@ -2,7 +2,7 @@
 @inject IViewLocalizer _localizer
 @{ ViewBag.Title = _localizer["Courses"];}
 
-<div class="container p-3">
+<div class="container p-2">
     <div class="row pt-4">
         <div class="col-6">
             <h2 class="text-primary ps-3">@_localizer["CoursesList"]</h2>
@@ -28,16 +28,16 @@
                 @foreach (var course in Model.Courses)
                 {
                     <tr>
-                        <td wigth="25%" class="align-middle ps-3">
+                        <td wigth="20%" class="align-middle ps-3">
                             <a class="h5" asp-controller="Groups" asp-action="Index" asp-route-courseId="@course.Id">@course.Name</a>
                         </td>
-                        <td width="65%">@course.Description</td>
-                        <td class="text-center align-middle">
-                            <div class="w-75 btn-group">
-                                <a asp-controller="Courses" asp-action="Edit" asp-route-Id="@course.Id" class="btn btn-primary">
+                        <td width="60%">@course.Description</td>
+                        <td class="text-center align-middle" >
+                            <div>
+                                <a asp-controller="Courses" asp-action="Edit" asp-route-Id="@course.Id" class="btn btn-primary ms-4 my-2">
                                     @_localizer["Edit"]
                                 </a>
-                                <a asp-controller="Courses" asp-action="Delete" asp-route-Id="@course.Id" class="btn btn-danger">
+                                <a asp-controller="Courses" asp-action="Delete" asp-route-Id="@course.Id" class="btn btn-danger ms-4 my-2">
                                     @_localizer["Delete"]
                                 </a>
                             </div>

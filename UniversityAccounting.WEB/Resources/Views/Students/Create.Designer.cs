@@ -88,6 +88,15 @@ namespace UniversityAccounting.WEB.Resources.Views.Students {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose....
+        /// </summary>
+        public static string Choose {
+            get {
+                return ResourceManager.GetString("Choose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create.
         /// </summary>
         public static string CreateBtn {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UniversityAccounting.WEB.Models
+namespace UniversityAccounting.WEB.Models.HelperClasses
 {
     public class PagingInfo
     {

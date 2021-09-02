@@ -156,4 +156,7 @@
   <data name="GpaRangeError" xml:space="preserve">
     <value>GPA must be between 2.0 and 5.0</value>
   </data>
+  <data name="ChooseStatus" xml:space="preserve">
+    <value>Choose student status</value>
+  </data>
 </root>

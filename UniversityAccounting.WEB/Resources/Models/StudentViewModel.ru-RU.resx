@@ -156,4 +156,7 @@
   <data name="GpaRangeError" xml:space="preserve">
     <value>Оценка должна быть от 2,0 до 5,0</value>
   </data>
+  <data name="ChooseStatus" xml:space="preserve">
+    <value>Выберите статус студента</value>
+  </data>
 </root>

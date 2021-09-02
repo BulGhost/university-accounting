@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using UniversityAccounting.DAL.Entities;
 
-namespace UniversityAccounting.WEB.Models
+namespace UniversityAccounting.WEB.Models.HelperClasses
 {
     public class MappingProfile : Profile
     {

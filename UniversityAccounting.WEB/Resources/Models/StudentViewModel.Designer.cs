@@ -61,6 +61,15 @@ namespace UniversityAccounting.WEB.Resources.Models {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose student status.
+        /// </summary>
+        public static string ChooseStatus {
+            get {
+                return ResourceManager.GetString("ChooseStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date Of Birth.
         /// </summary>
         public static string DateOfBirth {

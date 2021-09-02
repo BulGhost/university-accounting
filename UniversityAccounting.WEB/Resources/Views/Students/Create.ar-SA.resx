@@ -138,4 +138,7 @@
   <data name="Expelled" xml:space="preserve">
     <value>مطرود</value>
   </data>
+  <data name="Choose" xml:space="preserve">
+    <value>يختار...</value>
+  </data>
 </root>

@@ -135,4 +135,7 @@
   <data name="GroupFormationDateRequired" xml:space="preserve">
     <value>Поле "Дата создания" обязательно для заполнения</value>
   </data>
+  <data name="FormationDateError" xml:space="preserve">
+    <value>Дата должна быть в пределах последних шести лет</value>
+  </data>
 </root>

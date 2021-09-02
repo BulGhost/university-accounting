@@ -156,4 +156,7 @@
   <data name="GpaRangeError" xml:space="preserve">
     <value>يجب أن يكون المعدل التراكمي بين 2.0 و 5.0</value>
   </data>
+  <data name="ChooseStatus" xml:space="preserve">
+    <value>اختر حالة الطالب</value>
+  </data>
 </root>

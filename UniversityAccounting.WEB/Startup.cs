@@ -12,6 +12,7 @@ using UniversityAccounting.DAL.Interfaces;
 using UniversityAccounting.DAL.Repositories;
 using AutoMapper;
 using UniversityAccounting.WEB.Models;
+using UniversityAccounting.WEB.Models.HelperClasses;
 
 namespace UniversityAccounting.WEB
 {

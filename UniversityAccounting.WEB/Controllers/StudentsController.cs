@@ -10,6 +10,7 @@ using AutoMapper;
 using Microsoft.Extensions.Localization;
 using UniversityAccounting.DAL.BusinessLogic;
 using UniversityAccounting.DAL.Entities;
+using UniversityAccounting.WEB.Models.HelperClasses;
 
 namespace UniversityAccounting.WEB.Controllers
 {
