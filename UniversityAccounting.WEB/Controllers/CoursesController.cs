@@ -31,20 +31,27 @@ namespace UniversityAccounting.WEB.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(int page = 1, string sortProperty = nameof(Course.Id),
+            SortOrder sortOrder = SortOrder.Ascending)
         {
             int totalCourses = _unitOfWork.Courses.TotalCount();
-            if (page < 1 || page > Math.Ceiling((double) totalCourses / CoursesPerPage))
+            if (page < 1 || page > Math.Ceiling((double)totalCourses / CoursesPerPage))
                 return RedirectToAction("Index", new {page = 1});
 
             if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
 
+            var sortModel = new SortModel();
+            sortModel.AddColumn(nameof(Course.Name));
+            sortModel.AddColumn(nameof(Course.Description));
+            sortModel.ApplySort(sortProperty, sortOrder);
+
             var coursesOnPage = _mapper.Map<IEnumerable<CourseViewModel>>(
-                _unitOfWork.Courses.GetPart(nameof(Course.Id), page, CoursesPerPage));
+                _unitOfWork.Courses.GetPart(sortProperty, page, CoursesPerPage, sortOrder));
 
             return View(new CoursesIndexViewModel
             {
                 Courses = coursesOnPage,
+                SortModel = sortModel,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,

@@ -21,6 +21,9 @@ namespace UniversityAccounting.DAL.Entities
         [Column(TypeName = "date")]
         public DateTime FormationDate { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int StudentsQuantity { get; private set; }
+
         public virtual ICollection<Student> Students { get; set; }
     }
 }

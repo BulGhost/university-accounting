@@ -37,7 +37,7 @@ namespace UniversityAccounting.DAL.Entities
         public int Status { get; set; } = 1;
 
         [Range(2.0, 5.0)]
-        public double FinalExamGpa { get; set; }
+        public double? FinalExamGpa { get; set; }
 
         public Student()
         {

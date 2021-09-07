@@ -2,12 +2,12 @@
 @inject IViewLocalizer _localizer
 @{ ViewBag.Title = _localizer["CreateCourse"];}
 
-<form method="post" asp-action="Create" id="myform">
+<form method="post" asp-action="Create">
     <div class="border p-3">
         <div class="row">
             <h2 class="text-info ps-3">@_localizer["AddCourse"].Value</h2>
         </div>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row m-3">
             <div class="col-8">
                 <div class="row m-3">
@@ -15,8 +15,7 @@
                         <label asp-for="Name" class="required"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <input asp-for="Name" class="form-control" id="target"/>
                     </div>
                 </div>
 
@@ -49,5 +48,6 @@
     @{
         <partial name="_ValidationScriptsPartial" />
         <script src="~/lib/js/ConfirmBack.js"></script>
+        <script src="~/lib/js/DisableButtonIfMiodelInvalid.js"></script>
     }
 }

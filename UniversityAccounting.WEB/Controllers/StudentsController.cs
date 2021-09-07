@@ -22,7 +22,8 @@ namespace UniversityAccounting.WEB.Controllers
         private readonly IStringLocalizer<StudentsController> _localizer;
         private readonly IMapper _mapper;
 
-        public StudentsController(IUnitOfWork unitOfWork, INotyfService notyf, IStringLocalizer<StudentsController> localizer, IMapper mapper)
+        public StudentsController(IUnitOfWork unitOfWork, INotyfService notyf,
+            IStringLocalizer<StudentsController> localizer, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _notyf = notyf;
@@ -30,26 +31,41 @@ namespace UniversityAccounting.WEB.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index(int groupId, int page = 1)
+        public IActionResult Index(int groupId, int page = 1, string sortProperty = nameof(Student.Id),
+            SortOrder sortOrder = SortOrder.Ascending)
         {
             var currentGroup = _unitOfWork.Groups.Get(groupId);
             if (currentGroup == null) return NotFound();
 
             ViewBag.Group = currentGroup;
+            int totalStudents = _unitOfWork.Students.Find(s => s.GroupId == groupId).Count();
+            if (page < 1 || page > Math.Ceiling((double) totalStudents / StudentsPerPage))
+                return RedirectToAction("Index", new {page = 1});
+
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
             var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{currentGroup.Course.Name}")
                 {RouteValues = new {courseId = currentGroup.CourseId}, Parent = node1};
             var node3 = new MvcBreadcrumbNode("Index", "Students", _localizer["GroupName", currentGroup.Name])
                 {Parent = node2};
             ViewData["BreadcrumbNode"] = node3;
+
             if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
 
+            var sortModel = new SortModel();
+            sortModel.AddColumn(nameof(Student.FirstName));
+            sortModel.AddColumn(nameof(Student.LastName));
+            sortModel.AddColumn(nameof(Student.DateOfBirth));
+            sortModel.AddColumn(nameof(Student.FinalExamGpa));
+            sortModel.AddColumn(nameof(Student.Status));
+            sortModel.ApplySort(sortProperty, sortOrder);
+
             var studentsOnPage = _mapper.Map<List<StudentViewModel>>(_unitOfWork.Students
-                .GetPart(s => s.GroupId == groupId, nameof(Student.Id), page, StudentsPerPage));
+                .GetPart(s => s.GroupId == groupId, sortProperty, page, StudentsPerPage, sortOrder));
 
             return View(new StudentsIndexViewModel
             {
                 Students = studentsOnPage,
+                SortModel = sortModel,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,

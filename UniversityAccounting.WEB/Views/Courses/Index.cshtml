@@ -1,6 +1,9 @@
 ﻿@model CoursesIndexViewModel
 @inject IViewLocalizer _localizer
-@{ ViewBag.Title = _localizer["Courses"];}
+@{
+    ViewBag.Title = _localizer["Courses"];
+    ViewBag.SortModel = Model.SortModel;
+}
 
 <div class="container p-2">
     <div class="row pt-4">
@@ -19,8 +22,20 @@
         <table class="table table-striped" style="width: 100%">
             <thead>
                 <tr>
-                    <th class="ps-3">@_localizer["CourseName"]</th>
-                    <th>@_localizer["Description"]</th>
+                    <th class="ps-3">
+                        <a asp-action="Index" asp-route-sortProperty="Name" asp-route-page="1"
+                           asp-route-sortOrder="@Model.SortModel.GetColumn("Name").Order" class="column-heading">
+                            @_localizer["CourseName"]
+                        </a>
+                        <i class="@Model.SortModel.GetColumn("Name").SortIcon"></i>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortProperty="Description" asp-route-page="1"
+                           asp-route-sortOrder="@Model.SortModel.GetColumn("Description").Order" class="column-heading">
+                            @_localizer["Description"]
+                        </a>
+                        <i class="@Model.SortModel.GetColumn("Description").SortIcon"></i>
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -51,6 +66,6 @@
     {
         <p>@_localizer["NoCoursesExists."]</p>
     }
-    <partial name="_Pager" model="@Model.PagingInfo" />
+    <partial name="_Pager" model="@Model.PagingInfo" view-data="ViewData"/>
     <br />
 </div>

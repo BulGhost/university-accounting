@@ -58,6 +58,6 @@ namespace UniversityAccounting.WEB.Models
             ErrorMessageResourceType = typeof(Resources.Models.StudentViewModel))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:F2}")]
         [Display(Name = "Gpa", ResourceType = typeof(Resources.Models.StudentViewModel))]
-        public double FinalExamGpa { get; set; }
+        public double? FinalExamGpa { get; set; }
     }
 }

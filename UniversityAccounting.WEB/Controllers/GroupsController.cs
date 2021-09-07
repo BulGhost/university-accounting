@@ -23,7 +23,8 @@ namespace UniversityAccounting.WEB.Controllers
         private readonly IStringLocalizer<GroupsController> _localizer;
         private readonly IMapper _mapper;
 
-        public GroupsController(IUnitOfWork unitOfWork, INotyfService notyf, IStringLocalizer<GroupsController> localizer, IMapper mapper)
+        public GroupsController(IUnitOfWork unitOfWork, INotyfService notyf,
+            IStringLocalizer<GroupsController> localizer, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _notyf = notyf;
@@ -31,25 +32,36 @@ namespace UniversityAccounting.WEB.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index(int courseId, int page = 1)
+        public IActionResult Index(int courseId, int page = 1, string sortProperty = nameof(Group.Id),
+            SortOrder sortOrder = SortOrder.Ascending)
         {
             var currentCourse = _unitOfWork.Courses.Get(courseId);
             if (currentCourse == null) return NotFound();
+
+            ViewBag.Course = currentCourse;
+            int totalGroups = _unitOfWork.Groups.Find(g => g.CourseId == courseId).Count();
+            if (page < 1 || page > Math.Ceiling((double) totalGroups / GroupsPerPage))
+                return RedirectToAction("Index", new {page = 1});
 
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
             var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{currentCourse.Name}") {Parent = node1};
             ViewData["BreadcrumbNode"] = node2;
 
-            if (page < 1) page = 1;
-            ViewBag.Course = currentCourse;
             if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
 
+            var sortModel = new SortModel();
+            sortModel.AddColumn(nameof(Group.Name));
+            sortModel.AddColumn(nameof(Group.FormationDate));
+            sortModel.AddColumn(nameof(Group.StudentsQuantity));
+            sortModel.ApplySort(sortProperty, sortOrder);
+
             var groupsOnPage = _mapper.Map<IEnumerable<GroupViewModel>>(_unitOfWork.Groups
-                .GetPart(g => g.CourseId == courseId, nameof(Group.Id), page, GroupsPerPage));
+                .GetPart(g => g.CourseId == courseId, sortProperty, page, GroupsPerPage, sortOrder));
 
             return View(new GroupsIndexViewModel
             {
                 Groups = groupsOnPage,
+                SortModel = sortModel,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,

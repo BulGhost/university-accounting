@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = _localizer["CourseGroups", ViewBag.Course.Name];
     ViewBag.CourseId = ViewBag.Course.Id;
+    ViewBag.SortModel = Model.SortModel;
 }
 
 <div class="container p-2">
@@ -24,9 +25,27 @@
         <table class="table table-striped" style="width: 100%">
             <thead>
                 <tr>
-                    <th class="ps-3">@_localizer["GroupName"]</th>
-                    <th>@_localizer["FormationDate"]</th>
-                    <th>@_localizer["StudentsQuantity"]</th>
+                    <th class="ps-3">
+                        <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-page="1" asp-route-sortProperty="Name"
+                           asp-route-sortOrder="@Model.SortModel.GetColumn("Name").Order" class="column-heading">
+                            @_localizer["GroupName"]
+                        </a>
+                        <i class="@Model.SortModel.GetColumn("Name").SortIcon"></i>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-page="1" asp-route-sortProperty="FormationDate"
+                           asp-route-sortOrder="@Model.SortModel.GetColumn("FormationDate").Order" class="column-heading">
+                            @_localizer["FormationDate"]
+                        </a>
+                        <i class="@Model.SortModel.GetColumn("FormationDate").SortIcon"></i>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-page="1" asp-route-sortProperty="StudentsQuantity"
+                           asp-route-sortOrder="@Model.SortModel.GetColumn("StudentsQuantity").Order" class="column-heading">
+                            @_localizer["StudentsQuantity"]
+                        </a>
+                        <i class="@Model.SortModel.GetColumn("StudentsQuantity").SortIcon"></i>
+                    </th>
                     <th></th>
                 </tr>
             </thead>
