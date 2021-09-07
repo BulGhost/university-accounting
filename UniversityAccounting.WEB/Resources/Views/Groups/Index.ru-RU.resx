@@ -139,6 +139,12 @@
     <value>Количество студентов</value>
   </data>
   <data name="NoGroupsExists" xml:space="preserve">
-    <value>В курсе нет групп.</value>
+    <value>Группы не найдены.</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="SearchKey" xml:space="preserve">
+    <value>Текст для поиска</value>
   </data>
 </root>

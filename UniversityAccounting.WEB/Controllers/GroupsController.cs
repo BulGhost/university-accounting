@@ -33,7 +33,7 @@ namespace UniversityAccounting.WEB.Controllers
         }
 
         public IActionResult Index(int courseId, int page = 1, string sortProperty = nameof(Group.Name),
-            SortOrder sortOrder = SortOrder.Ascending)
+            SortOrder sortOrder = SortOrder.Ascending, string searchText = "")
         {
             var currentCourse = _unitOfWork.Courses.Get(courseId);
             if (currentCourse == null) return NotFound();
@@ -56,7 +56,9 @@ namespace UniversityAccounting.WEB.Controllers
             sortModel.ApplySort(sortProperty, sortOrder);
 
             var groupsOnPage = _mapper.Map<IEnumerable<GroupViewModel>>(_unitOfWork.Groups
-                .GetPart(g => g.CourseId == courseId, sortProperty, page, GroupsPerPage, sortOrder));
+                .GetPart(g => g.CourseId == courseId, sortProperty, page, GroupsPerPage, sortOrder)
+                .FindGroupsWithSearchText(searchText));
+            ViewBag.SearchText = searchText;
 
             return View(new GroupsIndexViewModel
             {

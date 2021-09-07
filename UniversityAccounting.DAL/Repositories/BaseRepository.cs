@@ -42,13 +42,7 @@ namespace UniversityAccounting.DAL.Repositories
         public IEnumerable<TEntity> GetPart(string sortProperty, int pageIndex, int pageSize,
             SortOrder sortOrder = SortOrder.Ascending)
         {
-            var type = typeof(TEntity);
-            var prop = type.GetProperty(sortProperty);
-            if (prop == null) throw new ArgumentException("Invalid property for ordering", sortProperty);
-
-            var param = Expression.Parameter(type);
-            var expr = Expression.Lambda<Func<TEntity, object>>(
-                Expression.Convert(Expression.Property(param, prop), typeof(object)), param);
+            var expr = GetKeySelector(typeof(TEntity), sortProperty);
 
             var items = sortOrder == SortOrder.Ascending
                 ? Context.Set<TEntity>().OrderBy(expr)
@@ -62,13 +56,7 @@ namespace UniversityAccounting.DAL.Repositories
         public IEnumerable<TEntity> GetPart(Expression<Func<TEntity, bool>> predicate, string sortProperty,
             int pageIndex, int pageSize, SortOrder sortOrder = SortOrder.Ascending)
         {
-            var type = typeof(TEntity);
-            var prop = type.GetProperty(sortProperty);
-            if (prop == null) throw new ArgumentException("Invalid property for ordering", sortProperty);
-
-            var param = Expression.Parameter(type);
-            var expr = Expression.Lambda<Func<TEntity, object>>(
-                Expression.Convert(Expression.Property(param, prop), typeof(object)), param);
+            var expr = GetKeySelector(typeof(TEntity), sortProperty);
 
             var items = sortOrder == SortOrder.Ascending
                 ? Context.Set<TEntity>().Where(predicate).OrderBy(expr)
@@ -102,6 +90,16 @@ namespace UniversityAccounting.DAL.Repositories
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
             Context.Set<TEntity>().RemoveRange(entities);
+        }
+
+        private Expression<Func<TEntity, object>> GetKeySelector(Type type, string sortProperty)
+        {
+            var prop = type.GetProperty(sortProperty);
+            if (prop == null) throw new ArgumentException("Invalid property for ordering", sortProperty);
+
+            var param = Expression.Parameter(type);
+            return Expression.Lambda<Func<TEntity, object>>(
+                Expression.Convert(Expression.Property(param, prop), typeof(object)), param);
         }
     }
 }

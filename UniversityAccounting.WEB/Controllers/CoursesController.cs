@@ -32,7 +32,7 @@ namespace UniversityAccounting.WEB.Controllers
         }
 
         public IActionResult Index(int page = 1, string sortProperty = nameof(Course.Name),
-            SortOrder sortOrder = SortOrder.Ascending)
+            SortOrder sortOrder = SortOrder.Ascending, string searchText = "")
         {
             int totalCourses = _unitOfWork.Courses.TotalCount();
             if (page < 1 || page > Math.Ceiling((double)totalCourses / CoursesPerPage))
@@ -46,7 +46,9 @@ namespace UniversityAccounting.WEB.Controllers
             sortModel.ApplySort(sortProperty, sortOrder);
 
             var coursesOnPage = _mapper.Map<IEnumerable<CourseViewModel>>(
-                _unitOfWork.Courses.GetPart(sortProperty, page, CoursesPerPage, sortOrder));
+                _unitOfWork.Courses.GetPart(sortProperty, page, CoursesPerPage, sortOrder)
+                    .FindCoursesWithSearchText(searchText));
+            ViewBag.SearchText = searchText;
 
             return View(new CoursesIndexViewModel
             {

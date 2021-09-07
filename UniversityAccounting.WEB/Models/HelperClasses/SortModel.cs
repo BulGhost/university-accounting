@@ -49,7 +49,7 @@ namespace UniversityAccounting.WEB.Models.HelperClasses
 
         public void ApplySort(string sortProperty, SortOrder sortOrder)
         {
-            if (sortProperty.IsNullOrEmpty()) sortProperty = SortProperty;
+            if (string.IsNullOrEmpty(sortProperty)) sortProperty = SortProperty;
 
             sortProperty = sortProperty.ToLower();
             foreach (var sortableColumn in _sortableColumns)

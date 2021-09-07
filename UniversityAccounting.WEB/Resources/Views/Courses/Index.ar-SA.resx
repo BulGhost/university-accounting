@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NoCoursesExists." xml:space="preserve">
-    <value>لا توجد دورات.</value>
+    <value>لم يتم العثور على دورات.</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>حذف</value>
@@ -140,5 +140,11 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>يحرر</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>بحث</value>
+  </data>
+  <data name="SearchKey" xml:space="preserve">
+    <value>مفتاح البحث</value>
   </data>
 </root>

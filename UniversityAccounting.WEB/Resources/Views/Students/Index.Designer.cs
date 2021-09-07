@@ -70,6 +70,15 @@ namespace UniversityAccounting.WEB.Resources.Views.Students {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Applicant.
+        /// </summary>
+        public static string Applicant {
+            get {
+                return ResourceManager.GetString("Applicant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date Of Birth.
         /// </summary>
         public static string DateOfBirth {
@@ -97,6 +106,15 @@ namespace UniversityAccounting.WEB.Resources.Views.Students {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expelled.
+        /// </summary>
+        public static string Expelled {
+            get {
+                return ResourceManager.GetString("Expelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First Name.
         /// </summary>
         public static string FirstName {
@@ -111,6 +129,15 @@ namespace UniversityAccounting.WEB.Resources.Views.Students {
         public static string Gpa {
             get {
                 return ResourceManager.GetString("Gpa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Graduate.
+        /// </summary>
+        public static string Graduate {
+            get {
+                return ResourceManager.GetString("Graduate", resourceCulture);
             }
         }
         
@@ -133,11 +160,29 @@ namespace UniversityAccounting.WEB.Resources.Views.Students {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No students exists..
+        ///   Looks up a localized string similar to No students found..
         /// </summary>
-        public static string NoStudentsExists_ {
+        public static string NoStudentsExists {
             get {
-                return ResourceManager.GetString("NoStudentsExists.", resourceCulture);
+                return ResourceManager.GetString("NoStudentsExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Key.
+        /// </summary>
+        public static string SearchKey {
+            get {
+                return ResourceManager.GetString("SearchKey", resourceCulture);
             }
         }
         
@@ -147,6 +192,15 @@ namespace UniversityAccounting.WEB.Resources.Views.Students {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undergraduate.
+        /// </summary>
+        public static string Undergraduate {
+            get {
+                return ResourceManager.GetString("Undergraduate", resourceCulture);
             }
         }
     }

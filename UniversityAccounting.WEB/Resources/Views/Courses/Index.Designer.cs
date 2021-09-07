@@ -124,11 +124,29 @@ namespace UniversityAccounting.WEB.Resources.Views.Courses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No courses exists..
+        ///   Looks up a localized string similar to No courses found..
         /// </summary>
         public static string NoCoursesExists_ {
             get {
                 return ResourceManager.GetString("NoCoursesExists.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Key.
+        /// </summary>
+        public static string SearchKey {
+            get {
+                return ResourceManager.GetString("SearchKey", resourceCulture);
             }
         }
     }

@@ -119,6 +119,12 @@
     <value>Delete</value>
   </data>
   <data name="NoGroupsExists" xml:space="preserve">
-    <value>No groups exists.</value>
+    <value>No groups found.</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchKey" xml:space="preserve">
+    <value>Search Key</value>
   </data>
 </root>

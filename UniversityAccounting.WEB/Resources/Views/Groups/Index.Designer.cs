@@ -115,11 +115,29 @@ namespace UniversityAccounting.WEB.Resources.Views.Groups {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No groups exists..
+        ///   Looks up a localized string similar to No groups found..
         /// </summary>
-        public static string NoGroupsExists_ {
+        public static string NoGroupsExists {
             get {
-                return ResourceManager.GetString("NoGroupsExists.", resourceCulture);
+                return ResourceManager.GetString("NoGroupsExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Key.
+        /// </summary>
+        public static string SearchKey {
+            get {
+                return ResourceManager.GetString("SearchKey", resourceCulture);
             }
         }
         

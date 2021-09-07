@@ -139,7 +139,7 @@
     <value>Удалить</value>
   </data>
   <data name="NoStudentsExists" xml:space="preserve">
-    <value>В группе нет студентов.</value>
+    <value>Студенты не найдены.</value>
   </data>
   <data name="GroupStudents" xml:space="preserve">
     <value>Студенты группы "{0}"</value>
@@ -158,5 +158,11 @@
   </data>
   <data name="Expelled" xml:space="preserve">
     <value>Отчислен</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="SearchKey" xml:space="preserve">
+    <value>Текст для поиска</value>
   </data>
 </root>

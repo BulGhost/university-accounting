@@ -32,7 +32,7 @@ namespace UniversityAccounting.WEB.Controllers
         }
 
         public IActionResult Index(int groupId, int page = 1, string sortProperty = nameof(Student.LastName),
-            SortOrder sortOrder = SortOrder.Ascending)
+            SortOrder sortOrder = SortOrder.Ascending, string searchText = "")
         {
             var currentGroup = _unitOfWork.Groups.Get(groupId);
             if (currentGroup == null) return NotFound();
@@ -60,7 +60,9 @@ namespace UniversityAccounting.WEB.Controllers
             sortModel.ApplySort(sortProperty, sortOrder);
 
             var studentsOnPage = _mapper.Map<List<StudentViewModel>>(_unitOfWork.Students
-                .GetPart(s => s.GroupId == groupId, sortProperty, page, StudentsPerPage, sortOrder));
+                .GetPart(s => s.GroupId == groupId, sortProperty, page, StudentsPerPage, sortOrder)
+                .FindStudentsWithSearchText(searchText));
+            ViewBag.SearchText = searchText;
 
             return View(new StudentsIndexViewModel
             {

@@ -139,7 +139,7 @@
     <value>حذف</value>
   </data>
   <data name="NoStudentsExists" xml:space="preserve">
-    <value>لا يوجد طلاب.</value>
+    <value>لم يتم العثور على طلاب.</value>
   </data>
   <data name="GroupStudents" xml:space="preserve">
     <value>مجموعة "{0}" الطلاب</value>
@@ -158,5 +158,11 @@
   </data>
   <data name="Expelled" xml:space="preserve">
     <value>مطرود</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>بحث</value>
+  </data>
+  <data name="SearchKey" xml:space="preserve">
+    <value>مفتاح البحث</value>
   </data>
 </root>

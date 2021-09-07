@@ -124,7 +124,7 @@
     <value>حذف</value>
   </data>
   <data name="NoGroupsExists" xml:space="preserve">
-    <value>لا توجد مجموعات.</value>
+    <value>لم يتم العثور على مجموعات.</value>
   </data>
   <data name="CourseGroups" xml:space="preserve">
     <value>مجموعات الدورات التدريبية "{0}"</value>
@@ -140,5 +140,11 @@
   </data>
   <data name="StudentsQuantity" xml:space="preserve">
     <value>عدد الطلاب</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>بحث</value>
+  </data>
+  <data name="SearchKey" xml:space="preserve">
+    <value>مفتاح البحث</value>
   </data>
 </root>

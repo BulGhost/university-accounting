@@ -119,6 +119,12 @@
     <value>Delete</value>
   </data>
   <data name="NoCoursesExists." xml:space="preserve">
-    <value>No courses exists.</value>
+    <value>No courses found.</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchKey" xml:space="preserve">
+    <value>Search Key</value>
   </data>
 </root>

@@ -139,6 +139,12 @@
     <value>Удалить</value>
   </data>
   <data name="NoCoursesExists." xml:space="preserve">
-    <value>Курсов нет.</value>
+    <value>Курсы не найдены.</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="SearchKey" xml:space="preserve">
+    <value>Текст для поиска</value>
   </data>
 </root>

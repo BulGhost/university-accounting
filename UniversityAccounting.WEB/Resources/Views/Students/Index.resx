@@ -125,7 +125,7 @@
     <value>Delete</value>
   </data>
   <data name="NoStudentsExists" xml:space="preserve">
-    <value>No students exists.</value>
+    <value>No students found.</value>
   </data>
   <data name="Applicant" xml:space="preserve">
     <value>Applicant</value>
@@ -138,5 +138,11 @@
   </data>
   <data name="Expelled" xml:space="preserve">
     <value>Expelled</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchKey" xml:space="preserve">
+    <value>Search Key</value>
   </data>
 </root>
