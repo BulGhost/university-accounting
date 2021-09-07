@@ -19,7 +19,6 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="FirstName" class="form-control" />
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row m-3">
@@ -28,7 +27,6 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="LastName" class="form-control" />
-                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row m-3">
@@ -37,7 +35,6 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="DateOfBirth" class="form-control" type="date" value="2003-01-01" />
-                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row m-3">
@@ -46,7 +43,6 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="FinalExamGpa" class="form-control" />
-                        <span asp-validation-for="FinalExamGpa" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row m-3">
@@ -61,7 +57,6 @@
                             <option value="3">@_localizer["Graduate"]</option>
                             <option value="4">@_localizer["Expelled"]</option>
                         </select>
-                        <span asp-validation-for="Status" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -86,5 +81,6 @@
     @{
         <partial name="_ValidationScriptsPartial" />
         <script src="~/lib/js/ConfirmBack.js"></script>
+        <script src="~/lib/js/DisableButtonIfMiodelInvalid.js"></script>
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using UniversityAccounting.DAL.Entities;
 
@@ -39,6 +40,11 @@ namespace UniversityAccounting.DAL.EF
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys()))
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+
+            modelBuilder.Entity<Group>()
+                .Property(g => g.StudentsQuantity)
+                .HasComputedColumnSql("dbo.FindStudentsQuantity([Id])");
         }
     }
 }
+    

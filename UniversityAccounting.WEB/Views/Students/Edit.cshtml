@@ -8,7 +8,7 @@
         <div class="row">
             <h2 class="text-info ps-3">@_localizer["EditStudent"]</h2>
         </div>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row m-3">
             <div class="col-8">
                 <div class="row m-3">
@@ -17,7 +17,6 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="FirstName" class="form-control" />
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row m-3">
@@ -26,7 +25,6 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="LastName" class="form-control" />
-                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row m-3">
@@ -35,7 +33,6 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="DateOfBirth" class="form-control" type="date" />
-                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row m-3">
@@ -57,7 +54,6 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="FinalExamGpa" class="form-control" />
-                        <span asp-validation-for="FinalExamGpa" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row m-3">
@@ -95,5 +91,6 @@
     @{
         <partial name="_ValidationScriptsPartial" />
         <script src="~/lib/js/ConfirmBack.js"></script>
+        <script src="~/lib/js/DisableButtonIfMiodelInvalid.js"></script>
     }
 }
