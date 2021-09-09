@@ -31,42 +31,6 @@ namespace UniversityAccounting.DAL.Repositories
             return Context.Set<TEntity>().AsEnumerable();
         }
 
-        public IEnumerable<TEntity> GetPart(int pageIndex, int pageSize)
-        {
-            return Context.Set<TEntity>()
-                .Skip((pageIndex - 1) * pageSize)
-                .Take(pageSize)
-                .AsEnumerable();
-        }
-
-        public IEnumerable<TEntity> GetPart(string sortProperty, int pageIndex, int pageSize,
-            SortOrder sortOrder = SortOrder.Ascending)
-        {
-            var expr = GetKeySelector(typeof(TEntity), sortProperty);
-
-            var items = sortOrder == SortOrder.Ascending
-                ? Context.Set<TEntity>().OrderBy(expr)
-                : Context.Set<TEntity>().OrderByDescending(expr);
-
-            return items
-                .Skip((pageIndex - 1) * pageSize)
-                .Take(pageSize);
-        }
-
-        public IEnumerable<TEntity> GetPart(Expression<Func<TEntity, bool>> predicate, string sortProperty,
-            int pageIndex, int pageSize, SortOrder sortOrder = SortOrder.Ascending)
-        {
-            var expr = GetKeySelector(typeof(TEntity), sortProperty);
-
-            var items = sortOrder == SortOrder.Ascending
-                ? Context.Set<TEntity>().Where(predicate).OrderBy(expr)
-                : Context.Set<TEntity>().Where(predicate).OrderByDescending(expr);
-
-            return items
-                .Skip((pageIndex - 1) * pageSize)
-                .Take(pageSize);
-        }
-
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().Where(predicate);
@@ -92,7 +56,7 @@ namespace UniversityAccounting.DAL.Repositories
             Context.Set<TEntity>().RemoveRange(entities);
         }
 
-        private Expression<Func<TEntity, object>> GetKeySelector(Type type, string sortProperty)
+        protected Expression<Func<TEntity, object>> GetKeySelector(Type type, string sortProperty)
         {
             var prop = type.GetProperty(sortProperty);
             if (prop == null) throw new ArgumentException("Invalid property for ordering", sortProperty);

@@ -61,6 +61,15 @@ namespace UniversityAccounting.WEB.Resources.Controllers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Courses.
+        /// </summary>
+        public static string Courses {
+            get {
+                return ResourceManager.GetString("Courses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete student.
         /// </summary>
         public static string DeleteStudent {
@@ -93,6 +102,15 @@ namespace UniversityAccounting.WEB.Resources.Controllers {
         public static string NewStudent {
             get {
                 return ResourceManager.GetString("NewStudent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} student(s) removed.
+        /// </summary>
+        public static string SeveralStudentsDeleted {
+            get {
+                return ResourceManager.GetString("SeveralStudentsDeleted", resourceCulture);
             }
         }
         

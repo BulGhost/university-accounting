@@ -34,7 +34,7 @@
                         <label asp-for="DateOfBirth" class="required"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="DateOfBirth" class="form-control" type="date" value="2003-01-01" /> @{/*TODO: Arabic fail default value*/}
+                        <input asp-for="DateOfBirth" class="form-control" type="date" value="2003-01-01" /> @{/*UNDONE: Arabic fail default value*/}
                     </div>
                 </div>
                 <div class="row m-3">
@@ -78,9 +78,7 @@
 <partial name="_BackConfirm" />
 
 @section Scripts {
-    @{
-        <partial name="_ValidationScriptsPartial" />
-        <script src="~/lib/js/ConfirmBack.js"></script>
-        <script src="~/lib/js/DisableButtonIfMiodelInvalid.js"></script>
-    }
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/js/ConfirmBack.js"></script>
+    <script src="~/lib/js/DisableButtonIfMiodelInvalid.js"></script>
 }

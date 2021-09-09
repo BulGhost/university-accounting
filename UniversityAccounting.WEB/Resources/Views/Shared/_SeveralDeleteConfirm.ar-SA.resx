@@ -117,34 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GroupName" xml:space="preserve">
-    <value>{0} مجموعة</value>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>هل أنت متأكد؟</value>
   </data>
-  <data name="NewStudent" xml:space="preserve">
-    <value>طالب جديد</value>
+  <data name="No" xml:space="preserve">
+    <value>لا</value>
   </data>
-  <data name="StudentAdded" xml:space="preserve">
-    <value>تمت إضافة الطالب {0} {1}</value>
-  </data>
-  <data name="EditStudent" xml:space="preserve">
-    <value>تحرير الطالب</value>
-  </data>
-  <data name="StudentUpdated" xml:space="preserve">
-    <value>تم تحديث الطالب {0} {1}</value>
-  </data>
-  <data name="DeleteStudent" xml:space="preserve">
-    <value>حذف الطالب</value>
-  </data>
-  <data name="StudentDeleted" xml:space="preserve">
-    <value>تم حذف الطالب {0} {1}</value>
-  </data>
-  <data name="StudentExists" xml:space="preserve">
-    <value>مثل هذا الطالب موجود بالفعل.</value>
-  </data>
-  <data name="Courses" xml:space="preserve">
-    <value>الدورات التدريبية</value>
-  </data>
-  <data name="SeveralStudentsDeleted" xml:space="preserve">
-    <value>تمت إزالة {0} طالب (طلاب)</value>
+  <data name="Yes" xml:space="preserve">
+    <value>نعم</value>
   </data>
 </root>

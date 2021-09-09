@@ -144,4 +144,7 @@
   <data name="EditCourse" xml:space="preserve">
     <value>تحرير الدورة</value>
   </data>
+  <data name="SeveralCoursesDeleted" xml:space="preserve">
+    <value>تمت إزالة {0} من الدورات التدريبية</value>
+  </data>
 </root>

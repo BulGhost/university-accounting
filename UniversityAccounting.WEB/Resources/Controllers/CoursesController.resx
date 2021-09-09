@@ -124,4 +124,7 @@
   <data name="EditCourse" xml:space="preserve">
     <value>Edit Course</value>
   </data>
+  <data name="SeveralCoursesDeleted" xml:space="preserve">
+    <value>{0} course(s) removed</value>
+  </data>
 </root>

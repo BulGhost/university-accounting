@@ -4,3 +4,4 @@
 $(document).ready(function () {
     Globalize.culture('@System.Globalization.CultureInfo.CurrentCulture.Name');
 });
+

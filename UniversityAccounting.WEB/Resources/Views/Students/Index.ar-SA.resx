@@ -165,4 +165,11 @@
   <data name="SearchKey" xml:space="preserve">
     <value>مفتاح البحث</value>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>هل أنت متأكد أنك تريد إزالة الطلاب المحددين؟ ستفقد البيانات.
+عدد الطلاب المطلوب حذفهم: </value>
+  </data>
+  <data name="DeleteBtn" xml:space="preserve">
+    <value>احذف المختار</value>
+  </data>
 </root>

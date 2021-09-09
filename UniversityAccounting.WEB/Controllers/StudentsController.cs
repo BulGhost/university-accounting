@@ -7,6 +7,7 @@ using SmartBreadcrumbs.Nodes;
 using UniversityAccounting.DAL.Interfaces;
 using UniversityAccounting.WEB.Models;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using UniversityAccounting.DAL.BusinessLogic;
 using UniversityAccounting.DAL.Entities;
@@ -38,9 +39,9 @@ namespace UniversityAccounting.WEB.Controllers
             if (currentGroup == null) return NotFound();
 
             ViewBag.Group = currentGroup;
-            int totalStudents = _unitOfWork.Students.Find(s => s.GroupId == groupId).Count();
-            if (page < 1 || page > Math.Ceiling((double) totalStudents / StudentsPerPage))
-                return RedirectToAction("Index", new {page = 1});
+            int totalStudents = _unitOfWork.Students.SuitableStudentsCount(s => s.GroupId == groupId, searchText);
+            if (page < 1 || page > Math.Floor((double) totalStudents / StudentsPerPage) + 1)
+                return RedirectToAction("Index", new {groupId, page = 1});
 
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
             var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{currentGroup.Course.Name}")
@@ -50,6 +51,7 @@ namespace UniversityAccounting.WEB.Controllers
             ViewData["BreadcrumbNode"] = node3;
 
             if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
+            if (TempData.ContainsKey("error")) _notyf.Error(TempData["error"].ToString());
 
             var sortModel = new SortModel();
             sortModel.AddColumn(nameof(Student.FirstName));
@@ -60,8 +62,8 @@ namespace UniversityAccounting.WEB.Controllers
             sortModel.ApplySort(sortProperty, sortOrder);
 
             var studentsOnPage = _mapper.Map<List<StudentViewModel>>(_unitOfWork.Students
-                .GetPart(s => s.GroupId == groupId, sortProperty, page, StudentsPerPage, sortOrder)
-                .FindStudentsWithSearchText(searchText));
+                .GetRequiredStudents(s => s.GroupId == groupId, searchText, sortProperty,
+                    page, StudentsPerPage, sortOrder));
             ViewBag.SearchText = searchText;
 
             return View(new StudentsIndexViewModel
@@ -72,9 +74,38 @@ namespace UniversityAccounting.WEB.Controllers
                 {
                     CurrentPage = page,
                     ItemsPerPage = StudentsPerPage,
-                    TotalItems = _unitOfWork.Students.Find(s => s.GroupId == groupId).Count()
+                    TotalItems = totalStudents
                 }
             });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteSeveral(int?[] ids)
+        {
+            ICollection<Student> students = new List<Student>();
+            foreach (int? id in ids)
+            {
+                if (id == null) continue;
+
+                var student = _unitOfWork.Students.Get((int) id);
+                if (student == null) return View("Error");
+
+                students.Add(student);
+            }
+
+            try
+            {
+                _unitOfWork.Students.RemoveRange(students);
+                _unitOfWork.Complete();
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+
+            TempData["message"] = _localizer["SeveralStudentsDeleted", students.Count].Value;
+            return RedirectToAction("Index", new {groupId = students.First().GroupId});
         }
 
         public IActionResult Create(int? groupId)
