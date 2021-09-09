@@ -88,6 +88,15 @@ namespace UniversityAccounting.WEB.Resources.Views.Groups {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete selected.
+        /// </summary>
+        public static string DeleteBtn {
+            get {
+                return ResourceManager.GetString("DeleteBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -111,6 +120,16 @@ namespace UniversityAccounting.WEB.Resources.Views.Groups {
         public static string GroupName {
             get {
                 return ResourceManager.GetString("GroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove selected groups? The data will be lost.
+        ///Number of groups to delete: .
+        /// </summary>
+        public static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
             }
         }
         

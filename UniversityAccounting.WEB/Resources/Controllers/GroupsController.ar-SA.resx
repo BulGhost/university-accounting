@@ -144,4 +144,7 @@
   <data name="Courses" xml:space="preserve">
     <value>الدورات التدريبية</value>
   </data>
+  <data name="SeveralGroupsDeleted" xml:space="preserve">
+    <value>تمت إزالة {0} مجموعة (مجموعات)</value>
+  </data>
 </root>

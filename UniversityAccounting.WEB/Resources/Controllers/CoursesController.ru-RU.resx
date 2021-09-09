@@ -144,4 +144,7 @@
   <data name="EditCourse" xml:space="preserve">
     <value>Изменить курс</value>
   </data>
+  <data name="SeveralCoursesDeleted" xml:space="preserve">
+    <value>Удалено {0} курс(ов)</value>
+  </data>
 </root>

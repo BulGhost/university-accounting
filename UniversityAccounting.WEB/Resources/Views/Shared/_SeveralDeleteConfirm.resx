@@ -97,34 +97,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NewGroup" xml:space="preserve">
-    <value>New group</value>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Are you sure?</value>
   </data>
-  <data name="GroupAdded" xml:space="preserve">
-    <value>"{0}" group added</value>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
   </data>
-  <data name="EditGroup" xml:space="preserve">
-    <value>Edit group</value>
-  </data>
-  <data name="GroupUpdated" xml:space="preserve">
-    <value>"{0}" group updated</value>
-  </data>
-  <data name="DeleteGroup" xml:space="preserve">
-    <value>Delete group</value>
-  </data>
-  <data name="DeleteErrorMessage" xml:space="preserve">
-    <value>Unable to delete group that contains students</value>
-  </data>
-  <data name="GroupDeleted" xml:space="preserve">
-    <value>"{0}" group deleted</value>
-  </data>
-  <data name="GroupExistsErrorMessage" xml:space="preserve">
-    <value>The group name {0} is already exists.</value>
-  </data>
-  <data name="Courses" xml:space="preserve">
-    <value>Courses</value>
-  </data>
-  <data name="SeveralGroupsDeleted" xml:space="preserve">
-    <value>{0} group(s) removed</value>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

@@ -144,4 +144,7 @@
   <data name="Courses" xml:space="preserve">
     <value>Курсы</value>
   </data>
+  <data name="SeveralStudentsDeleted" xml:space="preserve">
+    <value>Удалено {0} студента(ов)</value>
+  </data>
 </root>

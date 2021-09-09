@@ -127,4 +127,11 @@
   <data name="SearchKey" xml:space="preserve">
     <value>Search Key</value>
   </data>
+  <data name="DeleteBtn" xml:space="preserve">
+    <value>Delete selected</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Are you sure you want to remove selected courses? The data will be lost.
+Number of courses to delete: </value>
+  </data>
 </root>

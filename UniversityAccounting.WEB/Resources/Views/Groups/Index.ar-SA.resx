@@ -147,4 +147,11 @@
   <data name="SearchKey" xml:space="preserve">
     <value>مفتاح البحث</value>
   </data>
+  <data name="DeleteBtn" xml:space="preserve">
+    <value>احذف المختار</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>هل أنت متأكد أنك تريد إزالة المجموعات المختارة؟ ستفقد البيانات.
+عدد المجموعات المطلوب حذفها: </value>
+  </data>
 </root>

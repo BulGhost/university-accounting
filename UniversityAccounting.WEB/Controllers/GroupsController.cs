@@ -39,15 +39,16 @@ namespace UniversityAccounting.WEB.Controllers
             if (currentCourse == null) return NotFound();
 
             ViewBag.Course = currentCourse;
-            int totalGroups = _unitOfWork.Groups.Find(g => g.CourseId == courseId).Count();
-            if (page < 1 || page > Math.Ceiling((double) totalGroups / GroupsPerPage))
-                return RedirectToAction("Index", new {page = 1});
+            int totalGroups = _unitOfWork.Groups.SuitableGroupsCount(g => g.CourseId == courseId, searchText);
+            if (page < 1 || page > Math.Floor((double) totalGroups / GroupsPerPage) + 1)
+                return RedirectToAction("Index", new {courseId});
 
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
             var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{currentCourse.Name}") {Parent = node1};
             ViewData["BreadcrumbNode"] = node2;
 
             if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
+            if (TempData.ContainsKey("error")) _notyf.Error(TempData["error"].ToString());
 
             var sortModel = new SortModel();
             sortModel.AddColumn(nameof(Group.Name), true);
@@ -56,8 +57,8 @@ namespace UniversityAccounting.WEB.Controllers
             sortModel.ApplySort(sortProperty, sortOrder);
 
             var groupsOnPage = _mapper.Map<IEnumerable<GroupViewModel>>(_unitOfWork.Groups
-                .GetPart(g => g.CourseId == courseId, sortProperty, page, GroupsPerPage, sortOrder)
-                .FindGroupsWithSearchText(searchText));
+                .GetRequiredGroups(g => g.CourseId == courseId, searchText, sortProperty,
+                    page, GroupsPerPage, sortOrder));
             ViewBag.SearchText = searchText;
 
             return View(new GroupsIndexViewModel
@@ -68,9 +69,43 @@ namespace UniversityAccounting.WEB.Controllers
                 {
                     CurrentPage = page,
                     ItemsPerPage = GroupsPerPage,
-                    TotalItems = _unitOfWork.Groups.Find(g => g.CourseId == courseId).Count()
+                    TotalItems = totalGroups
                 }
             });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteSeveral(int?[] ids)
+        {
+            ICollection<Group> groups = new List<Group>();
+            foreach (int? id in ids)
+            {
+                if (id == null) continue;
+
+                var group = _unitOfWork.Groups.Get((int) id);
+                if (group == null) return View("Error");
+
+                groups.Add(group);
+            }
+
+            try
+            {
+                _unitOfWork.Groups.RemoveRange(groups);
+                _unitOfWork.Complete();
+            }
+            catch (DbUpdateException)
+            {
+                TempData["error"] = _localizer["DeleteErrorMessage"].Value;
+                return RedirectToAction("Index", new {courseId = groups.First().CourseId});
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+
+            TempData["message"] = _localizer["SeveralGroupsDeleted", groups.Count].Value;
+            return RedirectToAction("Index", new {courseId = groups.First().CourseId});
         }
 
         public IActionResult Create(int? courseId)

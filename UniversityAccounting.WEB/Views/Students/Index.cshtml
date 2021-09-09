@@ -9,7 +9,7 @@
 <div class="container p-2">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">@_localizer["GroupStudents", ViewBag.Group.Name]</h2>
+            <h2 class="text-primary ps-3">@_localizer["GroupStudents", ViewBag.Group.Name]</h2>
         </div>
         <div class="col-6 text-end">
             <a asp-controller="Students" asp-action="Create" asp-route-groupId="@ViewBag.Group.Id" class="btn btn-primary">
@@ -19,107 +19,124 @@
     </div>
 
     <div class="row justify-content-start my-2">
-        <div class="col-4">
+        <div class="col-6">
             <form asp-action="Index" asp-route-groupId="@ViewBag.Group.Id" class="row">
-                <div class="col-8">
-                    <input type="text" value="@ViewBag.SearchText" class="form-control"
-                           name="SearchText" placeholder="@_localizer["SearchKey"]" />
-                </div>
                 <div class="col">
-                    <input type="submit" value="@_localizer["Search"]" class="px-3 btn btn btn-success " />
+                    <input type="text" value="@ViewBag.SearchText" class="form-control mb-2"
+                           name="searchText" placeholder="@_localizer["SearchKey"]" />
+                </div>
+                <div class="col-7">
+                    <input type="submit" value="@_localizer["Search"]" class="px-3 btn btn btn-success" />
                 </div>
             </form>
+        </div>
+        <div class="col text-end">
+            <a id="deleteButton" class="btn btn-danger">@_localizer["DeleteBtn"]</a>
         </div>
     </div>
 
     @if (Model.Students.Any())
     {
-        <table class="table table-striped" style="width: 100%">
-            <thead>
-                <tr>
-                    <th>
-                        <a asp-action="Index" asp-route-groupId="@ViewBag.Group.Id" asp-route-page="1" asp-route-sortProperty="FirstName"
-                           asp-route-sortOrder="@Model.SortModel.GetColumn("FirstName").Order" class="column-heading">
-                            @_localizer["FirstName"]
-                        </a>
-                        <i class="@Model.SortModel.GetColumn("FirstName").SortIcon"></i>
-                    </th>
-                    <th>
-                        <a asp-action="Index" asp-route-groupId="@ViewBag.Group.Id" asp-route-page="1" asp-route-sortProperty="LastName"
-                           asp-route-sortOrder="@Model.SortModel.GetColumn("LastName").Order" class="column-heading">
-                            @_localizer["LastName"]
-                        </a>
-                        <i class="@Model.SortModel.GetColumn("LastName").SortIcon"></i>
-                    </th>
-                    <th>
-                        <a asp-action="Index" asp-route-groupId="@ViewBag.Group.Id" asp-route-page="1" asp-route-page="1" asp-route-sortProperty="DateOfBirth"
-                           asp-route-sortOrder="@Model.SortModel.GetColumn("DateOfBirth").Order" class="column-heading">
-                            @_localizer["DateOfBirth"]
-                        </a>
-                        <i class="@Model.SortModel.GetColumn("DateOfBirth").SortIcon"></i>
-                    </th>
-                    <th>
-                        <a asp-action="Index" asp-route-groupId="@ViewBag.Group.Id" asp-route-page="1" asp-route-sortProperty="FinalExamGpa"
-                           asp-route-sortOrder="@Model.SortModel.GetColumn("FinalExamGpa").Order" class="column-heading">
-                            @_localizer["Gpa"]
-                        </a>
-                        <i class="@Model.SortModel.GetColumn("FinalExamGpa").SortIcon"></i>
-                    </th>
-                    <th>
-                        <a asp-action="Index" asp-route-groupId="@ViewBag.Group.Id" asp-route-page="1" asp-route-sortProperty="Status"
-                           asp-route-sortOrder="@Model.SortModel.GetColumn("Status").Order" class="column-heading">
-                            @_localizer["Status"]
-                        </a>
-                        <i class="@Model.SortModel.GetColumn("Status").SortIcon"></i>
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var student in Model.Students)
-                {
-                    <tr class="align-middle">
-                        <td wigth="20%" class="ps-3">@student.FirstName</td>
-                        <td width="20%">@student.LastName</td>
-                        <td width="15%">@student.DateOfBirth.ToShortDateString()</td>
-                        <td width="15%">@Html.DisplayFor(modelItem => student.FinalExamGpa)</td>
-                        @{
-                            switch (student.Status)
-                            {
-                                case 1:
-                                    <td width="15%">@_localizer["Applicant"]</td>
-                                    break;
-                                case 2:
-                                    <td width="15%">@_localizer["Undergraduate"]</td>
-                                    break;
-                                case 3:
-                                    <td width="15%">@_localizer["Graduate"]</td>
-                                    break;
-                                case 4:
-                                    <td width="15%">@_localizer["Expelled"]</td>
-                                    break;
-                            }
-                        }
-                        <td class="text-center">
-                            <div>
-                                <a asp-controller="Students" asp-action="Edit" asp-route-Id="@student.Id" class="btn btn-primary ms-4 my-1">
-                                    @_localizer["Edit"]
-                                </a>
-                                <a asp-controller="Students" asp-action="Delete" asp-route-Id="@student.Id" class="btn btn-danger ms-4 my-1">
-                                    @_localizer["Delete"]
-                                </a>
-                            </div>
-                        </td>
+        <form asp-action="DeleteSeveral" method="post">
+            <table class="table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>
+                            <input class="form-check-input" type="checkbox" name="allcheck" id="selectAll" />
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-groupId="@ViewBag.Group.Id" asp-route-page="1" asp-route-sortProperty="FirstName"
+                               asp-route-sortOrder="@Model.SortModel.GetColumn("FirstName").Order" class="column-heading">
+                                @_localizer["FirstName"]
+                            </a>
+                            <i class="@Model.SortModel.GetColumn("FirstName").SortIcon"></i>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-groupId="@ViewBag.Group.Id" asp-route-page="1" asp-route-sortProperty="LastName"
+                               asp-route-sortOrder="@Model.SortModel.GetColumn("LastName").Order" class="column-heading">
+                                @_localizer["LastName"]
+                            </a>
+                            <i class="@Model.SortModel.GetColumn("LastName").SortIcon"></i>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-groupId="@ViewBag.Group.Id" asp-route-page="1" asp-route-page="1" asp-route-sortProperty="DateOfBirth"
+                               asp-route-sortOrder="@Model.SortModel.GetColumn("DateOfBirth").Order" class="column-heading">
+                                @_localizer["DateOfBirth"]
+                            </a>
+                            <i class="@Model.SortModel.GetColumn("DateOfBirth").SortIcon"></i>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-groupId="@ViewBag.Group.Id" asp-route-page="1" asp-route-sortProperty="FinalExamGpa"
+                               asp-route-sortOrder="@Model.SortModel.GetColumn("FinalExamGpa").Order" class="column-heading">
+                                @_localizer["Gpa"]
+                            </a>
+                            <i class="@Model.SortModel.GetColumn("FinalExamGpa").SortIcon"></i>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-groupId="@ViewBag.Group.Id" asp-route-page="1" asp-route-sortProperty="Status"
+                               asp-route-sortOrder="@Model.SortModel.GetColumn("Status").Order" class="column-heading">
+                                @_localizer["Status"]
+                            </a>
+                            <i class="@Model.SortModel.GetColumn("Status").SortIcon"></i>
+                        </th>
+                        <th></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.Students)
+                    {
+                        <tr>
+                            <td class="align-middle">
+                                <input type="checkbox" value="@student.Id" name="ids" id="ids" class="form-check-input" />
+                            </td>
+                            <td wigth="20%" class="ps-1">@student.FirstName</td>
+                            <td width="20%">@student.LastName</td>
+                            <td width="15%">@student.DateOfBirth.ToShortDateString()</td>
+                            <td width="15%">@Html.DisplayFor(modelItem => student.FinalExamGpa)</td>
+                            @{
+                                switch (student.Status)
+                                {
+                                    case 1:
+                                        <td width="15%">@_localizer["Applicant"]</td>
+                                        break;
+                                    case 2:
+                                        <td width="15%">@_localizer["Undergraduate"]</td>
+                                        break;
+                                    case 3:
+                                        <td width="15%">@_localizer["Graduate"]</td>
+                                        break;
+                                    case 4:
+                                        <td width="15%">@_localizer["Expelled"]</td>
+                                        break;
+                                }
+                            }
+                            <td class="text-center">
+                                <div>
+                                    <a asp-controller="Students" asp-action="Edit" asp-route-Id="@student.Id" class="btn btn-primary ms-4 my-1">
+                                        @_localizer["Edit"]
+                                    </a>
+                                    <a asp-controller="Students" asp-action="Delete" asp-route-Id="@student.Id" class="btn btn-danger ms-4 my-1">
+                                        @_localizer["Delete"]
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @{ ViewBag.Message = _localizer["Message"].Value; }
+            <partial name="_SeveralDeleteConfirm" view-data="ViewData" />
+        </form>
     }
     else
     {
         <p>@_localizer["NoStudentsExists"]</p>
     }
-    <partial name="_Pager" model="@Model.PagingInfo" view-data="ViewData"  />
+    <partial name="_Pager" model="@Model.PagingInfo" view-data="ViewData" />
     <br />
 </div>
 
+@section Scripts {
+    <script src="~/lib/js/SelectAllCheckbox.js"></script>
+    <script src="~/lib/js/DeleteButtonHideShow.js"></script>
+}

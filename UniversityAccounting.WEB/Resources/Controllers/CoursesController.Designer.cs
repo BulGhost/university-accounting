@@ -140,5 +140,14 @@ namespace UniversityAccounting.WEB.Resources.Controllers {
                 return ResourceManager.GetString("EditCourse", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} course(s) removed.
+        /// </summary>
+        public static string SeveralCoursesDeleted {
+            get {
+                return ResourceManager.GetString("SeveralCoursesDeleted", resourceCulture);
+            }
+        }
     }
 }

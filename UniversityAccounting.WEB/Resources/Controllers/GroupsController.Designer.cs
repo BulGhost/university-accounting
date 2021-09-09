@@ -61,6 +61,15 @@ namespace UniversityAccounting.WEB.Resources.Controllers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Courses.
+        /// </summary>
+        public static string Courses {
+            get {
+                return ResourceManager.GetString("Courses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to delete group that contains students.
         /// </summary>
         public static string DeleteErrorMessage {
@@ -129,6 +138,15 @@ namespace UniversityAccounting.WEB.Resources.Controllers {
         public static string NewGroup {
             get {
                 return ResourceManager.GetString("NewGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} group(s) removed.
+        /// </summary>
+        public static string SeveralGroupsDeleted {
+            get {
+                return ResourceManager.GetString("SeveralGroupsDeleted", resourceCulture);
             }
         }
     }

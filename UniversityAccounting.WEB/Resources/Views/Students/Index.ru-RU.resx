@@ -165,4 +165,11 @@
   <data name="SearchKey" xml:space="preserve">
     <value>Текст для поиска</value>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>Вы действительно хотите удалить выбранных студентов? Данные будут потеряны.
+Количество удаляемых студентов: </value>
+  </data>
+  <data name="DeleteBtn" xml:space="preserve">
+    <value>Удалить выбранные</value>
+  </data>
 </root>

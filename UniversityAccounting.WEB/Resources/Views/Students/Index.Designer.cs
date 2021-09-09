@@ -97,6 +97,15 @@ namespace UniversityAccounting.WEB.Resources.Views.Students {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete selected.
+        /// </summary>
+        public static string DeleteBtn {
+            get {
+                return ResourceManager.GetString("DeleteBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -156,6 +165,16 @@ namespace UniversityAccounting.WEB.Resources.Views.Students {
         public static string LastName {
             get {
                 return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove selected students? The data will be lost.
+        ///Number of students to delete: .
+        /// </summary>
+        public static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
             }
         }
         

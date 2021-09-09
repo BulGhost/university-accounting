@@ -34,11 +34,12 @@ namespace UniversityAccounting.WEB.Controllers
         public IActionResult Index(int page = 1, string sortProperty = nameof(Course.Name),
             SortOrder sortOrder = SortOrder.Ascending, string searchText = "")
         {
-            int totalCourses = _unitOfWork.Courses.TotalCount();
-            if (page < 1 || page > Math.Ceiling((double)totalCourses / CoursesPerPage))
+            int totalCourses = _unitOfWork.Courses.SuitableCoursesCount(searchText);
+            if (page < 1 || page > Math.Floor((double) totalCourses / CoursesPerPage) + 1)
                 return RedirectToAction("Index", new {page = 1});
 
             if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
+            if (TempData.ContainsKey("error")) _notyf.Error(TempData["error"].ToString());
 
             var sortModel = new SortModel();
             sortModel.AddColumn(nameof(Course.Name), true);
@@ -46,8 +47,8 @@ namespace UniversityAccounting.WEB.Controllers
             sortModel.ApplySort(sortProperty, sortOrder);
 
             var coursesOnPage = _mapper.Map<IEnumerable<CourseViewModel>>(
-                _unitOfWork.Courses.GetPart(sortProperty, page, CoursesPerPage, sortOrder)
-                    .FindCoursesWithSearchText(searchText));
+                _unitOfWork.Courses.GetRequiredCourses(searchText, sortProperty,
+                    page, CoursesPerPage, sortOrder));
             ViewBag.SearchText = searchText;
 
             return View(new CoursesIndexViewModel
@@ -61,6 +62,40 @@ namespace UniversityAccounting.WEB.Controllers
                     TotalItems = totalCourses
                 }
             });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteSeveral(int?[] ids)
+        {
+            ICollection<Course> courses = new List<Course>();
+            foreach (int? id in ids)
+            {
+                if (id == null) continue;
+
+                var course = _unitOfWork.Courses.Get((int) id);
+                if (course == null) return View("Error");
+
+                courses.Add(course);
+            }
+
+            try
+            {
+                _unitOfWork.Courses.RemoveRange(courses);
+                _unitOfWork.Complete();
+            }
+            catch (DbUpdateException)
+            {
+                TempData["error"] = _localizer["DeleteErrorMessage"].Value;
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+
+            TempData["message"] = _localizer["SeveralCoursesDeleted", courses.Count].Value;
+            return RedirectToAction("Index");
         }
 
         public IActionResult Create()
