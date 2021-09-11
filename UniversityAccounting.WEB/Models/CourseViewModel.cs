@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UniversityAccounting.WEB.Models
 {
@@ -20,6 +19,7 @@ namespace UniversityAccounting.WEB.Models
 
         [StringLength(300, ErrorMessageResourceName = "DescriptionErrorMessage",
             ErrorMessageResourceType = typeof(Resources.Models.CourseViewModel))]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "Description", ResourceType = typeof(Resources.Models.CourseViewModel))]
         public string Description { get; set; }
     }

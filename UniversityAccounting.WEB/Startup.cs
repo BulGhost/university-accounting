@@ -10,8 +10,6 @@ using SmartBreadcrumbs.Extensions;
 using UniversityAccounting.DAL.EF;
 using UniversityAccounting.DAL.Interfaces;
 using UniversityAccounting.DAL.Repositories;
-using AutoMapper;
-using UniversityAccounting.WEB.Models;
 using UniversityAccounting.WEB.Models.HelperClasses;
 
 namespace UniversityAccounting.WEB
@@ -31,7 +29,11 @@ namespace UniversityAccounting.WEB
                         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
 
             services.AddAutoMapper(typeof(MappingProfile));
-            services.AddMvc().AddViewLocalization();
+            services.AddMvc()
+                .AddViewLocalization()
+                .AddMvcOptions(opts => opts.ModelBindingMessageProvider
+                    .SetAttemptedValueIsInvalidAccessor((value, prop) =>
+                        string.Format(Resources.Startup.ValueIsInvalidMessage, value, prop)));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
