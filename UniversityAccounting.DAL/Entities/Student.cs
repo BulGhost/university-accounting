@@ -4,14 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UniversityAccounting.DAL.Entities
 {
-    public enum StudentStatus
-    {
-        Applicant = 1,
-        Undergraduate,
-        Graduate,
-        Expelled
-    }
-
     public class Student : EntityBase
     {
         [Required]

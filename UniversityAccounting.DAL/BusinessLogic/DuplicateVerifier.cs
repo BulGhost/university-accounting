@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using UniversityAccounting.DAL.EF;
-using UniversityAccounting.DAL.Repositories;
+using UniversityAccounting.DAL.Interfaces;
 
 namespace UniversityAccounting.DAL.BusinessLogic
 {
     public class DuplicateVerifier
     {
-        private readonly UniversityContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DuplicateVerifier()
+        public DuplicateVerifier(IUnitOfWork unitOfWork)
         {
-            var dbContextOptions = new DbContextOptions<UniversityContext>();
-            _context = new UniversityContext(dbContextOptions);
+            _unitOfWork = unitOfWork;
         }
 
         public bool VerifyCourseName(int id, string name)
         {
-            var courseRepository = new CourseRepository(_context);
+            var courseRepository = _unitOfWork.Courses;
 
             if (id == 0) return !courseRepository.Find(c => c.Name == name).Any();
 
@@ -28,7 +25,7 @@ namespace UniversityAccounting.DAL.BusinessLogic
 
         public bool VerifyGroupName(int id, string name)
         {
-            var groupRepository = new GroupRepository(_context);
+            var groupRepository = _unitOfWork.Groups;
 
             if (id == 0) return !groupRepository.Find(g => g.Name == name).Any();
 
@@ -38,7 +35,7 @@ namespace UniversityAccounting.DAL.BusinessLogic
 
         public bool VerifyStudent(int id, string firstName, string lastName, DateTime dateOfBirth)
         {
-            var studentRepository = new StudentRepository(_context);
+            var studentRepository = _unitOfWork.Students;
 
             if (id == 0)
                 return !studentRepository.Find(s =>

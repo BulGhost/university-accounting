@@ -248,7 +248,7 @@ namespace UniversityAccounting.WEB.Controllers
         [AcceptVerbs("GET", "POST")]
         public IActionResult VerifyStudent(int id, string firstName, string lastName, DateTime dateOfBirth)
         {
-            return new DuplicateVerifier().VerifyStudent(id, firstName, lastName, dateOfBirth)
+            return new DuplicateVerifier(_unitOfWork).VerifyStudent(id, firstName, lastName, dateOfBirth)
                 ? Json(true)
                 : Json(_localizer["StudentExists"].Value);
         }
