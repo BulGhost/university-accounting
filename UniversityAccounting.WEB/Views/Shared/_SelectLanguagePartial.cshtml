@@ -1,0 +1,23 @@
+﻿@using UniversityAccounting.WEB
+@inject IOptions<RequestLocalizationOptions> _locOptions
+@inject IHtmlLocalizer<SharedResource> _sharedLocalizer
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
+
+    var cultureItems = _locOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName.ToUpper()[0] + c.NativeName.Substring(1) })
+        .ToList();
+
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+<form asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" method="post" class="d-flex">
+    <div class="col-auto">
+        <label asp-for="@requestCulture" class="col-form-label me-2 text-light">@_sharedLocalizer["Language"]</label>
+    </div>
+    <div class="col-auto me-2">
+        <select asp-for="@requestCulture" asp-items="cultureItems" name="culture"
+                class="form-select form-select-sm mt-1" onchange="this.form.submit();"></select>
+    </div>
+</form>

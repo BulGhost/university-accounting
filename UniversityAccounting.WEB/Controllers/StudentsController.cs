@@ -7,7 +7,6 @@ using SmartBreadcrumbs.Nodes;
 using UniversityAccounting.DAL.Interfaces;
 using UniversityAccounting.WEB.Models;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using UniversityAccounting.DAL.BusinessLogic;
 using UniversityAccounting.DAL.Entities;
@@ -15,31 +14,26 @@ using UniversityAccounting.WEB.Models.HelperClasses;
 
 namespace UniversityAccounting.WEB.Controllers
 {
-    public class StudentsController : Controller
+    public class StudentsController : BaseController
     {
         private const int StudentsPerPage = 10;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly INotyfService _notyf;
         private readonly IStringLocalizer<StudentsController> _localizer;
-        private readonly IMapper _mapper;
 
-        public StudentsController(IUnitOfWork unitOfWork, INotyfService notyf,
-            IStringLocalizer<StudentsController> localizer, IMapper mapper)
+        public StudentsController(IUnitOfWork unitOfWork, INotyfService notyf, IMapper mapper,
+            IStringLocalizer<SharedResource> sharedLocalizer, IStringLocalizer<StudentsController> localizer)
+            :base(unitOfWork, notyf, sharedLocalizer, mapper)
         {
-            _unitOfWork = unitOfWork;
-            _notyf = notyf;
             _localizer = localizer;
-            _mapper = mapper;
         }
 
         public IActionResult Index(int groupId, int page = 1, string sortProperty = nameof(Student.LastName),
             SortOrder sortOrder = SortOrder.Ascending, string searchText = "")
         {
-            var currentGroup = _unitOfWork.Groups.Get(groupId);
+            var currentGroup = UnitOfWork.Groups.Get(groupId);
             if (currentGroup == null) return NotFound();
 
             ViewBag.Group = currentGroup;
-            int totalStudents = _unitOfWork.Students.SuitableStudentsCount(s => s.GroupId == groupId, searchText);
+            int totalStudents = UnitOfWork.Students.SuitableStudentsCount(s => s.GroupId == groupId, searchText);
             if (page < 1 || page > Math.Floor((double) totalStudents / StudentsPerPage) + 1)
                 return RedirectToAction("Index", new {groupId, page = 1});
 
@@ -50,8 +44,8 @@ namespace UniversityAccounting.WEB.Controllers
                 {Parent = node2};
             ViewData["BreadcrumbNode"] = node3;
 
-            if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
-            if (TempData.ContainsKey("error")) _notyf.Error(TempData["error"].ToString());
+            if (TempData.ContainsKey("message")) Notyf.Success(TempData["message"].ToString());
+            if (TempData.ContainsKey("error")) Notyf.Error(TempData["error"].ToString());
 
             var sortModel = new SortModel();
             sortModel.AddColumn(nameof(Student.FirstName));
@@ -61,7 +55,7 @@ namespace UniversityAccounting.WEB.Controllers
             sortModel.AddColumn(nameof(Student.Status));
             sortModel.ApplySort(sortProperty, sortOrder);
 
-            var studentsOnPage = _mapper.Map<List<StudentViewModel>>(_unitOfWork.Students
+            var studentsOnPage = Mapper.Map<List<StudentViewModel>>(UnitOfWork.Students
                 .GetRequiredStudents(s => s.GroupId == groupId, searchText, sortProperty,
                     page, StudentsPerPage, sortOrder));
             ViewBag.SearchText = searchText;
@@ -88,7 +82,7 @@ namespace UniversityAccounting.WEB.Controllers
             {
                 if (id == null) continue;
 
-                var student = _unitOfWork.Students.Get((int) id);
+                var student = UnitOfWork.Students.Get((int) id);
                 if (student == null) return View("Error");
 
                 students.Add(student);
@@ -96,8 +90,8 @@ namespace UniversityAccounting.WEB.Controllers
 
             try
             {
-                _unitOfWork.Students.RemoveRange(students);
-                _unitOfWork.Complete();
+                UnitOfWork.Students.RemoveRange(students);
+                UnitOfWork.Complete();
             }
             catch (Exception)
             {
@@ -112,7 +106,7 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (groupId == null || groupId == 0) return NotFound();
 
-            var currentGroup = _unitOfWork.Groups.Get((int) groupId);
+            var currentGroup = UnitOfWork.Groups.Get((int) groupId);
             if (currentGroup == null) return NotFound();
 
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
@@ -135,9 +129,9 @@ namespace UniversityAccounting.WEB.Controllers
 
             try
             {
-                var student = _mapper.Map<StudentViewModel, Student>(studentModel);
-                _unitOfWork.Students.Add(student);
-                _unitOfWork.Complete();
+                var student = Mapper.Map<StudentViewModel, Student>(studentModel);
+                UnitOfWork.Students.Add(student);
+                UnitOfWork.Complete();
             }
             catch (Exception)
             {
@@ -152,7 +146,7 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var student = _unitOfWork.Students.Get((int)id);
+            var student = UnitOfWork.Students.Get((int)id);
             if (student == null) return NotFound();
 
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
@@ -163,9 +157,9 @@ namespace UniversityAccounting.WEB.Controllers
             var node4 = new MvcBreadcrumbNode("Create", "Students", _localizer["EditStudent"]) {Parent = node3};
             ViewData["BreadcrumbNode"] = node4;
 
-            var studentModel = _mapper.Map<Student, StudentViewModel>(student);
+            var studentModel = Mapper.Map<Student, StudentViewModel>(student);
 
-            ViewBag.Groups = _unitOfWork.Groups.Find(g => g.CourseId == student.Group.CourseId);
+            ViewBag.Groups = UnitOfWork.Groups.Find(g => g.CourseId == student.Group.CourseId);
             return View(studentModel);
         }
 
@@ -175,23 +169,23 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var group = _unitOfWork.Groups.Get(student.GroupId);
+                var group = UnitOfWork.Groups.Get(student.GroupId);
                 if (group == null) return NotFound();
 
-                ViewBag.Groups = _unitOfWork.Groups.Find(g => g.CourseId == group.CourseId);
+                ViewBag.Groups = UnitOfWork.Groups.Find(g => g.CourseId == group.CourseId);
                 return View(student);
             }
 
             try
             {
-                var updStudent = _unitOfWork.Students.Get(student.Id);
+                var updStudent = UnitOfWork.Students.Get(student.Id);
                 updStudent.FirstName = student.FirstName;
                 updStudent.LastName = student.LastName;
                 updStudent.DateOfBirth = student.DateOfBirth;
                 updStudent.GroupId = student.GroupId;
                 updStudent.FinalExamGpa = student.FinalExamGpa;
                 updStudent.Status = student.Status;
-                _unitOfWork.Complete();
+                UnitOfWork.Complete();
             }
             catch (Exception)
             {
@@ -206,7 +200,7 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var student = _unitOfWork.Students.Get((int)id);
+            var student = UnitOfWork.Students.Get((int)id);
             if (student == null) return NotFound();
 
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
@@ -217,7 +211,7 @@ namespace UniversityAccounting.WEB.Controllers
             var node4 = new MvcBreadcrumbNode("Create", "Students", _localizer["DeleteStudent"]) { Parent = node3 };
             ViewData["BreadcrumbNode"] = node4;
 
-            var studentModel = _mapper.Map<Student, StudentViewModel>(student);
+            var studentModel = Mapper.Map<Student, StudentViewModel>(student);
 
             return View(studentModel);
         }
@@ -228,13 +222,13 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var student = _unitOfWork.Students.Get((int)id);
+            var student = UnitOfWork.Students.Get((int)id);
             if (student == null) return NotFound();
 
             try
             {
-                _unitOfWork.Students.Remove(student);
-                _unitOfWork.Complete();
+                UnitOfWork.Students.Remove(student);
+                UnitOfWork.Complete();
             }
             catch (Exception)
             {
@@ -248,7 +242,7 @@ namespace UniversityAccounting.WEB.Controllers
         [AcceptVerbs("GET", "POST")]
         public IActionResult VerifyStudent(int id, string firstName, string lastName, DateTime dateOfBirth)
         {
-            return new DuplicateVerifier(_unitOfWork).VerifyStudent(id, firstName, lastName, dateOfBirth)
+            return new DuplicateVerifier(UnitOfWork).VerifyStudent(id, firstName, lastName, dateOfBirth)
                 ? Json(true)
                 : Json(_localizer["StudentExists"].Value);
         }

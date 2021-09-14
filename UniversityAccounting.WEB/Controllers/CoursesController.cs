@@ -14,40 +14,35 @@ using UniversityAccounting.WEB.Models.HelperClasses;
 
 namespace UniversityAccounting.WEB.Controllers
 {
-    public class CoursesController : Controller
+    public class CoursesController : BaseController
     {
         private const int CoursesPerPage = 5;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly INotyfService _notyf;
         private readonly IStringLocalizer<CoursesController> _localizer;
-        private readonly IMapper _mapper;
 
-        public CoursesController(IUnitOfWork unitOfWork, INotyfService notyf,
-            IStringLocalizer<CoursesController> localizer, IMapper mapper)
+        public CoursesController(IUnitOfWork unitOfWork, INotyfService notyf, IMapper mapper,
+            IStringLocalizer<SharedResource> sharedLocalizer, IStringLocalizer<CoursesController> localizer)
+            : base(unitOfWork, notyf, sharedLocalizer, mapper)
         {
-            _unitOfWork = unitOfWork;
-            _notyf = notyf;
             _localizer = localizer;
-            _mapper = mapper;
         }
 
         public IActionResult Index(int page = 1, string sortProperty = nameof(Course.Name),
             SortOrder sortOrder = SortOrder.Ascending, string searchText = "")
         {
-            int totalCourses = _unitOfWork.Courses.SuitableCoursesCount(searchText);
+            int totalCourses = UnitOfWork.Courses.SuitableCoursesCount(searchText);
             if (page < 1 || page > Math.Floor((double) totalCourses / CoursesPerPage) + 1)
                 return RedirectToAction("Index", new {page = 1});
 
-            if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
-            if (TempData.ContainsKey("error")) _notyf.Error(TempData["error"].ToString());
+            if (TempData.ContainsKey("message")) Notyf.Success(TempData["message"].ToString());
+            if (TempData.ContainsKey("error")) Notyf.Error(TempData["error"].ToString());
 
             var sortModel = new SortModel();
             sortModel.AddColumn(nameof(Course.Name), true);
             sortModel.AddColumn(nameof(Course.Description));
             sortModel.ApplySort(sortProperty, sortOrder);
 
-            var coursesOnPage = _mapper.Map<IEnumerable<CourseViewModel>>(
-                _unitOfWork.Courses.GetRequiredCourses(searchText, sortProperty,
+            var coursesOnPage = Mapper.Map<IEnumerable<CourseViewModel>>(
+                UnitOfWork.Courses.GetRequiredCourses(searchText, sortProperty,
                     page, CoursesPerPage, sortOrder));
             ViewBag.SearchText = searchText;
 
@@ -73,7 +68,7 @@ namespace UniversityAccounting.WEB.Controllers
             {
                 if (id == null) continue;
 
-                var course = _unitOfWork.Courses.Get((int) id);
+                var course = UnitOfWork.Courses.Get((int) id);
                 if (course == null) return View("Error");
 
                 courses.Add(course);
@@ -81,8 +76,8 @@ namespace UniversityAccounting.WEB.Controllers
 
             try
             {
-                _unitOfWork.Courses.RemoveRange(courses);
-                _unitOfWork.Complete();
+                UnitOfWork.Courses.RemoveRange(courses);
+                UnitOfWork.Complete();
             }
             catch (DbUpdateException)
             {
@@ -115,9 +110,9 @@ namespace UniversityAccounting.WEB.Controllers
 
             try
             {
-                var course = _mapper.Map<CourseViewModel, Course>(courseModel);
-                _unitOfWork.Courses.Add(course);
-                _unitOfWork.Complete();
+                var course = Mapper.Map<CourseViewModel, Course>(courseModel);
+                UnitOfWork.Courses.Add(course);
+                UnitOfWork.Complete();
             }
             catch (Exception)
             {
@@ -132,14 +127,14 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var course = _unitOfWork.Courses.Get((int)id);
+            var course = UnitOfWork.Courses.Get((int)id);
             if (course == null) return NotFound();
 
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
             var node2 = new MvcBreadcrumbNode("Edit", "Courses", _localizer["EditCourse"]) { Parent = node1 };
             ViewData["BreadcrumbNode"] = node2;
 
-            var courseModel = _mapper.Map<Course, CourseViewModel>(course);
+            var courseModel = Mapper.Map<Course, CourseViewModel>(course);
 
             return View(courseModel);
         }
@@ -152,10 +147,10 @@ namespace UniversityAccounting.WEB.Controllers
 
             try
             {
-                var course = _unitOfWork.Courses.Get(courseModel.Id);
+                var course = UnitOfWork.Courses.Get(courseModel.Id);
                 course.Name = courseModel.Name;
                 course.Description = courseModel.Description;
-                _unitOfWork.Complete();
+                UnitOfWork.Complete();
             }
             catch (Exception)
             {
@@ -170,14 +165,14 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var course = _unitOfWork.Courses.Get((int)id);
+            var course = UnitOfWork.Courses.Get((int)id);
             if (course == null) return NotFound();
 
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
             var node2 = new MvcBreadcrumbNode("Delete", "Courses", _localizer["DeleteCourse"]) { Parent = node1 };
             ViewData["BreadcrumbNode"] = node2;
 
-            var courseModel = _mapper.Map<Course, CourseViewModel>(course);
+            var courseModel = Mapper.Map<Course, CourseViewModel>(course);
 
             return View(courseModel);
         }
@@ -188,18 +183,18 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var course = _unitOfWork.Courses.Get((int)id);
+            var course = UnitOfWork.Courses.Get((int)id);
             if (course == null) return NotFound();
 
             try
             {
-                _unitOfWork.Courses.Remove(course);
-                _unitOfWork.Complete();
+                UnitOfWork.Courses.Remove(course);
+                UnitOfWork.Complete();
             }
             catch (DbUpdateException)
             {
                 ModelState.AddModelError(string.Empty, _localizer["DeleteErrorMessage"]);
-                var courseModel = _mapper.Map<Course, CourseViewModel>(course);
+                var courseModel = Mapper.Map<Course, CourseViewModel>(course);
                 return View("Delete", courseModel);
             }
             catch (Exception)
@@ -214,7 +209,7 @@ namespace UniversityAccounting.WEB.Controllers
         [AcceptVerbs("GET", "POST")]
         public IActionResult VerifyCourseName(int id, string name)
         {
-            return new DuplicateVerifier(_unitOfWork).VerifyCourseName(id, name)
+            return new DuplicateVerifier(UnitOfWork).VerifyCourseName(id, name)
                 ? Json(true)
                 : Json(_localizer["CourseExistsErrorMessage", name].Value);
         }

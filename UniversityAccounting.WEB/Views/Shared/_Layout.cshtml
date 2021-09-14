@@ -1,24 +1,24 @@
 ﻿@inject IViewLocalizer _localizer
-
+    
 <!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="~/lib/js/TextTrimming.js"></script>
-    <link href="~/lib/css/site.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@_localizer["UniversityAccounting"] - @ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" />
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+    @await RenderSectionAsync("AdditionalMeta", false)
 </head>
 <body style="height: 760px">
     <header>
         <nav class="navbar py-3 navbar-expand-lg navbar-dark bg-primary border-bottom mb-3">
             <div class="container">
-                <a class="navbar-brand " asp-area="" asp-controller="Courses" asp-action="Index">@_localizer["UniversityAccounting"]</a>
+                <a class="navbar-brand" style="font-size: 1.75rem" asp-area="" asp-controller="Courses" asp-action="Index">@_localizer["UniversityAccounting"]</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -28,6 +28,9 @@
                             <a class="nav-link active mt-1" style="font-size: larger" aria-current="page" href="#">@_localizer["About"]</a>
                         </li>
                     </ul>
+                </div>
+                <div class="navbar-text ms-auto">
+                    @await Html.PartialAsync("_SelectLanguagePartial")
                 </div>
             </div>
         </nav>
@@ -44,7 +47,12 @@
             &copy; 2021 - UniverWebApp
         </div>
     </footer>
-    @await Component.InvokeAsync("Notyf")
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/js/TextTrimming.js"></script>
+    <script src="~/js/StopDoubleSubmit.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("Notyf")
 </body>
 </html>

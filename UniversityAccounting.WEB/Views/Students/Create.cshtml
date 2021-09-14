@@ -34,7 +34,7 @@
                         <label asp-for="DateOfBirth" class="required"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="DateOfBirth" class="form-control" />
+                        <input asp-for="DateOfBirth" class="form-control" id="datepicker" type="text" />
                     </div>
                 </div>
                 <div class="row m-3">
@@ -79,6 +79,7 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/lib/js/ConfirmBack.js"></script>
-    <script src="~/lib/js/DisableButtonIfMiodelInvalid.js"></script>
+    <script src="~/js/ConfirmBack.js"></script>
+    <script src="~/js/DisableButtonIfMiodelInvalid.js"></script>
+    <script src="~/js/DatePicker.js"></script>
 }

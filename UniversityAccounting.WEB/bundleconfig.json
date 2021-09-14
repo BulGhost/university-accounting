@@ -1,8 +1,0 @@
-[
-  {
-    "outputFileName": "wwwroot/lib/globalize/culture.min.js",
-    "inputFiles": [
-      "wwwroot/lib/globalize/culture.js"
-    ]
-  }
-]

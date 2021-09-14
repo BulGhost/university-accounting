@@ -5,14 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="bundleconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bundleconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
@@ -66,6 +58,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>StudentViewModel.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\SharedResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SharedResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\Startup.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -165,244 +162,248 @@
     <EmbeddedResource Update="Controllers\CoursesController.ru-RU.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Controllers\CoursesController.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Controllers\CoursesController.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Controllers\CoursesController.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CoursesController.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Controllers\CoursesController.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Controllers\CoursesController.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Controllers\ErrorController.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Controllers\ErrorController.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Controllers\ErrorController.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorController.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Controllers\ErrorController.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Controllers\ErrorController.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Controllers\GroupsController.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Controllers\GroupsController.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Controllers\GroupsController.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GroupsController.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Controllers\GroupsController.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Controllers\GroupsController.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Controllers\StudentsController.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Controllers\StudentsController.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Controllers\StudentsController.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StudentsController.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Controllers\StudentsController.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Controllers\StudentsController.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Models\CourseViewModel.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Models\CourseViewModel.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Models\CourseViewModel.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CourseViewModel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Models\CourseViewModel.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Models\CourseViewModel.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Models\GroupViewModel.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Models\GroupViewModel.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Models\GroupViewModel.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GroupViewModel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Models\GroupViewModel.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Models\GroupViewModel.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Models\StudentViewModel.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Models\StudentViewModel.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Models\StudentViewModel.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StudentViewModel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Models\StudentViewModel.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Models\StudentViewModel.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Startup.ar-SA.resx">
+    <EmbeddedResource Update="Resources\SharedResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Startup.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Startup.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Startup.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Startup.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Startup.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Courses\Create.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Courses\Create.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Courses\Create.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Create.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Courses\Create.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Courses\Create.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Courses\Delete.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Courses\Delete.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Courses\Delete.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Delete.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Courses\Delete.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Courses\Delete.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Courses\Edit.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Courses\Edit.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Courses\Edit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Edit.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Courses\Edit.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Courses\Edit.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Courses\Index.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Courses\Index.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Courses\Index.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Index.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Courses\Index.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Courses\Index.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Groups\Create.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Groups\Create.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Groups\Create.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Create.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Groups\Create.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Groups\Create.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Groups\Delete.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Groups\Delete.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Groups\Delete.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Delete.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Groups\Delete.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Groups\Delete.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Groups\Edit.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Groups\Edit.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Groups\Edit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Edit.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Groups\Edit.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Groups\Edit.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Groups\Index.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Groups\Index.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Groups\Index.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Index.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Groups\Index.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Groups\Index.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\Error.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\Error.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Shared\Error.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Error.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\Error.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\Error.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\_Layout.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\_Layout.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Shared\_Layout.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>_Layout.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\_Layout.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\_Layout.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\NotFound.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\NotFound.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Shared\NotFound.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NotFound.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\NotFound.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\NotFound.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\_Pager.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\_Pager.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Shared\_Pager.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>_Pager.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Shared\_Pager.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Shared\_Pager.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Students\Create.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Students\Create.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Students\Create.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Create.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Students\Create.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Students\Create.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Students\Delete.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Students\Delete.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Students\Delete.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Delete.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Students\Delete.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Students\Delete.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Students\Edit.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Students\Edit.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Students\Edit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Edit.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Students\Edit.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Students\Edit.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Students\Index.ar-SA.resx">
+    <EmbeddedResource Update="Resources\Views\Students\Index.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Students\Index.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Index.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Students\Index.ru-RU.resx">
+    <EmbeddedResource Update="Resources\Views\Students\Index.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>

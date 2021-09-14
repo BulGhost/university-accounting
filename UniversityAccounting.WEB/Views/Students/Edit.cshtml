@@ -32,7 +32,7 @@
                         <label asp-for="DateOfBirth" class="required"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="DateOfBirth" class="form-control" />
+                        <input asp-for="DateOfBirth" class="form-control" id="datepicker" type="text" />
                     </div>
                 </div>
                 <div class="row m-3">
@@ -73,7 +73,7 @@
                 <div class="row m-3">
                     <div class="col-8 offset-4 row">
                         <div class="col">
-                            <input type="submit" class="btn btn-info w-100" value=@_localizer["Update"] />
+                            <input type="submit" class="btn btn-info w-100" value=@_localizer["Update"] OnClick="Button1_Clicked"/>
                         </div>
                         <div class="col">
                             <a id="backButton" class="btn btn-success w-100">@_localizer["Back"]</a>
@@ -89,6 +89,7 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/lib/js/ConfirmBack.js"></script>
-    <script src="~/lib/js/DisableButtonIfMiodelInvalid.js"></script>
+    <script src="~/js/ConfirmBack.js"></script>
+    <script src="~/js/DisableButtonIfMiodelInvalid.js"></script>
+    <script src="~/js/DatePicker.js"></script>
 }

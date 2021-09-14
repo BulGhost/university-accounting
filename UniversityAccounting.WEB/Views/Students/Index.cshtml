@@ -9,7 +9,7 @@
 <div class="container p-2">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary ps-3">@_localizer["GroupStudents", ViewBag.Group.Name]</h2>
+            <h3 class="text-primary ps-3">@_localizer["GroupStudents", ViewBag.Group.Name]</h3>
         </div>
         <div class="col-6 text-end">
             <a asp-controller="Students" asp-action="Create" asp-route-groupId="@ViewBag.Group.Id" class="btn btn-primary">
@@ -137,6 +137,6 @@
 </div>
 
 @section Scripts {
-    <script src="~/lib/js/SelectAllCheckbox.js"></script>
-    <script src="~/lib/js/DeleteButtonHideShow.js"></script>
+    <script src="~/js/SelectAllCheckbox.js"></script>
+    <script src="~/js/DeleteButtonHideShow.js"></script>
 }

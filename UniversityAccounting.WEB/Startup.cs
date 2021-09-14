@@ -11,6 +11,11 @@ using UniversityAccounting.DAL.EF;
 using UniversityAccounting.DAL.Interfaces;
 using UniversityAccounting.DAL.Repositories;
 using UniversityAccounting.WEB.Models.HelperClasses;
+using AutoMapper;
+using UniversityAccounting.WEB.Models;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using Microsoft.Extensions.Options;
 
 namespace UniversityAccounting.WEB
 {
@@ -29,20 +34,26 @@ namespace UniversityAccounting.WEB
                         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
 
             services.AddAutoMapper(typeof(MappingProfile));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("ru"),
+                    new CultureInfo("ar")
+                };
+                options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
             services.AddMvc()
-                .AddViewLocalization()
+                .AddViewLocalization(options => options.ResourcesPath = "Resources")
                 .AddMvcOptions(opts => opts.ModelBindingMessageProvider
                     .SetAttemptedValueIsInvalidAccessor((value, prop) =>
                         string.Format(Resources.Startup.ValueIsInvalidMessage, value, prop)));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.SetDefaultCulture("en-Us");
-                options.AddSupportedCultures("en-US", "ru-RU", "ar-SA");
-                options.AddSupportedUICultures("en-US", "ru-RU", "ar-SA");
-            });
+            services.AddLocalization(options => options.ResourcesPath = "Resources"); //TODO: Delete or stay?
             services.AddBreadcrumbs(GetType().Assembly, options => options.DontLookForDefaultNode = true);
             services.AddNotyf(config =>
             {
@@ -69,8 +80,9 @@ namespace UniversityAccounting.WEB
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseRequestLocalization();
             app.UseRouting();
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions?.Value);
 
             app.UseEndpoints(endpoints =>
             {

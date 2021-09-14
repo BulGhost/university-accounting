@@ -15,31 +15,26 @@ using UniversityAccounting.WEB.Models.HelperClasses;
 
 namespace UniversityAccounting.WEB.Controllers
 {
-    public class GroupsController : Controller
+    public class GroupsController : BaseController
     {
         private const int GroupsPerPage = 10;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly INotyfService _notyf;
         private readonly IStringLocalizer<GroupsController> _localizer;
-        private readonly IMapper _mapper;
 
-        public GroupsController(IUnitOfWork unitOfWork, INotyfService notyf,
-            IStringLocalizer<GroupsController> localizer, IMapper mapper)
+        public GroupsController(IUnitOfWork unitOfWork, INotyfService notyf, IMapper mapper,
+            IStringLocalizer<SharedResource> sharedLocalizer, IStringLocalizer<GroupsController> localizer)
+            : base(unitOfWork, notyf, sharedLocalizer, mapper)
         {
-            _unitOfWork = unitOfWork;
-            _notyf = notyf;
             _localizer = localizer;
-            _mapper = mapper;
         }
 
         public IActionResult Index(int courseId, int page = 1, string sortProperty = nameof(Group.Name),
             SortOrder sortOrder = SortOrder.Ascending, string searchText = "")
         {
-            var currentCourse = _unitOfWork.Courses.Get(courseId);
+            var currentCourse = UnitOfWork.Courses.Get(courseId);
             if (currentCourse == null) return NotFound();
 
             ViewBag.Course = currentCourse;
-            int totalGroups = _unitOfWork.Groups.SuitableGroupsCount(g => g.CourseId == courseId, searchText);
+            int totalGroups = UnitOfWork.Groups.SuitableGroupsCount(g => g.CourseId == courseId, searchText);
             if (page < 1 || page > Math.Floor((double) totalGroups / GroupsPerPage) + 1)
                 return RedirectToAction("Index", new {courseId});
 
@@ -47,8 +42,8 @@ namespace UniversityAccounting.WEB.Controllers
             var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{currentCourse.Name}") {Parent = node1};
             ViewData["BreadcrumbNode"] = node2;
 
-            if (TempData.ContainsKey("message")) _notyf.Success(TempData["message"].ToString());
-            if (TempData.ContainsKey("error")) _notyf.Error(TempData["error"].ToString());
+            if (TempData.ContainsKey("message")) Notyf.Success(TempData["message"].ToString());
+            if (TempData.ContainsKey("error")) Notyf.Error(TempData["error"].ToString());
 
             var sortModel = new SortModel();
             sortModel.AddColumn(nameof(Group.Name), true);
@@ -56,7 +51,7 @@ namespace UniversityAccounting.WEB.Controllers
             sortModel.AddColumn(nameof(Group.StudentsQuantity));
             sortModel.ApplySort(sortProperty, sortOrder);
 
-            var groupsOnPage = _mapper.Map<IEnumerable<GroupViewModel>>(_unitOfWork.Groups
+            var groupsOnPage = Mapper.Map<IEnumerable<GroupViewModel>>(UnitOfWork.Groups
                 .GetRequiredGroups(g => g.CourseId == courseId, searchText, sortProperty,
                     page, GroupsPerPage, sortOrder));
             ViewBag.SearchText = searchText;
@@ -83,7 +78,7 @@ namespace UniversityAccounting.WEB.Controllers
             {
                 if (id == null) continue;
 
-                var group = _unitOfWork.Groups.Get((int) id);
+                var group = UnitOfWork.Groups.Get((int) id);
                 if (group == null) return View("Error");
 
                 groups.Add(group);
@@ -91,8 +86,8 @@ namespace UniversityAccounting.WEB.Controllers
 
             try
             {
-                _unitOfWork.Groups.RemoveRange(groups);
-                _unitOfWork.Complete();
+                UnitOfWork.Groups.RemoveRange(groups);
+                UnitOfWork.Complete();
             }
             catch (DbUpdateException)
             {
@@ -112,7 +107,7 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (courseId == null || courseId == 0) return NotFound();
 
-            var currentCourse = _unitOfWork.Courses.Get((int) courseId);
+            var currentCourse = UnitOfWork.Courses.Get((int) courseId);
             if (currentCourse == null) return NotFound();
 
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
@@ -133,9 +128,9 @@ namespace UniversityAccounting.WEB.Controllers
 
             try
             {
-                var group = _mapper.Map<GroupViewModel, Group>(groupModel);
-                _unitOfWork.Groups.Add(group);
-                _unitOfWork.Complete();
+                var group = Mapper.Map<GroupViewModel, Group>(groupModel);
+                UnitOfWork.Groups.Add(group);
+                UnitOfWork.Complete();
             }
             catch (Exception)
             {
@@ -150,7 +145,7 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var group = _unitOfWork.Groups.Get((int) id);
+            var group = UnitOfWork.Groups.Get((int) id);
             if (group == null) return NotFound();
 
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
@@ -159,7 +154,7 @@ namespace UniversityAccounting.WEB.Controllers
             var node3 = new MvcBreadcrumbNode("Edit", "Groups", _localizer["EditGroup"]) {Parent = node2};
             ViewData["BreadcrumbNode"] = node3;
 
-            var groupModel = _mapper.Map<Group, GroupViewModel>(group);
+            var groupModel = Mapper.Map<Group, GroupViewModel>(group);
 
             return View(groupModel);
         }
@@ -172,11 +167,11 @@ namespace UniversityAccounting.WEB.Controllers
 
             try
             {
-                var updGroup = _unitOfWork.Groups.Get(group.Id);
+                var updGroup = UnitOfWork.Groups.Get(group.Id);
                 updGroup.Name = group.Name;
                 updGroup.CourseId = group.CourseId;
                 updGroup.FormationDate = group.FormationDate;
-                _unitOfWork.Complete();
+                UnitOfWork.Complete();
             }
             catch (Exception)
             {
@@ -191,7 +186,7 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var group = _unitOfWork.Groups.Get((int) id);
+            var group = UnitOfWork.Groups.Get((int) id);
             if (group == null) return NotFound();
 
             var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
@@ -200,7 +195,7 @@ namespace UniversityAccounting.WEB.Controllers
             var node3 = new MvcBreadcrumbNode("Edit", "Groups", _localizer["DeleteGroup"]) {Parent = node2};
             ViewData["BreadcrumbNode"] = node3;
 
-            var groupModel = _mapper.Map<Group, GroupViewModel>(group);
+            var groupModel = Mapper.Map<Group, GroupViewModel>(group);
 
             return View(groupModel);
         }
@@ -211,18 +206,18 @@ namespace UniversityAccounting.WEB.Controllers
         {
             if (id == null || id == 0) return NotFound();
 
-            var group = _unitOfWork.Groups.Get((int) id);
+            var group = UnitOfWork.Groups.Get((int) id);
             if (group == null) return NotFound();
 
             try
             {
-                _unitOfWork.Groups.Remove(group);
-                _unitOfWork.Complete();
+                UnitOfWork.Groups.Remove(group);
+                UnitOfWork.Complete();
             }
             catch (DbUpdateException)
             {
                 ModelState.AddModelError(string.Empty, _localizer["DeleteErrorMessage"]);
-                var groupModel = _mapper.Map<Group, GroupViewModel>(group);
+                var groupModel = Mapper.Map<Group, GroupViewModel>(group);
                 return View("Delete", groupModel);
             }
             catch (Exception)
@@ -237,7 +232,7 @@ namespace UniversityAccounting.WEB.Controllers
         [AcceptVerbs("GET", "POST")]
         public IActionResult VerifyGroupName(int id, string name)
         {
-            return new DuplicateVerifier(_unitOfWork).VerifyGroupName(id, name)
+            return new DuplicateVerifier(UnitOfWork).VerifyGroupName(id, name)
                 ? Json(true)
                 : Json(_localizer["GroupExistsErrorMessage", name].Value);
         }

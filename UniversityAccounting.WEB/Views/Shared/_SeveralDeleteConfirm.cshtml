@@ -19,12 +19,10 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        $('#deleteButton').click(function () {
+    document.getElementById("deleteButton").onclick = function() {
             var checkboxes = $('input[name="ids"]:checked').length;
             document.getElementById("message").innerHTML = "@ViewBag.Message" + checkboxes;
             $('#deleteDialog').modal('toggle');
-        });
-    });
+        };
 </script>
     
