@@ -54,7 +54,7 @@ namespace UniversityAccounting.WEB
                     .SetAttemptedValueIsInvalidAccessor((value, prop) =>
                         string.Format(Resources.Startup.ValueIsInvalidMessage, value, prop)));
 
-            //services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddBreadcrumbs(GetType().Assembly, options => options.DontLookForDefaultNode = true);
             services.AddNotyf(config =>
             {

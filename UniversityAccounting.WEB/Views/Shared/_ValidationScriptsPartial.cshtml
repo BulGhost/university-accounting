@@ -1,6 +1,35 @@
-﻿<script src="~/lib/jquery-validate/jquery.validate.js"></script>
-<script src="~/lib/jquery-validate/localization/messages_ar.js"></script>
-<script src="~/lib/jquery-validate/localization/messages_ru.js"></script>
-<script src="~/lib/jquery-validate/additional-methods.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-@{/*UNDONE: Validation bag*/}
+﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/lib/cldrjs/dist/cldr.js"></script>
+<script src="~/lib/cldrjs/dist/cldr/event.js"></script>
+<script src="~/lib/cldrjs/dist/cldr/supplemental.js"></script>
+
+<script src="~/lib/globalize/globalize.js"></script>
+<script src="~/lib/globalize/globalize/number.js"></script>
+<script src="~/lib/globalize/globalize/date.js"></script>
+
+<script src="~/lib/jquery-validation-globalize/jquery.validate.globalize.js"></script>
+
+<script type="text/javascript">
+    var locale = "@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName";
+    $.when(
+        $.getJSON("/cldr-data/cldr-core/supplemental/likelySubtags.json"),
+        $.getJSON("/cldr-data/cldr-core/supplemental/numberingSystems.json"),
+        $.getJSON("/cldr-data/cldr-core/supplemental/plurals.json"),
+        $.getJSON("/cldr-data/cldr-core/supplemental/ordinals.json"),
+        $.getJSON("/cldr-data/cldr-core/supplemental/currencyData.json"),
+        $.getJSON("/cldr-data/cldr-core/supplemental/timeData.json"),
+        $.getJSON("/cldr-data/cldr-core/supplemental/weekData.json"),
+        $.getJSON(`/cldr-data/cldr-dates-modern/main/${locale}/ca-gregorian.json`),
+        $.getJSON(`/cldr-data/cldr-dates-modern/main/${locale}/timeZoneNames.json`),
+        $.getJSON(`/cldr-data/cldr-numbers-modern/main/${locale}/numbers.json`),
+        $.getJSON(`/cldr-data/cldr-numbers-modern/main/${locale}/currencies.json`),
+    ).then(function () {
+        return [].slice.apply(arguments, [0]).map(function (result) {
+            return result[0];
+        });
+    }).then(Globalize.load).then(function () {
+        Globalize.locale(locale);
+    });
+</script>
