@@ -73,7 +73,7 @@
                 <div class="row m-3">
                     <div class="col-8 offset-4 row">
                         <div class="col">
-                            <input type="submit" class="btn btn-info w-100" value=@_localizer["Update"] OnClick="Button1_Clicked"/>
+                            <input type="submit" class="btn btn-info w-100" value=@_localizer["Update"] OnClick="Button1_Clicked" />
                         </div>
                         <div class="col">
                             <a id="backButton" class="btn btn-success w-100">@_localizer["Back"]</a>
@@ -89,7 +89,8 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
     <script src="~/js/ConfirmBack.js"></script>
     <script src="~/js/DisableButtonIfMiodelInvalid.js"></script>
-    <script src="~/js/DatePicker.js"></script>
+    <partial name="_DatePickerPartial" />
 }

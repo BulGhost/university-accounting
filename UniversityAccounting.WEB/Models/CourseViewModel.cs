@@ -9,18 +9,15 @@ namespace UniversityAccounting.WEB.Models
         [Remote(action: "VerifyCourseName", controller: "Courses", AdditionalFields = nameof(Name))]
         public int Id { get; set; }
 
-        [Required(ErrorMessageResourceName = "CourseNameRequired",
-            ErrorMessageResourceType = typeof(Resources.Models.CourseViewModel))]
-        [StringLength(30, ErrorMessageResourceName = "CourseNameErrorMessage",
-            ErrorMessageResourceType = typeof(Resources.Models.CourseViewModel))]
+        [Required(ErrorMessage = "CourseNameRequired")]
+        [StringLength(30, ErrorMessage = "CourseNameErrorMessage")]
         [Remote(action: "VerifyCourseName", controller: "Courses", AdditionalFields = nameof(Id))]
-        [Display(Name = "Name", ResourceType = typeof(Resources.Models.CourseViewModel))]
+        [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [StringLength(300, ErrorMessageResourceName = "DescriptionErrorMessage",
-            ErrorMessageResourceType = typeof(Resources.Models.CourseViewModel))]
+        [StringLength(300, ErrorMessage = "DescriptionErrorMessage")]
         [DataType(DataType.MultilineText)]
-        [Display(Name = "Description", ResourceType = typeof(Resources.Models.CourseViewModel))]
+        [Display(Name = "Description")]
         public string Description { get; set; }
     }
 }

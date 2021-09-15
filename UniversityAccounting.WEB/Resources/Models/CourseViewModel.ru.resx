@@ -130,6 +130,6 @@
     <value>Название</value>
   </data>
   <data name="CourseNameRequired" xml:space="preserve">
-    <value>Поле "Имя" обязательно для заполнения</value>
+    <value>Поле "Название" обязательно для заполнения</value>
   </data>
 </root>

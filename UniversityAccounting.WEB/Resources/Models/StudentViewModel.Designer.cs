@@ -142,7 +142,7 @@ namespace UniversityAccounting.WEB.Resources.Models {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LastName.
+        ///   Looks up a localized string similar to Last Name.
         /// </summary>
         public static string LastName {
             get {

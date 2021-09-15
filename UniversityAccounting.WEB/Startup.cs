@@ -49,11 +49,12 @@ namespace UniversityAccounting.WEB
             });
             services.AddMvc()
                 .AddViewLocalization(options => options.ResourcesPath = "Resources")
+                .AddDataAnnotationsLocalization()
                 .AddMvcOptions(opts => opts.ModelBindingMessageProvider
                     .SetAttemptedValueIsInvalidAccessor((value, prop) =>
                         string.Format(Resources.Startup.ValueIsInvalidMessage, value, prop)));
 
-            services.AddLocalization(options => options.ResourcesPath = "Resources"); //TODO: Delete or stay?
+            //services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddBreadcrumbs(GetType().Assembly, options => options.DontLookForDefaultNode = true);
             services.AddNotyf(config =>
             {

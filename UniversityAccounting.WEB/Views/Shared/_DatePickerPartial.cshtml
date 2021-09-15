@@ -1,0 +1,22 @@
+﻿@using System.Globalization
+@{
+    string lang = CultureInfo.CurrentUICulture.Name;
+    int weekStart = lang switch
+    {
+        "ru" => 1,
+        _ => 0
+    };
+}
+<script>
+    $(function () {
+        $("#datepicker").datepicker({
+            maxViewMode: 2,
+            todayBtn: true,
+            orientation: "bottom auto",
+            autoclose: true,
+            todayHighlight: true,
+            weekStart: @weekStart,
+            language: "@lang"
+        });
+    });
+</script>

@@ -14,22 +14,19 @@ namespace UniversityAccounting.WEB.Models
         [Required]
         public int CourseId { get; set; }
 
-        [Required(ErrorMessageResourceName = "GroupNameRequired",
-            ErrorMessageResourceType = typeof(Resources.Models.GroupViewModel))]
-        [StringLength(30, ErrorMessageResourceName = "GroupNameErrorMessage",
-            ErrorMessageResourceType = typeof(Resources.Models.GroupViewModel))]
+        [Required(ErrorMessage = "GroupNameRequired")]
+        [StringLength(30, ErrorMessage = "GroupNameErrorMessage")]
         [Remote(action: "VerifyGroupName", controller: "Groups", AdditionalFields = nameof(Id))]
-        [Display(Name = "Name", ResourceType = typeof(Resources.Models.GroupViewModel))]
+        [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Required(ErrorMessageResourceName = "GroupFormationDateRequired",
-            ErrorMessageResourceType = typeof(Resources.Models.GroupViewModel))]
+        [Required(ErrorMessage = "GroupFormationDateRequired")]
         [DataType(DataType.Date)]
         [WithinSixYears]
-        [Display(Name = "FormationDate", ResourceType = typeof(Resources.Models.GroupViewModel))]
+        [Display(Name = "FormationDate")]
         public DateTime FormationDate { get; set; }
 
-        [Display(Name = "StudentsQuantity", ResourceType = typeof(Resources.Models.GroupViewModel))]
+        [Display(Name = "StudentsQuantity")]
         public int StudentsQuantity { get; set; }
     }
 }

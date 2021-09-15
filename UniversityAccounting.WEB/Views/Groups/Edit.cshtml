@@ -26,7 +26,7 @@
                         <label asp-for="FormationDate" class="required"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="FormationDate" class="form-control" id="datepicker" type="text"/>
+                        <input asp-for="FormationDate" class="form-control" id="datepicker" type="text" />
                     </div>
                 </div>
                 <div class="row m-3">
@@ -46,9 +46,13 @@
 
 <partial name="_BackConfirm" />
 
+
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ar.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
     <script src="~/js/ConfirmBack.js"></script>
     <script src="~/js/DisableButtonIfMiodelInvalid.js"></script>
-    <script src="~/js/DatePicker.js"></script>
+    <partial name="_DatePickerPartial" />
 }

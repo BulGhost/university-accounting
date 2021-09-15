@@ -21,6 +21,10 @@
     {
       "library": "bootstrap-datepicker@1.9.0",
       "destination": "wwwroot/lib/bootstrap-datepicker/"
+    },
+    {
+      "library": "bootstrap-rtl@3.4.0",
+      "destination": "wwwroot/lib/bootstrap-rtl/"
     }
   ]
 }

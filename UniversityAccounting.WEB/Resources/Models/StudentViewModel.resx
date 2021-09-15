@@ -124,7 +124,7 @@
     <value>First Name</value>
   </data>
   <data name="LastName" xml:space="preserve">
-    <value>LastName</value>
+    <value>Last Name</value>
   </data>
   <data name="DateOfBirth" xml:space="preserve">
     <value>Date Of Birth</value>

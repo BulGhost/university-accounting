@@ -1,5 +1,6 @@
 ﻿@inject IViewLocalizer _localizer
-    
+@{ bool isRtl = Context.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.TextInfo.IsRightToLeft; }
+
 <!DOCTYPE html>
 
 <html>
@@ -11,10 +12,11 @@
     <link href="~/css/site.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" />
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    @{ if (isRtl) {<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.rtl.min.css" integrity="sha384-LPvXVVAlyPoBSGkX8UddpctDks+1P4HG8MhT7/YwqHtJ40bstjzCqjj+VVVDhsCo" crossorigin="anonymous">} }
     <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
     @await RenderSectionAsync("AdditionalMeta", false)
 </head>
-<body style="height: 760px">
+<body style="height: 760px; direction: @(isRtl ? "rtl" : "ltr")">
     <header>
         <nav class="navbar py-3 navbar-expand-lg navbar-dark bg-primary border-bottom mb-3">
             <div class="container">
