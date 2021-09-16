@@ -18,11 +18,7 @@
     </div>
 </div>
 
-<script>
-    document.getElementById("deleteButton").onclick = function() {
-            var checkboxes = $('input[name="ids"]:checked').length;
-            document.getElementById("message").innerHTML = "@ViewBag.Message" + checkboxes;
-            $('#deleteDialog').modal('toggle');
-        };
+<script type="text/javascript">
+    var message = "@ViewBag.Message";
 </script>
-    
+<script src="~/js/confirm-delete-several.js"></script>

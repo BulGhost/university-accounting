@@ -120,4 +120,7 @@
   <data name="ValueIsInvalidMessage" xml:space="preserve">
     <value>القيمة {0} غير صالحة لـ {1}</value>
   </data>
+  <data name="ValueMustBeANumber" xml:space="preserve">
+    <value>يجب أن يكون الحقل {0} رقمًا.</value>
+  </data>
 </root>

@@ -11,7 +11,8 @@
                 <li class="page-item">
                     <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage - 1)"
                        asp-route-courseId="@ViewBag.CourseId" asp-route-groupId="@ViewBag.GroupId"
-                       asp-route-sortProperty="@ViewBag.SortModel.SortProperty" asp-route-sortOrder="@ViewBag.SortModel.SortOrder">
+                       asp-route-sortProperty="@ViewBag.SortModel.SortProperty"
+                       asp-route-sortOrder="@ViewBag.SortModel.SortOrder" asp-route-searchText="@ViewBag.SearchText">
                         @_localizer["Previous"]
                     </a>
                 </li>
@@ -22,7 +23,8 @@
                 <li class="page-item @(pg == Model.CurrentPage ? "active" : "")">
                     <a class="page-link" asp-action="Index" asp-route-page="@pg"
                        asp-route-courseId="@ViewBag.CourseId" asp-route-groupId="@ViewBag.GroupId"
-                       asp-route-sortProperty="@ViewBag.SortModel.SortProperty" asp-route-sortOrder="@ViewBag.SortModel.SortOrder">
+                       asp-route-sortProperty="@ViewBag.SortModel.SortProperty"
+                       asp-route-sortOrder="@ViewBag.SortModel.SortOrder" asp-route-searchText="@ViewBag.SearchText">
                         @pg
                     </a>
                 </li>
@@ -33,12 +35,12 @@
                 <li class="page-item">
                     <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage + 1)"
                        asp-route-courseId="@ViewBag.CourseId" asp-route-groupId="@ViewBag.GroupId"
-                       asp-route-sortProperty="@ViewBag.SortModel.SortProperty" asp-route-sortOrder="@ViewBag.SortModel.SortOrder">
+                       asp-route-sortProperty="@ViewBag.SortModel.SortProperty"
+                       asp-route-sortOrder="@ViewBag.SortModel.SortOrder" asp-route-searchText="@ViewBag.SearchText">
                         @_localizer["Next"]
                     </a>
                 </li>
             }
-
         </ul>
     }
 </div>

@@ -120,4 +120,7 @@
   <data name="ValueIsInvalidMessage" xml:space="preserve">
     <value>Значение {0} некорректно для поля {1}</value>
   </data>
+  <data name="ValueMustBeANumber" xml:space="preserve">
+    <value>В поле {0} должно быть число</value>
+  </data>
 </root>

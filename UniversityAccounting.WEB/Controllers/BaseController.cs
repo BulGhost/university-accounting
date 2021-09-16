@@ -43,6 +43,5 @@ namespace UniversityAccounting.WEB.Controllers
 
             return LocalRedirect(returnUrl);
         }
-        //TODO: Breadcrumbs optimization
     }
 }

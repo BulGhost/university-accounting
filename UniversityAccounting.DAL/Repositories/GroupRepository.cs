@@ -45,7 +45,7 @@ namespace UniversityAccounting.DAL.Repositories
             bool isNumber = int.TryParse(searchText, out int n);
             bool isDate = DateTime.TryParse(searchText, out var date);
             return groups.Where(g => g.Name.ToLower().Contains(searchText) ||
-                                     isNumber && g.StudentsQuantity == n ||
+                                     isNumber && (g.StudentsQuantity == n || g.FormationDate.Year == n) ||
                                      isDate && g.FormationDate == date);
         }
     }

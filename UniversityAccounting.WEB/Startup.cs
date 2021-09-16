@@ -50,9 +50,15 @@ namespace UniversityAccounting.WEB
             services.AddMvc()
                 .AddViewLocalization(options => options.ResourcesPath = "Resources")
                 .AddDataAnnotationsLocalization()
-                .AddMvcOptions(opts => opts.ModelBindingMessageProvider
-                    .SetAttemptedValueIsInvalidAccessor((value, prop) =>
-                        string.Format(Resources.Startup.ValueIsInvalidMessage, value, prop)));
+                .AddMvcOptions(opts =>
+                {
+                    opts.ModelBindingMessageProvider
+                        .SetAttemptedValueIsInvalidAccessor((value, prop) =>
+                            string.Format(Resources.Startup.ValueIsInvalidMessage, value, prop));
+                    opts.ModelBindingMessageProvider
+                        .SetValueMustBeANumberAccessor(value =>
+                            string.Format(Resources.Startup.ValueMustBeANumber, value));
+                });
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddBreadcrumbs(GetType().Assembly, options => options.DontLookForDefaultNode = true);

@@ -60,5 +60,23 @@
       "wwwroot/lib/globalize/globalize/date.js",
       "wwwroot/lib/jquery-validation-globalize/jquery.validate.globalize.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/data-number-globalization.min.js",
+    "inputFiles": [
+      "wwwroot/js/data-number-globalization.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/datapicker-globalization.min.js",
+    "inputFiles": [
+      "wwwroot/js/datapicker-globalization.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/confirm-delete-several.min.js",
+    "inputFiles": [
+      "wwwroot/js/confirm-delete-several.js"
+    ]
   }
 ]

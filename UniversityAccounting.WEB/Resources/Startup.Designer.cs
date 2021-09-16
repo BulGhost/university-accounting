@@ -68,5 +68,14 @@ namespace UniversityAccounting.WEB.Resources {
                 return ResourceManager.GetString("ValueIsInvalidMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must be a number..
+        /// </summary>
+        public static string ValueMustBeANumber {
+            get {
+                return ResourceManager.GetString("ValueMustBeANumber", resourceCulture);
+            }
+        }
     }
 }
