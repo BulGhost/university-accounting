@@ -6,6 +6,7 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
 using Microsoft.Extensions.Localization;
 using UniversityAccounting.DAL.Interfaces;
+using UniversityAccounting.WEB.Controllers.HelperClasses;
 
 namespace UniversityAccounting.WEB.Controllers
 {
@@ -15,18 +16,20 @@ namespace UniversityAccounting.WEB.Controllers
         protected readonly INotyfService Notyf;
         protected readonly IStringLocalizer<SharedResource> SharedLocalizer;
         protected readonly IMapper Mapper;
+        protected readonly IBreadcrumbNodeCreator BrCrNodesCreator;
 
         public BaseController()
         {
         }
 
         public BaseController(IUnitOfWork unitOfWork, INotyfService notyf,
-            IStringLocalizer<SharedResource> localizer, IMapper mapper)
+            IStringLocalizer<SharedResource> localizer, IMapper mapper, IBreadcrumbNodeCreator brCrNodesCreator)
         {
             UnitOfWork = unitOfWork;
             Notyf = notyf;
             SharedLocalizer = localizer;
             Mapper = mapper;
+            BrCrNodesCreator = brCrNodesCreator;
         }
 
         [HttpPost]

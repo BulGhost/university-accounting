@@ -11,7 +11,23 @@
                 @_localizer["Message"]
             </div>
             <div class="modal-footer">
-                <a onclick="window.history.back();" class="btn btn-success w-25">@_localizer["Yes"]</a>
+                @{
+                    switch (Context.Request.RouteValues["controller"]?.ToString())
+                    {
+                        case "Courses":
+                            <a asp-action="Index" class="btn btn-success w-25">@_localizer["Yes"]</a>
+                            break;
+                        case "Groups":
+                            <a asp-action="Index" asp-route-courseId="@Model.CourseId" class="btn btn-success w-25">@_localizer["Yes"]</a>
+                            break;
+                        case "Students":
+                            <a asp-action="Index" asp-route-groupId="@Model.GroupId" class="btn btn-success w-25">@_localizer["Yes"]</a>
+                            break;
+                        default:
+                            <a asp-action="Index" asp-controller="Courses" class="btn btn-success w-25">@_localizer["Yes"]</a>
+                            break;
+                    }
+                }
                 <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">@_localizer["No"]</button>
             </div>
         </div>

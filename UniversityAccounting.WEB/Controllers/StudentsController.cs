@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using SmartBreadcrumbs.Nodes;
 using UniversityAccounting.DAL.Interfaces;
 using UniversityAccounting.WEB.Models;
 using AutoMapper;
 using Microsoft.Extensions.Localization;
 using UniversityAccounting.DAL.BusinessLogic;
 using UniversityAccounting.DAL.Entities;
+using UniversityAccounting.WEB.Controllers.HelperClasses;
 using UniversityAccounting.WEB.Models.HelperClasses;
 
 namespace UniversityAccounting.WEB.Controllers
@@ -19,9 +19,9 @@ namespace UniversityAccounting.WEB.Controllers
         private const int StudentsPerPage = 10;
         private readonly IStringLocalizer<StudentsController> _localizer;
 
-        public StudentsController(IUnitOfWork unitOfWork, INotyfService notyf, IMapper mapper,
+        public StudentsController(IUnitOfWork unitOfWork, INotyfService notyf, IMapper mapper, IBreadcrumbNodeCreator nodesCreator,
             IStringLocalizer<SharedResource> sharedLocalizer, IStringLocalizer<StudentsController> localizer)
-            :base(unitOfWork, notyf, sharedLocalizer, mapper)
+            :base(unitOfWork, notyf, sharedLocalizer, mapper, nodesCreator)
         {
             _localizer = localizer;
         }
@@ -37,12 +37,8 @@ namespace UniversityAccounting.WEB.Controllers
             if (page < 1 || page > Math.Floor((double) totalStudents / StudentsPerPage) + 1)
                 return RedirectToAction("Index", new {groupId, page = 1});
 
-            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
-            var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{currentGroup.Course.Name}")
-                {RouteValues = new {courseId = currentGroup.CourseId}, Parent = node1};
-            var node3 = new MvcBreadcrumbNode("Index", "Students", _localizer["GroupName", currentGroup.Name])
-                {Parent = node2};
-            ViewData["BreadcrumbNode"] = node3;
+            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Index), "Students",
+                currentGroup.Course.Name, currentGroup.CourseId, currentGroup.Name, currentGroup.Id);
 
             if (TempData.ContainsKey("message")) Notyf.Success(TempData["message"].ToString());
             if (TempData.ContainsKey("error")) Notyf.Error(TempData["error"].ToString());
@@ -109,13 +105,8 @@ namespace UniversityAccounting.WEB.Controllers
             var currentGroup = UnitOfWork.Groups.Get((int) groupId);
             if (currentGroup == null) return NotFound();
 
-            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
-            var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{currentGroup.Course.Name}")
-                {RouteValues = new {courseId = currentGroup.CourseId}, Parent = node1};
-            var node3 = new MvcBreadcrumbNode("Index", "Students", _localizer["GroupName", currentGroup.Name])
-                {RouteValues = new {groupId = currentGroup.Id}, Parent = node2};
-            var node4 = new MvcBreadcrumbNode("Create", "Students", _localizer["NewStudent"]) { Parent = node3 };
-            ViewData["BreadcrumbNode"] = node4;
+            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Create), "Students",
+                currentGroup.Course.Name, currentGroup.CourseId, currentGroup.Name, currentGroup.Id);
 
             var student = new StudentViewModel {GroupId = (int) groupId};
             return View(student);
@@ -149,13 +140,8 @@ namespace UniversityAccounting.WEB.Controllers
             var student = UnitOfWork.Students.Get((int)id);
             if (student == null) return NotFound();
 
-            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
-            var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{student.Group.Course.Name}")
-                {RouteValues = new {courseId = student.Group.CourseId}, Parent = node1};
-            var node3 = new MvcBreadcrumbNode("Index", "Students", _localizer["GroupName", student.Group.Name])
-                {RouteValues = new { groupId = student.Group.Id}, Parent = node2};
-            var node4 = new MvcBreadcrumbNode("Create", "Students", _localizer["EditStudent"]) {Parent = node3};
-            ViewData["BreadcrumbNode"] = node4;
+            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Edit), "Students",
+                student.Group.Course.Name, student.Group.CourseId, student.Group.Name, student.Group.Id);
 
             var studentModel = Mapper.Map<Student, StudentViewModel>(student);
 
@@ -203,13 +189,8 @@ namespace UniversityAccounting.WEB.Controllers
             var student = UnitOfWork.Students.Get((int)id);
             if (student == null) return NotFound();
 
-            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
-            var node2 = new MvcBreadcrumbNode("Index", "Groups", $"{student.Group.Course.Name}")
-                {RouteValues = new {courseId = student.Group.CourseId }, Parent = node1};
-            var node3 = new MvcBreadcrumbNode("Index", "Students", _localizer["GroupName", student.Group.Name])
-                {RouteValues = new {groupId = student.Group.Id}, Parent = node2};
-            var node4 = new MvcBreadcrumbNode("Create", "Students", _localizer["DeleteStudent"]) { Parent = node3 };
-            ViewData["BreadcrumbNode"] = node4;
+            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Delete), "Students",
+                student.Group.Course.Name, student.Group.CourseId, student.Group.Name, student.Group.Id);
 
             var studentModel = Mapper.Map<Student, StudentViewModel>(student);
 

@@ -1,0 +1,64 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/ConfirmBack.min.js",
+    "inputFiles": [
+      "wwwroot/js/ConfirmBack.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/ConfirmDelete.min.js",
+    "inputFiles": [
+      "wwwroot/js/ConfirmDelete.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/DeleteButtonHideShow.min.js",
+    "inputFiles": [
+      "wwwroot/js/DeleteButtonHideShow.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/DisableButtonIfMiodelInvalid.min.js",
+    "inputFiles": [
+      "wwwroot/js/DisableButtonIfMiodelInvalid.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/SelectAllCheckbox.min.js",
+    "inputFiles": [
+      "wwwroot/js/SelectAllCheckbox.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/StopDoubleSubmit.min.js",
+    "inputFiles": [
+      "wwwroot/js/StopDoubleSubmit.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/TextTrimming.min.js",
+    "inputFiles": [
+      "wwwroot/js/TextTrimming.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/validation-bundle.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "wwwroot/lib/cldrjs/dist/cldr.js",
+      "wwwroot/lib/cldrjs/dist/cldr/event.js",
+      "wwwroot/lib/cldrjs/dist/cldr/supplemental.js",
+      "wwwroot/lib/globalize/globalize.js",
+      "wwwroot/lib/globalize/globalize/number.js",
+      "wwwroot/lib/globalize/globalize/date.js",
+      "wwwroot/lib/jquery-validation-globalize/jquery.validate.globalize.js"
+    ]
+  }
+]

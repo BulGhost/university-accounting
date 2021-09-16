@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using UniversityAccounting.DAL.Interfaces;
 using AutoMapper;
 using Microsoft.Extensions.Localization;
-using SmartBreadcrumbs.Nodes;
 using UniversityAccounting.DAL.BusinessLogic;
 using UniversityAccounting.DAL.Entities;
+using UniversityAccounting.WEB.Controllers.HelperClasses;
 using UniversityAccounting.WEB.Models;
 using UniversityAccounting.WEB.Models.HelperClasses;
 
@@ -19,9 +19,9 @@ namespace UniversityAccounting.WEB.Controllers
         private const int CoursesPerPage = 5;
         private readonly IStringLocalizer<CoursesController> _localizer;
 
-        public CoursesController(IUnitOfWork unitOfWork, INotyfService notyf, IMapper mapper,
+        public CoursesController(IUnitOfWork unitOfWork, INotyfService notyf, IMapper mapper, IBreadcrumbNodeCreator nodesCreator,
             IStringLocalizer<SharedResource> sharedLocalizer, IStringLocalizer<CoursesController> localizer)
-            : base(unitOfWork, notyf, sharedLocalizer, mapper)
+            : base(unitOfWork, notyf, sharedLocalizer, mapper, nodesCreator)
         {
             _localizer = localizer;
         }
@@ -95,11 +95,9 @@ namespace UniversityAccounting.WEB.Controllers
 
         public IActionResult Create()
         {
-            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
-            var node2 = new MvcBreadcrumbNode("Create", "Courses", _localizer["CreateNew"]) { Parent = node1 };
-            ViewData["BreadcrumbNode"] = node2;
+            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Create), "Courses");
 
-            return View();
+            return View(new CourseViewModel());
         }
 
         [HttpPost]
@@ -130,9 +128,7 @@ namespace UniversityAccounting.WEB.Controllers
             var course = UnitOfWork.Courses.Get((int)id);
             if (course == null) return NotFound();
 
-            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
-            var node2 = new MvcBreadcrumbNode("Edit", "Courses", _localizer["EditCourse"]) { Parent = node1 };
-            ViewData["BreadcrumbNode"] = node2;
+            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Edit), "Courses");
 
             var courseModel = Mapper.Map<Course, CourseViewModel>(course);
 
@@ -168,9 +164,7 @@ namespace UniversityAccounting.WEB.Controllers
             var course = UnitOfWork.Courses.Get((int)id);
             if (course == null) return NotFound();
 
-            var node1 = new MvcBreadcrumbNode("Index", "Courses", _localizer["Courses"]);
-            var node2 = new MvcBreadcrumbNode("Delete", "Courses", _localizer["DeleteCourse"]) { Parent = node1 };
-            ViewData["BreadcrumbNode"] = node2;
+            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Delete), "Courses");
 
             var courseModel = Mapper.Map<Course, CourseViewModel>(course);
 

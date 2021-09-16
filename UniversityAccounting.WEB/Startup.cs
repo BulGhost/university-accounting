@@ -11,11 +11,10 @@ using UniversityAccounting.DAL.EF;
 using UniversityAccounting.DAL.Interfaces;
 using UniversityAccounting.DAL.Repositories;
 using UniversityAccounting.WEB.Models.HelperClasses;
-using AutoMapper;
-using UniversityAccounting.WEB.Models;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Microsoft.Extensions.Options;
+using UniversityAccounting.WEB.Controllers.HelperClasses;
 
 namespace UniversityAccounting.WEB
 {
@@ -35,6 +34,7 @@ namespace UniversityAccounting.WEB
 
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IBreadcrumbNodeCreator, BreadcrumbNodeCreator>();
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 var supportedCultures = new[]
