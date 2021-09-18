@@ -41,5 +41,18 @@ namespace UniversityAccounting.DAL.Entities
             FirstName = firstName;
             LastName = lastName;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is not Student student) return false;
+
+            return Id == student.Id && FirstName == student.FirstName && LastName == student.LastName
+                   && GroupId == student.GroupId && DateOfBirth == student.DateOfBirth;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, FirstName, LastName, GroupId, DateOfBirth);
+        }
     }
 }

@@ -7,6 +7,10 @@ namespace UniversityAccounting.DAL.EF
 {
     public class UniversityContext : DbContext
     {
+        public UniversityContext()
+        {
+        }
+
         public UniversityContext(DbContextOptions<UniversityContext> options) : base(options)
         {
         }

@@ -40,10 +40,12 @@ namespace UniversityAccounting.DAL.Repositories
             if (string.IsNullOrEmpty(searchText)) return students;
 
             searchText = searchText.ToLower();
+            bool isNumber = int.TryParse(searchText, out int n);
             bool isDate = DateTime.TryParse(searchText, out var date);
             return students.Where(s => s.FirstName.ToLower().Contains(searchText) ||
                                        s.LastName.ToLower().Contains(searchText) ||
-                                       isDate && s.DateOfBirth == date);
+                                       isDate && s.DateOfBirth == date ||
+                                       isNumber && s.DateOfBirth.Year == n);
         }
     }
 }

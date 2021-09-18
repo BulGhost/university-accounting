@@ -25,5 +25,18 @@ namespace UniversityAccounting.DAL.Entities
         public int StudentsQuantity { get; private set; }
 
         public virtual ICollection<Student> Students { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is not Group group) return false;
+
+            return Id == group.Id && Name == group.Name && CourseId == group.CourseId &&
+                   FormationDate == group.FormationDate;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, CourseId, FormationDate);
+        }
     }
 }
