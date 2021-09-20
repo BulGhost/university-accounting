@@ -1,0 +1,51 @@
+﻿@model CourseViewModel
+@inject IViewLocalizer _localizer
+@{ ViewBag.Title = _localizer["CreateCourse"];}
+
+<form method="post" asp-action="Create">
+    <div class="border p-3">
+        <div class="row">
+            <h2 class="text-info ps-3">@_localizer["AddCourse"].Value</h2>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row m-3">
+            <div class="col-8">
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="Name" class="required"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Name" class="form-control" id="target" />
+                    </div>
+                </div>
+
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <textarea asp-for="Description" class="form-control" rows="6"></textarea>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-8 offset-md-4 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value=@_localizer["CreateBtn"] />
+                        </div>
+                        <div class="col">
+                            <a id="backButton" class="btn btn-success w-100">@_localizer["Back"]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<partial name="_BackConfirm" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/confirm-back.js"></script>
+    <script src="~/js/disable-button-if-miodel-invalid.js"></script>
+}

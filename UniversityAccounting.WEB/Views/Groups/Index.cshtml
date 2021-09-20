@@ -1,0 +1,112 @@
+﻿@model GroupsIndexViewModel
+@inject IViewLocalizer _localizer
+@{
+    ViewBag.Title = _localizer["CourseGroups", ViewBag.Course.Name];
+    ViewBag.CourseId = ViewBag.Course.Id;
+    ViewBag.SortModel = Model.SortModel;
+}
+
+<div class="container p-2">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h3 class="text-primary ps-3">@_localizer["CourseGroups", ViewBag.Course.Name]</h3>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Groups" asp-action="Create" asp-route-courseId="@ViewBag.Course.Id" class="btn btn-primary">
+                @_localizer["CreateNewGroup"]
+            </a>
+        </div>
+    </div>
+
+    <div class="row justify-content-start my-2">
+        <div class="col-6">
+            <form asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" class="row">
+                <div class="col">
+                    <input type="text" value="@ViewBag.SearchText" class="form-control mb-2"
+                           name="searchText" placeholder="@_localizer["SearchKey"]" />
+                </div>
+                <div class="col-7">
+                    <input type="submit" value="@_localizer["Search"]" class="px-3 btn btn btn-success" />
+                </div>
+            </form>
+        </div>
+        <div class="col text-end">
+            <a id="deleteButton" class="btn btn-danger">@_localizer["DeleteBtn"]</a>
+        </div>
+    </div>
+
+    @if (Model.Groups.Any())
+    {
+        <form asp-action="DeleteSeveral" method="post">
+            <table class="table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>
+                            <input class="form-check-input" type="checkbox" name="allcheck" id="selectAll" />
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-page="1" asp-route-sortProperty="Name"
+                               asp-route-sortOrder="@Model.SortModel.GetColumn("Name").Order" class="column-heading">
+                                @_localizer["GroupName"]
+                            </a>
+                            <i class="@Model.SortModel.GetColumn("Name").SortIcon"></i>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-page="1" asp-route-sortProperty="FormationDate"
+                               asp-route-sortOrder="@Model.SortModel.GetColumn("FormationDate").Order" class="column-heading">
+                                @_localizer["FormationDate"]
+                            </a>
+                            <i class="@Model.SortModel.GetColumn("FormationDate").SortIcon"></i>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-page="1" asp-route-sortProperty="StudentsQuantity"
+                               asp-route-sortOrder="@Model.SortModel.GetColumn("StudentsQuantity").Order" class="column-heading">
+                                @_localizer["StudentsQuantity"]
+                            </a>
+                            <i class="@Model.SortModel.GetColumn("StudentsQuantity").SortIcon"></i>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in Model.Groups)
+                    {
+                        <tr>
+                            <td class="align-middle">
+                                <input type="checkbox" value="@group.Id" name="ids" id="ids" class="form-check-input" />
+                            </td>
+                            <td wigth="30%" class="ps-1">
+                                <a class="h5" asp-controller="Students" asp-action="Index" asp-route-groupId="@group.Id">@group.Name</a>
+                            </td>
+                            <td width="30%">@group.FormationDate.ToShortDateString()</td>
+                            <td width="20%">@group.StudentsQuantity</td>
+                            <td class="text-center">
+                                <div>
+                                    <a asp-controller="Groups" asp-action="Edit" asp-route-Id="@group.Id" class="btn btn-primary ms-4 my-2">
+                                        @_localizer["Edit"]
+                                    </a>
+                                    <a asp-controller="Groups" asp-action="Delete" asp-route-Id="@group.Id" class="btn btn-danger ms-4 my-2">
+                                        @_localizer["Delete"]
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @{ ViewBag.Message = _localizer["Message"].Value; }
+            <partial name="_SeveralDeleteConfirm" view-data="ViewData" />
+        </form>
+    }
+    else
+    {
+        <p>@_localizer["NoGroupsExists"]</p>
+    }
+    <partial name="_Pager" model="@Model.PagingInfo" view-data="ViewData" />
+    <br />
+</div>
+
+@section Scripts {
+    <script src="~/js/select-all-checkbox.js"></script>
+    <script src="~/js/delete-button-hide-show.js"></script>
+}

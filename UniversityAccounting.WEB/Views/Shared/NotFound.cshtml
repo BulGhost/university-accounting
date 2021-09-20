@@ -1,0 +1,19 @@
+﻿@inject IViewLocalizer _localizer
+@{
+    ViewBag.Title = _localizer["NotFoundTitle"];
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <h2 class="pb-2">@ViewBag.ErrorMessage</h2>
+                <div>
+                    <a asp-action="Index" asp-controller="Courses" class="btn btn-primary btn-lg">
+                        @_localizer["HomePage"]
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

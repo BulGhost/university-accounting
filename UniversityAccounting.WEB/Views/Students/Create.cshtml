@@ -1,0 +1,87 @@
+﻿@model StudentViewModel
+@inject IViewLocalizer _localizer
+@{
+    ViewBag.Title = _localizer["AddStudent"];
+}
+
+<form method="post" asp-action="Create">
+    <input asp-for="GroupId" hidden />
+    <div class="border p-3">
+        <div class="row">
+            <h2 class="text-info ps-3">@_localizer["AddStudent"]</h2>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row m-3">
+            <div class="col-8">
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="FirstName" class="required"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="FirstName" class="form-control" />
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="LastName" class="required"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="LastName" class="form-control" />
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="DateOfBirth" class="required"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="DateOfBirth" class="form-control" id="datepicker" type="text" />
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="FinalExamGpa"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="FinalExamGpa" class="form-control" />
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="Status" class="required"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="Status" class="form-select">
+                            <option value="0" selected>@_localizer["Choose"]</option>
+                            <option value="1">@_localizer["Applicant"]</option>
+                            <option value="2">@_localizer["Undergraduate"]</option>
+                            <option value="3">@_localizer["Graduate"]</option>
+                            <option value="4">@_localizer["Expelled"]</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row m-3">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value=@_localizer["CreateBtn"] />
+                        </div>
+                        <div class="col">
+                            <a id="backButton" class="btn btn-success w-100">@_localizer["Back"]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<partial name="_BackConfirm" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ar.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
+    <script src="~/js/confirm-back.js"></script>
+    <script src="~/js/disable-button-if-miodel-invalid.js"></script>
+    <partial name="_DatePickerPartial" />
+}

@@ -1,0 +1,58 @@
+﻿@model GroupViewModel
+@inject IViewLocalizer _localizer
+@{ ViewBag.Title = _localizer["EditGroup"];}
+
+<form method="post">
+    <input asp-for="Id" hidden />
+    <input asp-for="CourseId" hidden />
+    <div class="border p-3">
+        <div class="row">
+            <h2 class="text-info ps-3">@_localizer["EditGroup"]</h2>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row m-3">
+            <div class="col-8">
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="Name" class="required"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Name" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="FormationDate" class="required"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="FormationDate" class="form-control" id="datepicker" type="text" />
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value=@_localizer["Update"] />
+                        </div>
+                        <div class="col">
+                            <a id="backButton" class="btn btn-success w-100">@_localizer["Back"]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<partial name="_BackConfirm" />
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ar.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
+    <script src="~/js/confirm-back.js"></script>
+    <script src="~/js/disable-button-if-miodel-invalid.js"></script>
+    <partial name="_DatePickerPartial" />
+}

@@ -1,0 +1,35 @@
+﻿@inject IViewLocalizer _localizer
+
+<div class="modal fade" id="backDialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">@_localizer["AreYouSure"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @_localizer["Message"]
+            </div>
+            <div class="modal-footer">
+                @{
+                    switch (Context.Request.RouteValues["controller"]?.ToString())
+                    {
+                        case "Courses":
+                            <a asp-action="Index" class="btn btn-success w-25">@_localizer["Yes"]</a>
+                            break;
+                        case "Groups":
+                            <a asp-action="Index" asp-route-courseId="@Model.CourseId" class="btn btn-success w-25">@_localizer["Yes"]</a>
+                            break;
+                        case "Students":
+                            <a asp-action="Index" asp-route-groupId="@Model.GroupId" class="btn btn-success w-25">@_localizer["Yes"]</a>
+                            break;
+                        default:
+                            <a asp-action="Index" asp-controller="Courses" class="btn btn-success w-25">@_localizer["Yes"]</a>
+                            break;
+                    }
+                }
+                <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">@_localizer["No"]</button>
+            </div>
+        </div>
+    </div>
+</div>

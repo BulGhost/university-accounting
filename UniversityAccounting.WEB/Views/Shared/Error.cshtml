@@ -1,0 +1,20 @@
+﻿@inject IViewLocalizer _localizer
+@{
+    ViewData["Title"] = _localizer["ErrorTitle"];
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <h1 class="text-danger">@_localizer["ErrorTitle"]</h1>
+                <h2 class="text-danger pb-2">@_localizer["Message"]</h2>
+                <div>
+                    <a asp-action="Index" asp-controller="Courses" class="btn btn-primary btn-lg">
+                        @_localizer["HomePage"]
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

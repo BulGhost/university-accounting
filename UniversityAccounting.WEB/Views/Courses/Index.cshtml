@@ -1,0 +1,103 @@
+﻿@model CoursesIndexViewModel
+@inject IViewLocalizer _localizer
+@{
+    ViewBag.Title = _localizer["Courses"];
+    ViewBag.SortModel = Model.SortModel;
+}
+
+<div class="container p-2">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h3 class="text-primary ps-3">@_localizer["CoursesList"]</h3>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Courses" asp-action="Create" class="btn btn-primary">
+                @_localizer["CreateNewCourse"]
+            </a>
+        </div>
+    </div>
+
+    <div class="row justify-content-start my-2">
+        <div class="col-6">
+            <form asp-action="Index" class="row">
+                <div class="col">
+                    <input type="text" value="@ViewBag.SearchText" class="form-control mb-2"
+                           name="searchText" placeholder="@_localizer["SearchKey"]" as />
+                </div>
+                <div class="col-7">
+                    <input type="submit" value="@_localizer["Search"]" class="px-3 btn btn btn-success" />
+                </div>
+            </form>
+        </div>
+        <div class="col text-end">
+            <a class="btn btn-danger" id="deleteButton">@_localizer["DeleteBtn"]</a>
+        </div>
+    </div>
+
+    @if (Model.Courses.Any())
+    {
+        <form asp-action="DeleteSeveral" method="post">
+            <table class="table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>
+                            <input class="form-check-input" type="checkbox" name="allcheck" id="selectAll" />
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortProperty="Name" asp-route-page="1"
+                               asp-route-sortOrder="@Model.SortModel.GetColumn("Name").Order" class="column-heading">
+                                @_localizer["CourseName"]
+                            </a>
+                            <i class="@Model.SortModel.GetColumn("Name").SortIcon"></i>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortProperty="Description" asp-route-page="1"
+                               asp-route-sortOrder="@Model.SortModel.GetColumn("Description").Order" class="column-heading">
+                                @_localizer["Description"]
+                            </a>
+                            <i class="@Model.SortModel.GetColumn("Description").SortIcon"></i>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var course in Model.Courses)
+                    {
+                        <tr>
+                            <td class="align-middle">
+                                <input type="checkbox" value="@course.Id" name="ids" id="ids" class="form-check-input" />
+                            </td>
+                            <td wigth="20%" class="align-middle ps-1">
+                                <a class="h5" asp-controller="Groups" asp-action="Index" asp-route-courseId="@course.Id">@course.Name</a>
+                            </td>
+                            <td width="60%">@course.Description</td>
+                            <td class="text-center align-middle">
+                                <div>
+                                    <a asp-controller="Courses" asp-action="Edit" asp-route-Id="@course.Id" class="btn btn-primary ms-4 my-2">
+                                        @_localizer["Edit"]
+                                    </a>
+                                    <a asp-controller="Courses" asp-action="Delete" asp-route-Id="@course.Id" class="btn btn-danger ms-4 my-2">
+                                        @_localizer["Delete"]
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @{ ViewBag.Message = _localizer["Message"].Value;}
+            <partial name="_SeveralDeleteConfirm" />
+        </form>
+    }
+    else
+    {
+        <p>@_localizer["NoCoursesExists."]</p>
+    }
+    <partial name="_Pager" model="@Model.PagingInfo" view-data="ViewData" />
+    <br />
+</div>
+
+@section Scripts {
+    <script src="~/js/select-all-checkbox.js"></script>
+    <script src="~/js/delete-button-hide-show.js"></script>
+}

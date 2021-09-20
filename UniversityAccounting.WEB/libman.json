@@ -1,0 +1,86 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "bootstrap@5.1.0",
+      "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "jquery@3.6.0",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.12",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "library": "bootstrap-datepicker@1.9.0",
+      "destination": "wwwroot/lib/bootstrap-datepicker/"
+    },
+    {
+      "library": "bootstrap-rtl@3.4.0",
+      "destination": "wwwroot/lib/bootstrap-rtl/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "cldrjs@0.5.5",
+      "destination": "wwwroot/lib/cldrjs/"
+    },
+    {
+      "library": "globalize@1.7.0",
+      "destination": "wwwroot/lib/globalize/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "cldr-core@39.0.0",
+      "destination": "wwwroot/lib/cldr-core/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "cldr-dates-modern@39.0.0",
+      "destination": "wwwroot/lib/cldr-dates-modern/",
+      "files": [
+        "bower.json",
+        "LICENSE",
+        "package.json",
+        "README.md",
+        "main/ru/timeZoneNames.json",
+        "main/ru/dateFields.json",
+        "main/ru/ca-gregorian.json",
+        "main/ru/ca-generic.json",
+        "main/en/timeZoneNames.json",
+        "main/en/dateFields.json",
+        "main/en/ca-gregorian.json",
+        "main/en/ca-generic.json",
+        "main/ar/timeZoneNames.json",
+        "main/ar/dateFields.json",
+        "main/ar/ca-gregorian.json",
+        "main/ar/ca-generic.json"
+      ]
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "cldr-numbers-modern@39.0.0",
+      "destination": "wwwroot/lib/cldr-numbers-modern/",
+      "files": [
+        "bower.json",
+        "LICENSE",
+        "package.json",
+        "README.md",
+        "main/ru/numbers.json",
+        "main/ru/currencies.json",
+        "main/en/numbers.json",
+        "main/en/currencies.json",
+        "main/ar/numbers.json",
+        "main/ar/currencies.json"
+      ]
+    }
+  ,
+{
+  "provider": "jsdelivr",
+  "library": "jquery-validation@1.19.3",
+  "destination": "wwwroot/lib/jquery-validation/"
+}
+]
+}

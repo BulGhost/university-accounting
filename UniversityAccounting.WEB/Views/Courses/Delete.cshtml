@@ -1,0 +1,52 @@
+﻿@model CourseViewModel
+@inject IViewLocalizer _localizer
+@{
+    ViewBag.Title = _localizer["DeleteСourse"];
+    ViewData["Details"] = _localizer["Details", Model.Name];
+}
+
+<form method="post" asp-action="DeletePost">
+    <input asp-for="Id" hidden />
+    <div class="border p-3">
+        <div class="row">
+            <h2 class="text-info ps-3">@_localizer["DeleteСourse"]</h2>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row m-3">
+            <div class="col-8">
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Name" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <textarea asp-for="Description" disabled class="form-control" rows="6"></textarea>
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <a id="deleteButton" class="btn btn-danger w-100">@_localizer["DeleteBtn"]</a>
+                        </div>
+                        <div class="col">
+                            <a onclick="window.history.back();" class="btn btn-success w-100">@_localizer["Back"]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <partial name="_DeleteConfirm" view-data="ViewData" />
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/confirm-delete.js"></script>
+}

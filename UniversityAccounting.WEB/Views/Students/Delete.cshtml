@@ -1,0 +1,88 @@
+﻿@model StudentViewModel
+@inject IViewLocalizer _localizer
+@{
+    ViewBag.Title = _localizer["DeleteStudent"];
+    ViewData["Details"] = _localizer["Details", Model.FirstName, Model.LastName];
+}
+
+<form method="post" asp-action="DeletePost">
+    <input asp-for="Id" hidden />
+    <div class="border p-3">
+        <div class="row">
+            <h2 class="text-info ps-3">@_localizer["DeleteStudent"]</h2>
+        </div>
+        <div class="row m-3">
+            <div class="col-8">
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="FirstName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="FirstName" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="LastName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="LastName" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="DateOfBirth"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="DateOfBirth" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="GroupName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="GroupName" disabled class="form-control">
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="FinalExamGpa"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="FinalExamGpa" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row m-3">
+                    <div class="col-4">
+                        <label asp-for="Status"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="Status" disabled class="form-select">
+                            <option value="1">@_localizer["Applicant"]</option>
+                            <option value="2">@_localizer["Undergraduate"]</option>
+                            <option value="3">@_localizer["Graduate"]</option>
+                            <option value="4">@_localizer["Expelled"]</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row m-3">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <a id="deleteButton" class="btn btn-danger w-100">@_localizer["DeleteBtn"]</a>
+                        </div>
+                        <div class="col">
+                            <a onclick="window.history.back();" class="btn btn-success w-100">@_localizer["Back"]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <partial name="_DeleteConfirm" view-data="ViewData" />
+</form>
+
+@section Scripts {
+    <script src="~/js/confirm-delete.js"></script>
+}
