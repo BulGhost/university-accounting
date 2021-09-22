@@ -12,24 +12,25 @@ namespace UniversityAccounting.WEB.Controllers
 {
     public class BaseController : Controller
     {
+        protected const string NotifMessage = "message";
+        protected const string NotifError = "error";
+
         protected readonly IUnitOfWork UnitOfWork;
         protected readonly INotyfService Notyf;
         protected readonly IStringLocalizer<SharedResource> SharedLocalizer;
         protected readonly IMapper Mapper;
-        protected readonly IBreadcrumbNodeCreator BrCrNodesCreator;
+        protected readonly IBreadcrumbNodeCreator BreadcrumbNodeCreator;
+        protected readonly ISortModel SortModel;
 
-        public BaseController()
-        {
-        }
-
-        public BaseController(IUnitOfWork unitOfWork, INotyfService notyf,
-            IStringLocalizer<SharedResource> localizer, IMapper mapper, IBreadcrumbNodeCreator brCrNodesCreator)
+        public BaseController(IUnitOfWork unitOfWork, INotyfService notyf, ISortModel sortModel,
+            IStringLocalizer<SharedResource> localizer, IMapper mapper, IBreadcrumbNodeCreator breadcrumbNodeCreator)
         {
             UnitOfWork = unitOfWork;
             Notyf = notyf;
+            SortModel = sortModel;
             SharedLocalizer = localizer;
             Mapper = mapper;
-            BrCrNodesCreator = brCrNodesCreator;
+            BreadcrumbNodeCreator = breadcrumbNodeCreator;
         }
 
         [HttpPost]

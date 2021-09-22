@@ -19,14 +19,15 @@ namespace UniversityAccounting.WEB.Controllers
         private const int StudentsPerPage = 10;
         private readonly IStringLocalizer<StudentsController> _localizer;
 
-        public StudentsController(IUnitOfWork unitOfWork, INotyfService notyf, IMapper mapper, IBreadcrumbNodeCreator nodesCreator,
+        public StudentsController(IUnitOfWork unitOfWork, INotyfService notyf, IMapper mapper,
+            IBreadcrumbNodeCreator nodesCreator, ISortModel sortModel,
             IStringLocalizer<SharedResource> sharedLocalizer, IStringLocalizer<StudentsController> localizer)
-            :base(unitOfWork, notyf, sharedLocalizer, mapper, nodesCreator)
+            :base(unitOfWork, notyf, sortModel, sharedLocalizer, mapper, nodesCreator)
         {
             _localizer = localizer;
         }
 
-        public IActionResult Index(int groupId, int page = 1, string sortProperty = nameof(Student.LastName),
+        public IActionResult Index(int groupId, int page = 1, string sortProperty = nameof(StudentViewModel.LastName),
             SortOrder sortOrder = SortOrder.Ascending, string searchText = "")
         {
             var currentGroup = UnitOfWork.Groups.Get(groupId);
@@ -37,19 +38,18 @@ namespace UniversityAccounting.WEB.Controllers
             if (page < 1 || page > Math.Floor((double) totalStudents / StudentsPerPage) + 1)
                 return RedirectToAction("Index", new {groupId, page = 1});
 
-            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Index), "Students",
+            BreadcrumbNodeCreator.CreateNodes(ViewData, nameof(Index), "Students",
                 currentGroup.Course.Name, currentGroup.CourseId, currentGroup.Name, currentGroup.Id);
 
-            if (TempData.ContainsKey("message")) Notyf.Success(TempData["message"].ToString());
-            if (TempData.ContainsKey("error")) Notyf.Error(TempData["error"].ToString());
+            if (TempData.ContainsKey(NotifMessage)) Notyf.Success(TempData[NotifMessage].ToString());
+            if (TempData.ContainsKey(NotifError)) Notyf.Error(TempData[NotifError].ToString());
 
-            var sortModel = new SortModel();
-            sortModel.AddColumn(nameof(Student.FirstName));
-            sortModel.AddColumn(nameof(Student.LastName), true);
-            sortModel.AddColumn(nameof(Student.DateOfBirth));
-            sortModel.AddColumn(nameof(Student.FinalExamGpa));
-            sortModel.AddColumn(nameof(Student.Status));
-            sortModel.ApplySort(sortProperty, sortOrder);
+            SortModel.AddColumn(nameof(StudentViewModel.FirstName));
+            SortModel.AddColumn(nameof(StudentViewModel.LastName), true);
+            SortModel.AddColumn(nameof(StudentViewModel.DateOfBirth));
+            SortModel.AddColumn(nameof(StudentViewModel.FinalExamGpa));
+            SortModel.AddColumn(nameof(StudentViewModel.Status));
+            SortModel.ApplySort(sortProperty, sortOrder);
 
             var studentsOnPage = Mapper.Map<List<StudentViewModel>>(UnitOfWork.Students
                 .GetRequiredStudents(s => s.GroupId == groupId, searchText, sortProperty,
@@ -59,7 +59,7 @@ namespace UniversityAccounting.WEB.Controllers
             return View(new StudentsIndexViewModel
             {
                 Students = studentsOnPage,
-                SortModel = sortModel,
+                SortModel = SortModel,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
@@ -94,7 +94,7 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = _localizer["SeveralStudentsDeleted", students.Count].Value;
+            TempData[NotifMessage] = _localizer["SeveralStudentsDeleted", students.Count].Value;
             return RedirectToAction("Index", new {groupId = students.First().GroupId});
         }
 
@@ -105,7 +105,7 @@ namespace UniversityAccounting.WEB.Controllers
             var currentGroup = UnitOfWork.Groups.Get((int) groupId);
             if (currentGroup == null) return NotFound();
 
-            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Create), "Students",
+            BreadcrumbNodeCreator.CreateNodes(ViewData, nameof(Create), "Students",
                 currentGroup.Course.Name, currentGroup.CourseId, currentGroup.Name, currentGroup.Id);
 
             var student = new StudentViewModel {GroupId = (int) groupId};
@@ -129,7 +129,7 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = _localizer["StudentAdded", studentModel.FirstName, studentModel.LastName].Value;
+            TempData[NotifMessage] = _localizer["StudentAdded", studentModel.FirstName, studentModel.LastName].Value;
             return RedirectToAction("Index", new { groupId = studentModel.GroupId });
         }
 
@@ -140,7 +140,7 @@ namespace UniversityAccounting.WEB.Controllers
             var student = UnitOfWork.Students.Get((int)id);
             if (student == null) return NotFound();
 
-            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Edit), "Students",
+            BreadcrumbNodeCreator.CreateNodes(ViewData, nameof(Edit), "Students",
                 student.Group.Course.Name, student.Group.CourseId, student.Group.Name, student.Group.Id);
 
             var studentModel = Mapper.Map<Student, StudentViewModel>(student);
@@ -178,7 +178,7 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = _localizer["StudentUpdated", student.FirstName, student.LastName].Value;
+            TempData[NotifMessage] = _localizer["StudentUpdated", student.FirstName, student.LastName].Value;
             return RedirectToAction("Index", new {groupId = student.GroupId});
         }
 
@@ -189,7 +189,7 @@ namespace UniversityAccounting.WEB.Controllers
             var student = UnitOfWork.Students.Get((int)id);
             if (student == null) return NotFound();
 
-            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Delete), "Students",
+            BreadcrumbNodeCreator.CreateNodes(ViewData, nameof(Delete), "Students",
                 student.Group.Course.Name, student.Group.CourseId, student.Group.Name, student.Group.Id);
 
             var studentModel = Mapper.Map<Student, StudentViewModel>(student);
@@ -216,7 +216,7 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = _localizer["StudentDeleted", student.FirstName, student.LastName].Value;
+            TempData[NotifMessage] = _localizer["StudentDeleted", student.FirstName, student.LastName].Value;
             return RedirectToAction("Index", new {groupId = student.GroupId});
         }
 

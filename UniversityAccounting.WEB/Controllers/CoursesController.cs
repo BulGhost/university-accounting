@@ -19,27 +19,27 @@ namespace UniversityAccounting.WEB.Controllers
         private const int CoursesPerPage = 5;
         private readonly IStringLocalizer<CoursesController> _localizer;
 
-        public CoursesController(IUnitOfWork unitOfWork, INotyfService notyf, IMapper mapper, IBreadcrumbNodeCreator nodesCreator,
+        public CoursesController(IUnitOfWork unitOfWork, INotyfService notyf, IMapper mapper,
+            IBreadcrumbNodeCreator nodesCreator, ISortModel sortModel,
             IStringLocalizer<SharedResource> sharedLocalizer, IStringLocalizer<CoursesController> localizer)
-            : base(unitOfWork, notyf, sharedLocalizer, mapper, nodesCreator)
+            : base(unitOfWork, notyf, sortModel, sharedLocalizer, mapper, nodesCreator)
         {
             _localizer = localizer;
         }
 
-        public IActionResult Index(int page = 1, string sortProperty = nameof(Course.Name),
+        public IActionResult Index(int page = 1, string sortProperty = nameof(CourseViewModel.Name),
             SortOrder sortOrder = SortOrder.Ascending, string searchText = "")
         {
             int totalCourses = UnitOfWork.Courses.SuitableCoursesCount(searchText);
             if (page < 1 || page > Math.Floor((double) totalCourses / CoursesPerPage) + 1)
                 return RedirectToAction("Index", new {page = 1});
 
-            if (TempData.ContainsKey("message")) Notyf.Success(TempData["message"].ToString());
-            if (TempData.ContainsKey("error")) Notyf.Error(TempData["error"].ToString());
+            if (TempData.ContainsKey(NotifMessage)) Notyf.Success(TempData[NotifMessage].ToString());
+            if (TempData.ContainsKey(NotifError)) Notyf.Error(TempData[NotifError].ToString());
 
-            var sortModel = new SortModel();
-            sortModel.AddColumn(nameof(Course.Name), true);
-            sortModel.AddColumn(nameof(Course.Description));
-            sortModel.ApplySort(sortProperty, sortOrder);
+            SortModel.AddColumn(nameof(CourseViewModel.Name), true);
+            SortModel.AddColumn(nameof(CourseViewModel.Description));
+            SortModel.ApplySort(sortProperty, sortOrder);
 
             var coursesOnPage = Mapper.Map<IEnumerable<CourseViewModel>>(
                 UnitOfWork.Courses.GetRequiredCourses(searchText, sortProperty,
@@ -49,7 +49,7 @@ namespace UniversityAccounting.WEB.Controllers
             return View(new CoursesIndexViewModel
             {
                 Courses = coursesOnPage,
-                SortModel = sortModel,
+                SortModel = SortModel,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
@@ -81,7 +81,7 @@ namespace UniversityAccounting.WEB.Controllers
             }
             catch (DbUpdateException)
             {
-                TempData["error"] = _localizer["DeleteErrorMessage"].Value;
+                TempData[NotifError] = _localizer["DeleteErrorMessage"].Value;
                 return RedirectToAction("Index");
             }
             catch (Exception)
@@ -89,13 +89,13 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = _localizer["SeveralCoursesDeleted", courses.Count].Value;
+            TempData[NotifMessage] = _localizer["SeveralCoursesDeleted", courses.Count].Value;
             return RedirectToAction("Index");
         }
 
         public IActionResult Create()
         {
-            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Create), "Courses");
+            BreadcrumbNodeCreator.CreateNodes(ViewData, nameof(Create), "Courses");
 
             return View(new CourseViewModel());
         }
@@ -117,7 +117,7 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = _localizer["CourseAdded", courseModel.Name].Value;
+            TempData[NotifMessage] = _localizer["CourseAdded", courseModel.Name].Value;
             return RedirectToAction("Index");
         }
 
@@ -128,7 +128,7 @@ namespace UniversityAccounting.WEB.Controllers
             var course = UnitOfWork.Courses.Get((int)id);
             if (course == null) return NotFound();
 
-            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Edit), "Courses");
+            BreadcrumbNodeCreator.CreateNodes(ViewData, nameof(Edit), "Courses");
 
             var courseModel = Mapper.Map<Course, CourseViewModel>(course);
 
@@ -153,7 +153,7 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = _localizer["CourseUpdated", courseModel.Name].Value;
+            TempData[NotifMessage] = _localizer["CourseUpdated", courseModel.Name].Value;
             return RedirectToAction("Index");
         }
 
@@ -164,7 +164,7 @@ namespace UniversityAccounting.WEB.Controllers
             var course = UnitOfWork.Courses.Get((int)id);
             if (course == null) return NotFound();
 
-            ViewData["BreadcrumbNode"] = BrCrNodesCreator.CreateNodes(nameof(Delete), "Courses");
+            BreadcrumbNodeCreator.CreateNodes(ViewData, nameof(Delete), "Courses");
 
             var courseModel = Mapper.Map<Course, CourseViewModel>(course);
 
@@ -196,7 +196,7 @@ namespace UniversityAccounting.WEB.Controllers
                 return View("Error");
             }
 
-            TempData["message"] = _localizer["CourseDeleted", course.Name].Value;
+            TempData[NotifMessage] = _localizer["CourseDeleted", course.Name].Value;
             return RedirectToAction("Index");
         }
 

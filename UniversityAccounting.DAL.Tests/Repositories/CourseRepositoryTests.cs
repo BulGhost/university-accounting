@@ -28,8 +28,8 @@ namespace UniversityAccounting.DAL.Tests.Repositories
         private readonly CourseRepository _repo;
 
         public static IEnumerable<object[]> SortingTestData =>
-                    new List<object[]>
-                    {
+            new List<object[]>
+            {
                 new object[]
                 {
                     "Name",
@@ -63,7 +63,7 @@ namespace UniversityAccounting.DAL.Tests.Repositories
                         new() {Id = 2, Name = "Course2", Description = "second foo"}
                     }
                 }
-                    };
+            };
 
         public static IEnumerable<object[]> PaginationTestData =>
             new List<object[]>

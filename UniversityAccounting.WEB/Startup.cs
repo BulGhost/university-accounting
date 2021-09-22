@@ -34,6 +34,7 @@ namespace UniversityAccounting.WEB
 
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ISortModel, SortModel>();
             services.AddSingleton<IBreadcrumbNodeCreator, BreadcrumbNodeCreator>();
             services.Configure<RequestLocalizationOptions>(options =>
             {
