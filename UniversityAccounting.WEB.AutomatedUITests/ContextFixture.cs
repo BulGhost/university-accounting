@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using UniversityAccounting.DAL.EF;
 using UniversityAccounting.DAL.Entities;
@@ -8,6 +10,8 @@ namespace UniversityAccounting.WEB.AutomatedUITests
     public class ContextFixture : IDisposable
     {
         private readonly UniversityContext _context;
+        private Process _kestrelProcess;
+
         public int TestGroupId { get; }
         public string TestGroupName { get; }
         public Student TestStudent { get; set; }
@@ -18,13 +22,19 @@ namespace UniversityAccounting.WEB.AutomatedUITests
             var group = _context.Groups.First();
             TestGroupId = group.Id;
             TestGroupName = group.Name;
+
+            StartKestrel();
         }
+
 
         public void Dispose()
         {
             DeleteAddedStudent(TestStudent);
             _context.Dispose();
+
+            KillKestrel();
         }
+
 
         private void DeleteAddedStudent(Student student)
         {
@@ -39,6 +49,39 @@ namespace UniversityAccounting.WEB.AutomatedUITests
 
             _context.Students.Remove(studentToDelete);
             _context.SaveChanges();
+        }
+
+        private void StartKestrel()
+        {
+            _kestrelProcess = new Process
+            {
+                StartInfo =
+                {
+                    FileName = "dotnet",
+                    Arguments = "run",
+                    WorkingDirectory = Path.Combine(GetSolutionFolderPath(), "UniversityAccounting.WEB")
+                }
+            };
+            _kestrelProcess.Start();
+        }
+
+        private static string GetSolutionFolderPath()
+        {
+            var directory = new DirectoryInfo(Environment.CurrentDirectory);
+
+            while (directory?.GetFiles("*.sln").Length == 0)
+                directory = directory.Parent;
+
+            return directory?.FullName;
+        }
+
+        private void KillKestrel()
+        {
+            if (!_kestrelProcess.HasExited)
+            {
+                _kestrelProcess.Kill();
+                _kestrelProcess.Dispose();
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace UniversityAccounting.WEB.AutomatedUITests
         public CreateStudentPage(IWebDriver driver, int groupId)
         {
             _driver = driver;
-            _url = $"https://localhost:44345/Students/Create?groupId={groupId}";
+            _url = $"https://localhost:5001/Students/Create?groupId={groupId}";
         }
 
         public void Navigate() => _driver.Navigate()
