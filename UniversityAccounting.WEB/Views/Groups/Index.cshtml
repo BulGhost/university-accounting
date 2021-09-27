@@ -12,7 +12,7 @@
             <h3 class="text-primary ps-3">@_localizer["CourseGroups", ViewBag.Course.Name]</h3>
         </div>
         <div class="col-6 text-end">
-            <a asp-controller="Groups" asp-action="Create" asp-route-courseId="@ViewBag.Course.Id" class="btn btn-primary">
+            <a asp-controller="Groups" asp-action="Create" asp-route-courseId="@ViewBag.Course.Id" class="btn btn-primary" id="add-new">
                 @_localizer["CreateNewGroup"]
             </a>
         </div>
@@ -45,22 +45,22 @@
                             <input class="form-check-input" type="checkbox" name="allcheck" id="selectAll" />
                         </th>
                         <th>
-                            <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-page="1" asp-route-sortProperty="Name"
-                               asp-route-sortOrder="@Model.SortModel.GetColumn("Name").Order" class="column-heading">
+                            <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-searchText=@ViewBag.SearchText
+                                asp-route-sortProperty="Name" asp-route-sortOrder="@Model.SortModel.GetColumn("Name").Order" class="column-heading">
                                 @_localizer["GroupName"]
                             </a>
                             <i class="@Model.SortModel.GetColumn("Name").SortIcon"></i>
                         </th>
                         <th>
-                            <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-page="1" asp-route-sortProperty="FormationDate"
-                               asp-route-sortOrder="@Model.SortModel.GetColumn("FormationDate").Order" class="column-heading">
+                            <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-searchText=@ViewBag.SearchText
+                                asp-route-sortProperty="FormationDate" asp-route-sortOrder="@Model.SortModel.GetColumn("FormationDate").Order" class="column-heading">
                                 @_localizer["FormationDate"]
                             </a>
                             <i class="@Model.SortModel.GetColumn("FormationDate").SortIcon"></i>
                         </th>
                         <th>
-                            <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-page="1" asp-route-sortProperty="StudentsQuantity"
-                               asp-route-sortOrder="@Model.SortModel.GetColumn("StudentsQuantity").Order" class="column-heading">
+                            <a asp-action="Index" asp-route-courseId="@ViewBag.Course.Id" asp-route-searchText=@ViewBag.SearchText
+                                asp-route-sortProperty="StudentsQuantity" asp-route-sortOrder="@Model.SortModel.GetColumn("StudentsQuantity").Order" class="column-heading">
                                 @_localizer["StudentsQuantity"]
                             </a>
                             <i class="@Model.SortModel.GetColumn("StudentsQuantity").SortIcon"></i>

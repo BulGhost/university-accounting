@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using UniversityAccounting.DAL.Interfaces;
 
-namespace UniversityAccounting.WEB.Models.HelperClasses
+namespace UniversityAccounting.WEB.Controllers.HelperClasses
 {
-    public class SortModel
+    public class SortableColumn
     {
-        public class SortableColumn
-        {
-            public string ColumnName { get; set; }
-            public SortOrder Order { get; set; }
-            public string SortIcon { get; set; }
-        }
+        public string ColumnName { get; set; }
+        public SortOrder Order { get; set; }
+        public string SortIcon { get; set; }
+    }
 
-        private readonly string _upIcon = "fas fa-arrow-up";
-        private readonly string _downIcon = "fas fa-arrow-down";
+    public class SortModel : ISortModel
+    {
+        private const string UpIcon = "fas fa-arrow-up";
+        private const string DownIcon = "fas fa-arrow-down";
         private readonly List<SortableColumn> _sortableColumns = new();
 
         public string SortProperty { get; set; }
@@ -23,10 +23,12 @@ namespace UniversityAccounting.WEB.Models.HelperClasses
 
         public void AddColumn(string colName, bool isDefaultColumn = false)
         {
+            if (string.IsNullOrEmpty(colName)) throw new ArgumentNullException(nameof(colName));
+
             SortableColumn column = _sortableColumns.SingleOrDefault(c =>
                 c.ColumnName.ToLower() == colName.ToLower());
 
-            if (column == null) _sortableColumns.Add(new SortableColumn {ColumnName = colName});
+            if (column == null) _sortableColumns.Add(new SortableColumn { ColumnName = colName });
 
             if (isDefaultColumn || _sortableColumns.Count == 1)
             {
@@ -37,11 +39,13 @@ namespace UniversityAccounting.WEB.Models.HelperClasses
 
         public SortableColumn GetColumn(string colName)
         {
+            if (string.IsNullOrEmpty(colName)) throw new ArgumentNullException(nameof(colName));
+
             SortableColumn column = _sortableColumns.SingleOrDefault(c =>
                 c.ColumnName.ToLower() == colName.ToLower());
 
-            if (column == null) throw new ArgumentException(@"Unable to sort by column with this name.",
-                nameof(colName));
+            if (column == null)
+                throw new ArgumentException(@"Unable to sort by column with this name.", nameof(colName));
 
             return column;
         }
@@ -56,19 +60,18 @@ namespace UniversityAccounting.WEB.Models.HelperClasses
                 sortableColumn.SortIcon = string.Empty;
                 sortableColumn.Order = SortOrder.Ascending;
 
-                if (sortProperty == sortableColumn.ColumnName.ToLower() && sortOrder == SortOrder.Ascending)
+                if (sortProperty != sortableColumn.ColumnName.ToLower()) continue;
+
+                SortProperty = sortableColumn.ColumnName;
+                SortOrder = sortOrder;
+                if (sortOrder == SortOrder.Ascending)
                 {
-                    SortProperty = sortableColumn.ColumnName;
-                    SortOrder = sortOrder;
-                    sortableColumn.SortIcon = _downIcon;
+                    sortableColumn.SortIcon = DownIcon;
                     sortableColumn.Order = SortOrder.Descending;
                 }
-
-                if (sortProperty == sortableColumn.ColumnName.ToLower() && sortOrder == SortOrder.Descending)
+                else
                 {
-                    SortProperty = sortableColumn.ColumnName;
-                    SortOrder = sortOrder;
-                    sortableColumn.SortIcon = _upIcon;
+                    sortableColumn.SortIcon = UpIcon;
                     sortableColumn.Order = SortOrder.Ascending;
                 }
             }

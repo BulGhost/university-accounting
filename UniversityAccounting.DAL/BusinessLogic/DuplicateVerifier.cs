@@ -17,6 +17,7 @@ namespace UniversityAccounting.DAL.BusinessLogic
         {
             var courseRepository = _unitOfWork.Courses;
 
+            var x = courseRepository.Find(c => c.Name == name);
             if (id == 0) return !courseRepository.Find(c => c.Name == name).Any();
 
             var coursesWithSameName = courseRepository.Find(c => c.Name == name);
