@@ -1,4 +1,7 @@
 using System;
+//using System.Diagnostics;
+//using System.Globalization;
+//using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using UniversityAccounting.DAL.Entities;
@@ -11,9 +14,11 @@ namespace UniversityAccounting.WEB.AutomatedUITests
         private readonly IWebDriver _driver;
         private readonly ContextFixture _fixture;
         private readonly CreateStudentPage _page;
+        //private static Process _iisExpressProcess;
 
         public StudentCreateAutomatedUiTests(ContextFixture fixture)
         {
+            //StartIISExpress();
             _driver = new ChromeDriver();
             _fixture = fixture;
             _page = new CreateStudentPage(_driver, _fixture.TestGroupId);
@@ -31,6 +36,8 @@ namespace UniversityAccounting.WEB.AutomatedUITests
             Assert.True(_page.DateOfBirthNameDisplayed());
             Assert.True(_page.CreateDisplayed());
             Assert.True(_page.BackDisplayed());
+
+            //StopIISExpress();
         }
 
         [Fact]
@@ -111,5 +118,40 @@ namespace UniversityAccounting.WEB.AutomatedUITests
             _driver.Quit();
             _driver.Dispose();
         }
+
+        //private static void StartIISExpress()
+        //{
+        //    var x = Path.Combine(@"D:\Foxminded\UniversityWebApp", "UniversityAccounting.WEB");
+        //    var key = Environment.Is64BitOperatingSystem ? "programfiles(x86)" : "programfiles";
+        //    var programFiles = Environment.GetEnvironmentVariable(key);
+        //    //var programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+        //    var y = programFiles + @"\IIS Express\iisexpress.exe";
+
+        //    var conf = @"D:\Foxminded\UniversityWebApp\UniversityAccounting.WEB.AutomatedUITests\applicationhost.config";
+        //    var arguments = string.Format(CultureInfo.InvariantCulture,
+        //        "/config:\"{0}\"", conf);
+
+        //    var startInfo = new ProcessStartInfo(y)
+        //    {
+        //        WindowStyle = ProcessWindowStyle.Hidden,
+        //        ErrorDialog = true,
+        //        LoadUserProfile = true,
+        //        CreateNoWindow = true,
+        //        UseShellExecute = false,
+        //        Arguments = arguments
+        //    };
+
+        //    _iisExpressProcess = Process.Start(startInfo);
+        //}
+
+        //private static void StopIISExpress()
+        //{
+        //    if (_iisExpressProcess.HasExited == false)
+        //    {
+        //        _iisExpressProcess.Kill();
+        //        _iisExpressProcess.Dispose();
+        //        _iisExpressProcess = null;
+        //    }
+        //}
     }
 }

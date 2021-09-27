@@ -44,14 +44,14 @@
                             <input class="form-check-input" type="checkbox" name="allcheck" id="selectAll" />
                         </th>
                         <th>
-                            <a asp-action="Index" asp-route-sortProperty="Name" asp-route-page="1"
+                            <a asp-action="Index" asp-route-sortProperty="Name" asp-route-searchText=@ViewBag.SearchText
                                asp-route-sortOrder="@Model.SortModel.GetColumn("Name").Order" class="column-heading">
                                 @_localizer["CourseName"]
                             </a>
                             <i class="@Model.SortModel.GetColumn("Name").SortIcon"></i>
                         </th>
                         <th>
-                            <a asp-action="Index" asp-route-sortProperty="Description" asp-route-page="1"
+                            <a asp-action="Index" asp-route-sortProperty="Description" asp-route-searchText=@ViewBag.SearchText
                                asp-route-sortOrder="@Model.SortModel.GetColumn("Description").Order" class="column-heading">
                                 @_localizer["Description"]
                             </a>

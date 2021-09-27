@@ -140,6 +140,16 @@ namespace UniversityAccounting.DAL.Tests.Repositories
             Assert.Equal(expectedCount, result);
         }
 
+        [Fact]
+        public void SuitableGroupsCount_WithFormationDateFilter_RequiredGroupsCount()
+        {
+            string searchText = new DateTime(2021, 10, 6).ToShortDateString();
+
+            int result = _repo.SuitableGroupsCount(g => g.CourseId == 2, searchText);
+
+            Assert.Equal(1, result);
+        }
+
         [InlineData(null)]
         [InlineData("")]
         [InlineData("2kz6")]

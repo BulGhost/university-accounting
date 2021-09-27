@@ -155,7 +155,6 @@ namespace UniversityAccounting.DAL.Tests.Repositories
         [InlineData(1, "Cc", 1)]
         [InlineData(2, "Cc", 0)]
         [InlineData(1, "2019", 2)]
-        [InlineData(2, "22.11.2017", 1)]
         [Theory]
         public void SuitableStudentsCount_WithFilter_RequiredStudentsCount(int groupId, string searchText,
             int expectedCount)
@@ -163,6 +162,16 @@ namespace UniversityAccounting.DAL.Tests.Repositories
             int result = _repo.SuitableStudentsCount(s => s.GroupId == groupId, searchText);
 
             Assert.Equal(expectedCount, result);
+        }
+
+        [Fact]
+        public void SuitableStudentsCount_WithDateOfBirthFilter_RequiredStudentsCount()
+        {
+            string searchText = new DateTime(2017, 11, 22).ToShortDateString();
+
+            int result = _repo.SuitableStudentsCount(s => s.GroupId == 2, searchText);
+
+            Assert.Equal(1, result);
         }
 
         [InlineData(null)]
