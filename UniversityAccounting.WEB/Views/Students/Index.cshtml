@@ -85,8 +85,8 @@
                 <tbody>
                     @foreach (var student in Model.Students)
                     {
-                        <tr>
-                            <td class="align-middle">
+                        <tr class="align-middle">
+                            <td>
                                 <input type="checkbox" value="@student.Id" name="ids" id="ids" class="form-check-input" />
                             </td>
                             <td wigth="20%" class="ps-1">@student.FirstName</td>
@@ -112,10 +112,10 @@
                             }
                             <td class="text-center">
                                 <div>
-                                    <a asp-controller="Students" asp-action="Edit" asp-route-Id="@student.Id" class="btn btn-primary ms-4 my-1">
+                                    <a asp-controller="Students" asp-action="Edit" asp-route-Id="@student.Id" class="btn btn-primary ms-4">
                                         @_localizer["Edit"]
                                     </a>
-                                    <a asp-controller="Students" asp-action="Delete" asp-route-Id="@student.Id" class="btn btn-danger ms-4 my-1">
+                                    <a asp-controller="Students" asp-action="Delete" asp-route-Id="@student.Id" class="btn btn-danger ms-4">
                                         @_localizer["Delete"]
                                     </a>
                                 </div>

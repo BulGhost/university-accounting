@@ -71,8 +71,8 @@
                 <tbody>
                     @foreach (var group in Model.Groups)
                     {
-                        <tr>
-                            <td class="align-middle">
+                        <tr class="align-middle">
+                            <td>
                                 <input type="checkbox" value="@group.Id" name="ids" id="ids" class="form-check-input" />
                             </td>
                             <td wigth="30%" class="ps-1">
@@ -82,10 +82,10 @@
                             <td width="20%">@group.StudentsQuantity</td>
                             <td class="text-center">
                                 <div>
-                                    <a asp-controller="Groups" asp-action="Edit" asp-route-Id="@group.Id" class="btn btn-primary ms-4 my-2">
+                                    <a asp-controller="Groups" asp-action="Edit" asp-route-Id="@group.Id" class="btn btn-primary ms-4">
                                         @_localizer["Edit"]
                                     </a>
-                                    <a asp-controller="Groups" asp-action="Delete" asp-route-Id="@group.Id" class="btn btn-danger ms-4 my-2">
+                                    <a asp-controller="Groups" asp-action="Delete" asp-route-Id="@group.Id" class="btn btn-danger ms-4">
                                         @_localizer["Delete"]
                                     </a>
                                 </div>
